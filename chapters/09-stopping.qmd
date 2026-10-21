@@ -1,16 +1,271 @@
 # Stopping in searching and screening {#sec-stopping}
 
-::: {.callout-note}
-## Not yet drafted
+Every review stops twice. It stops adding sources and revising its searches, and it stops screening. Both decisions are made without knowing how many eligible studies have not yet been seen. A review that screens every record its searches return makes no stopping decision at the screening stage: it is finished when the pool is exhausted. Prioritised screening changes that. Once a tool puts the likeliest records first, it becomes tempting to stop before the end, and the records left unscreened are excluded without anyone having judged them.
 
-This chapter is an outline. See the [plan](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/plan.md) and [chapter map](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/chapter-map.md) for its sources and status.
-:::
+This chapter treats the two decisions together, because they share one difficulty: an unknown denominator. It explains what the common stopping rules observe and what each can claim, tests a streak rule and a statistical criterion on the case pack's screening logs, and sets out what a team can defensibly decide and report.
 
 **After this chapter you should be able to** separate ranking efficiency from a defensible decision to stop.
 
-## Planned contents
+## One problem, an unknown denominator {#sec-stop-problem}
 
-- Stopping a search [@booth2010; @kastner2009] and stopping screening as one problem with an unknown denominator.
-- Prioritised screening, active learning and what a better order does and does not change.
-- Heuristic and statistical stopping criteria [@callaghan2020].
-- Published screening logs for the Moran and CD010558 cases, so the exercises need no code.
+Recall is the number of eligible studies found divided by the number that exist. A team always knows the numerator. It never knows the denominator, because it would have to have found everything to count it (@sec-missing-measures). Every method for deciding when to stop does one of four things with that gap (@tbl-stop-families).
+
+| Family | What it observes | What it can claim | When searching | When screening |
+|---|---|---|---|---|
+| Resource limit | Time or records spent | Nothing about recall | Stop when the time allowed is spent | Screen a fixed number or share of records |
+| Falling yield | New eligible records per unit of effort | That the yield has fallen, not that few eligible records remain | Diminishing returns; theoretical saturation [@booth2010] | A run of consecutive irrelevant records; the knee method [@cormack2016] |
+| Known items | Whether studies already known to be eligible were found | That those studies were found | Checking a known set of studies [@booth2010] | Key papers in the SAFE procedure [@boetje2024] |
+| Estimate of the unseen | The overlap between sources, or a sample of what remains | An estimate or test of how many remain, under stated assumptions | Capture–recapture [@spoor1996; @kastner2009] | Statistical stopping criteria [@callaghan2020; @li2020; @stevenson2023] |
+
+: Four ways to decide when to stop, and the claim each can support. {#tbl-stop-families}
+
+Only the last family says anything about the denominator. The other three can be sensible ways to manage effort, but none of them can support a statement about recall.
+
+The known-item family needs one qualification. A set of key studies chosen by the team is not a random sample of the eligible studies: it is usually the best-known, most typically worded and most easily found, which are the studies least likely to be missed. Finding all of them shows that the search and the ranking work for studies like them. @cormack2016 turned the idea into a statistical method by drawing the target set at random: their target method "chooses ten random relevant documents as a target", then searches independently until all ten are found, and they prove that this achieves 95% reliability for a minimum recall of 70%. The randomness is what earns the guarantee, and it is costly: with eligible records at 1% of the collection, finding the ten targets "entails a review overhead of about 1,000 additional documents".
+
+## Stopping a search {#sec-stop-search}
+
+The Cochrane Handbook says it is "often difficult to decide in a scientific or objective way when a search is complete". It describes rules based on whether new search terms or sources still yield new relevant records, and notes that "there has been little formal evaluation of the approaches" [@lefebvre2025, sec. 4.4.11]. @booth2010 found eight methods in the literature, from capture–recapture and known-item checks to diminishing returns and theoretical saturation, and reached the same conclusion.
+
+Capture–recapture is the one method in that list that estimates the denominator, so it is worth understanding exactly.
+
+### Capture–recapture
+
+The idea comes from ecology. Catch and mark animals, release them, catch again, and count how many of the second catch are marked. If a large share of the second catch is marked, the first catch must have taken a large share of the population.
+
+Applied to searching, two searches are the two catches, and a study found by both is a recapture. If the first search found *n*~1~ eligible studies, the second *n*~2~, and *m* were found by both, the Lincoln–Petersen estimate of the total is *n*~1~ × *n*~2~ / *m*. Chapman's version, (*n*~1~ + 1)(*n*~2~ + 1) / (*m* + 1) − 1, is less biased when the counts are small.
+
+@spoor1996 compared a MEDLINE search with a hand search of *Diabetic Medicine* from 1984 to 1994 for randomised trials. The hand search found 150 trials and MEDLINE 123; 115 were found by both. The estimated total was 160 (95% confidence interval 158 to 164), so about two trials had been missed by both methods. The case pack's script reproduces their figures. @kastner2009 used four databases (MEDLINE, Embase, CINAHL and EBM Reviews) in a review of clinical decision support tools for osteoporosis. The model estimated 1,838 potentially relevant articles at the title-and-abstract stage, where 1,246 had been retrieved, and 49 at full text, where 42 had. They concluded that "more studies are needed" before the estimate could serve as a stopping rule.
+
+The Moran review searched Web of Science and Scopus with the same strategy. @tbl-moran-crc applies the estimate to the eligible records each database found.
+
+| Stage | Web of Science | Scopus | Found by both | Found in all | Chapman estimate (95% interval) | Estimated missed by both |
+|---|---|---|---|---|---|---|
+| Included at full text | 111 | 115 | 89 | 137 | 143.4 (137.1 to 149.6) | 6 |
+| Passed title and abstract | 344 | 513 | 271 | 586 | 650.9 (626.5 to 675.4) | 65 |
+
+: Two-source capture–recapture on the Moran review's database searches. Records matched by DOI or exact title. From `case-pack/data/stopping/capture-recapture.csv`. {#tbl-moran-crc}
+
+Taken at face value, the searches found about 96% of the included studies that searches like these could find. That figure rests on assumptions that this case breaks.
+
+**The two searches must be independent.** Each must be as likely to find a study whether or not the other did. Here both databases were searched with one strategy, so a study whose title and abstract use none of its terms is missed by both, and a study whose wording matches is found by both. That positive dependence inflates the overlap, and Spoor and colleagues spell out the consequence: with "positive dependency between the two sources", the estimates "will underestimate the true population".
+
+**Every study must be equally catchable.** Some studies are easy to find: well indexed, conventionally titled, in core journals. Others are hard by every route. Variation of this kind also makes the estimate too low.
+
+**The estimate covers only what such searches can reach.** A study held in neither kind of source, such as an unpublished dataset or a report in a journal neither database indexes, has no chance of capture and is invisible to the method.
+
+All three violations push in one direction, so the estimate is best read as a floor. A large estimate of missed studies is informative: it says that searching should continue. A small one is not reassuring on its own. The estimate is more trustworthy when the two routes work differently, for example a database search against a hand search, as in Spoor and colleagues' study, or against citation searching (@sec-supplementary), because a study missed by one route is then not systematically missed by the other.
+
+## Prioritisation changes order; stopping changes membership {#sec-stop-order}
+
+Prioritised screening, often called active learning or technology-assisted review, reorders the records a search has already admitted. The reviewer labels some records; a model learns from the labels and scores the rest; the record the model ranks highest is shown next; each new label updates the model. In ASReview LAB, for example, the default model represents each record's title and abstract as weighted words and word pairs (TF-IDF) and fits a support vector machine classifier, and each labelling decision starts training a new model [@asreviewmodels]. The reviewer still makes every eligibility decision. The model only decides what to show next.
+
+As long as every record is screened, nothing is lost: the order changes, the membership does not (@sec-ranking-order). Prioritisation still has uses without early stopping. It brings eligible studies forward, so full-text retrieval and data extraction can start while screening continues, and it can support decisions such as screening the low-ranked tail with one reviewer instead of two [@callaghan2024].
+
+Stopping early is a different act. The unscreened records are excluded, though no one has judged them. That is boundary 6 in @fig-boundaries, and it can only lose studies that the earlier boundaries let through. A stopping rule says nothing about the coverage, indexing, query or export losses upstream of it.
+
+### What the tools offer
+
+@tbl-stop-tools summarises what five widely used screening tools say about ordering and stopping in their public documentation.
+
+| Tool | How records are ordered | Stopping aid | What the documentation says about stopping |
+|---|---|---|---|
+| ASReview LAB 3.0.8 | Active learning; default model TF-IDF with a support vector machine [@asreviewmodels] | An optional prompt after a user-set number of not-relevant records since the last relevant one; no number is set by default | The ideal threshold "is still actively researched"; the user decides whether to stop [@asreviewprogress] |
+| EPPI-Reviewer | Active learning; a support vector machine on weighted words and phrases of up to three words [@eppiml] | None in the screening workflow; Callaghan and Müller-Hansen's criterion (as "BUSCAR") added in April 2026 for simulations only [@eppi61800] | "There are no hard and fast rules" [@eppistopping]; recommends that all items are screened manually [@eppiml] |
+| Covidence | "Most relevant", the default sort, using an active-learning model developed by the EPPI Centre [@covidencesort] | None | "Covidence does not recommend any criteria or rules for stopping screening before all studies have been voted on" [@covidence2023] |
+| DistillerSR | Continuous re-ranking ("Re-Rank"); the model is not described publicly | A 2021 white paper describes a report giving "a conservative prediction of the number of relevant records not yet identified" [@distiller2021]; the current public pages do not describe it, and the user guide requires a login | Records may be left unscreened once a threshold such as a predicted 95% is met [@distiller2021] |
+| Rayyan | Ratings computed on request by a support vector machine on words, word pairs and MeSH terms [@rayyanratings] | None | None in the help pages |
+
+: Ordering and stopping in five screening tools, as documented on 22 October 2026. Every claim is dated in `claims/register.csv`. {#tbl-stop-tools}
+
+Two of the five advise screening everything. One offers a streak prompt with no default, and one offers nothing. Only one describes an estimate of how many eligible records remain, and its current documentation of that feature is not public, so a team cannot check what it assumes. The ranking is the feature on display; the stopping decision is left to the team.
+
+## Rules that watch the yield fall {#sec-stop-heuristics}
+
+The most common screening rule is a streak: stop after a set number of consecutive records judged irrelevant. ASReview's prompt works this way. The intuition is sound: if many eligible records remained, a long run without one would be unlikely. @callaghan2020 identify three problems with turning that intuition into a rule. It ignores uncertainty; nothing tells the team what number to choose; and it looks only at the proportion of eligible records in what remains, when what matters is their number. In their words, "Recall is not simply a function of the proportion of unseen documents that are relevant, but also of the number of unseen documents." A streak of 50 in a pool with 300 records left means something different from a streak of 50 with 30,000 left.
+
+The second problem cannot be engineered away. For any review there is some streak length that would have stopped close to the target, but "a user has no way of knowing a priori what that value will be" [@callaghan2024].
+
+### What the comparisons found
+
+@callaghan2020 ran 100 simulations on each of a set of benchmark collections and found that stopping after 50 consecutive irrelevant records saved 41% of the work on average but missed a 95% recall target in 39% of runs. A later commentary reports that the 5th percentile of recall under the same rule "was as low as 53%" [@callaghan2024]. @repke2026 compared 15 methods over 223 simulated screening runs on 81 datasets. The rule that stops after a fixed number of consecutive exclusions reached a mean recall of 34% (range 0% to 100%), and the authors conclude that "heuristic methods that use the number of consecutive exclusions tend to miss most of the relevant records." In psychology datasets, @konig2024 found that a rule estimating prevalence from a random 10% sample achieved the highest mean sensitivity (81.87%), ahead of a streak rule (72.27%) and the knee method (65.71%).
+
+::: {.callout-warning}
+## Read the figure at its source
+
+A later paper restates Callaghan and Müller-Hansen's result as a share of reviews, saying that the rules "could not find 95% of all relevant records in 39% of the 20 systematic reviews analyzed" [@campos2024]. The original reports 39% of *simulation runs*, 100 per dataset, not 39% of reviews. The difference matters: a rule that fails in 39% of runs could fail sometimes on every review. A figure that will steer a methods decision should be checked in the paper that produced it.
+:::
+
+The **knee method** watches the shape of the gain curve, the plot of eligible records found against records screened [@cormack2016]. When the curve flattens, its slope after the bend is compared with its slope before; screening stops when the ratio passes a threshold, and never before 1,000 records have been screened. It was developed and tested on legal, news and clinical-record collections, with a recall of 70% counted as acceptable, not on the high targets of evidence synthesis. In @repke2026 it reached a mean recall of 90%, ranging from 36% to 100%.
+
+### The case pack
+
+The Moran simulations show both what a streak rule can do and why its success does not transfer (@tbl-moran-seeds). With either model, a 50-record streak stopped short of 95% title-and-abstract recall in many runs: 4 of 10 with the support vector machine, 7 of 10 with naive Bayes. A 100-record streak never did. On this review alone, a team might conclude that 100 is safe.
+
+In the Moran pool, 12% of records passed title and abstract screening. In CD010558 the figure is 1.3%: 37 of 2,815. With so few eligible records, long gaps between them are normal, and a streak arrives early. A 100-record streak stopped the Padua BM25 ranking at record 292, with 4 of the 10 included records unseen, and the Sheffield ranking at record 885 with 1 unseen. The rule that met the target in all twenty Moran runs lost 4 of the 10 included records in one health run. The streak does not measure what remains. It measures the gap between eligible records, which depends on how common they are and how well the ranking works.
+
+## Statistical stopping criteria {#sec-stop-statistical}
+
+@callaghan2020 reframed stopping as a hypothesis test. Choose a recall target, say 95%, and a confidence level, say 95%. The null hypothesis is that recall is still below the target. If it were, at least a certain number of eligible records would remain unscreened. The test asks how likely it is to have seen as few eligible records as the team has in a random sample of what remains, if that many were really there. If the probability is below 5%, the hypothesis is rejected and screening may stop. The team can then write a sentence that a reader can check: "We reject the null hypothesis that we achieve a recall of less than 95% with a significance level of 5%."
+
+The original method interrupts prioritised screening and draws a random sample of the unscreened records. Its variant, which the authors call ranked quasi-sampling, avoids the separate sample by "treating batches of previously screened documents as if they were random samples". Those batches were chosen by the model, so they are not random. The authors argue that the test remains conservative "if the assumption holds that documents chosen by machine learning are not less likely to be relevant than those chosen at random." In their simulations this variant missed the target in 0.95% of runs and saved 17% of the work on average. The authors' package, buscarpy [@buscarpy], implements it, and the case pack applies it to every screening log (`case-pack/data/stopping/`).
+
+| Screening log | Records screened when 95% of title-and-abstract eligible records had in fact been found | 100-record streak: stop (included records unseen) | Statistical criterion: stop (included records unseen) |
+|---|---|---|---|
+| Moran, TF-IDF with SVM, ten runs | 2,092.5 | 2,642 (0) | 2,927.5 (0) |
+| Moran, TF-IDF with naive Bayes, ten runs | 2,386 | 2,737.5 (1) | 3,445 (0) |
+| Moran, random order, ten runs | 4,632.5 | 4,882 (0) | 4,602.5 (7.5) |
+| CD010558, Sheffield BM25 | 1,589 | 885 (1) | 2,645 (0) |
+| CD010558, Padua BM25 | 2,320 | 292 (4) | 2,715 (0) |
+| CD010558, Padua active learning | 1,792 | 348 (0) | 2,625 (0) |
+
+: A streak rule and a statistical criterion on the same screening logs. Moran rows are medians across ten starting pairs (4,882 records, 137 included); CD010558 rows are single runs (2,815 records, 10 included). The criterion targets 95% recall of title-and-abstract eligible records at 95% confidence. The first column needs every label, so a live review cannot know it. From `case-pack/data/stopping/` and the screening logs' `summary.json` files. {#tbl-stop-compare}
+
+Three things stand out.
+
+**In prioritised order, the criterion never stopped short, and it cost more.** In all 20 model-ranked Moran runs and all three CD010558 runs it stopped with at least 99% of title-and-abstract eligible records found and no included record unseen. With the support vector machine, it stopped between 759 and 1,102 records (median 836.5) after the point at which 95% had actually been reached. Those records are the price of being able to state a confidence level, and the criterion still left 40% of the pool unscreened.
+
+**With few eligible records, it must screen most of what remains.** In CD010558, 37 records are eligible at title and abstract. Recall of 37 out of 38 is above 95%, but 37 out of 39 is below it, so the test must rule out that two eligible records remain. In the Sheffield ranking the last eligible record is at rank 2,055, leaving 760 records. If two of them were eligible, the chance of seeing neither in the next 590 records is (170 × 169) / (760 × 759) = 0.0498, just under 0.05; the criterion stops at record 2,645. Callaghan and Müller-Hansen found the same in a dataset with 47 eligible records out of 5,999, where ruling out three remaining eligible records "requires a lot of evidence to disprove". A statistical criterion cannot save much when eligible records are rare, and no honest method can: with few eligible records, one missed record is a large share of recall.
+
+**The guarantee depends on its assumptions.** In random order, the ranked test has nothing to make it conservative, and it is repeated after every block of screening. The paper notes that "we did not address the problem of multiple testing formally". In the Moran random-order runs it stopped below the 95% target in 6 of 10, leaving a median of 7.5 included records unseen. No one would use it this way, but the result is a reminder that a confidence statement holds only under the conditions it was derived for.
+
+The independent comparison points the same way. Of the 15 methods @repke2026 tested, only Callaghan and Müller-Hansen's never stopped before the recall target, at targets from 80% to 99%, and it "stops conservatively". The authors conclude that "almost all existing stopping methods either fail to reliably stop without missing relevant records or fail to utilize the full potential work-savings." Other statistical approaches exist. @li2020 estimate the number of remaining eligible records by sampling from a distribution fitted to the ranking. Point-process methods model how often eligible records occur as screening moves down the ranking and estimate how many remain beyond the current point [@sneyd2019; @stevenson2023]. They make different assumptions and give different guarantees, and reliability has to be shown for each.
+
+A useful definition comes from a group of methodologists and tool developers: "A stopping criterion should be considered reliable when the frequency of premature stopping aligns with the specified confidence level" [@callaghan2024]. A method stated at 95% confidence should stop too early in no more than 5% of runs, across many datasets and models.
+
+## SAFE: a procedure, not a test {#sec-stop-safe}
+
+The SAFE procedure [@boetje2024] arranges screening into four phases: "1. Screen a random set for training data; 2. Apply active learning; 3. Find more relevant records with a different model; 4. Evaluate quality." Active learning stops when four conditions are all met: all key papers have been marked relevant; at least twice the number of relevant records expected from the random set have been screened; at least 10% of the records have been screened; and no relevant record has appeared in the last, for example, 50 records. Phases 3 and 4 then continue until another streak without new relevant records.
+
+SAFE adds things a single streak lacks: a random start, known-item checks, a second model to catch records the first buried, and a quality check. Its conditions still belong to the falling-yield and known-item families (@tbl-stop-families), and its authors are explicit that the numbers "should be merely used as an example and are in no way meant as exact rules". It came from a meeting of experts, and the paper acknowledges that "a direct comparison with existing stopping heuristics has not been presented". @repke2026 did not evaluate it. SAFE is a well-structured way to organise and document screening. It does not produce an estimate of recall.
+
+## Measures that are not stopping rules {#sec-stop-measures}
+
+Most published evaluations of screening tools report work saved over sampling at 95% recall (WSS@95), or recall after screening a fixed share of the pool (@sec-validation-measures). Both are computed afterwards, from fully labelled data, at the point where the target was in fact reached. They measure how good the order was. They do not show that a live review could have known when to stop, and the saving they report is the most a perfect stopping rule could achieve.
+
+WSS also depends on how common eligible records are. With a perfect ranking, WSS@95 is 0.95 × (1 − *p*), where *p* is the proportion of eligible records: about 0.94 in CD010558, 0.84 in the Moran pool and 0.48 in a pool where half the records are eligible. @kusa2023 show that "the absolute maximum and minimum values of WSS depend on the dataset", and that averaging it across datasets can put methods in the wrong order.
+
+So a claim that a tool "saves 83% of screening" needs three questions. At what recall target, and of which records? On which datasets, with what proportion of eligible records? And what stopping rule would have achieved the saving in a review that did not know the labels? ASReview's developers reported exactly that figure, an average WSS@95 of 83%, and in the same paper called an accurate estimate of a system's error rate in a live review "a pressing open problem" [@vandeschoot2021]. A group of tool developers and methodologists has since recommended that "researchers should only make claims about workload saved if their studies incorporate a stopping method" [@callaghan2024].
+
+## What guidance says {#sec-stop-guidance}
+
+The Cochrane Handbook notes recent work suggesting that knowing when it is safe to stop "is not insurmountable", but says that "the automatic elimination of records using this approach has not been recommended for use in Cochrane reviews at the time of writing in mid-2023, since more work is needed to develop and validate safe 'stopping rules'" [@lefebvre2025, sec. 4.6.6.2]. It still values prioritisation for bringing likely inclusions forward. The RAISE guidance, which the joint Cochrane, Campbell, JBI and CEE position statement endorses [@flemyng2025], lists for prioritised screening algorithms that "stopping criteria [are] required to determine when to stop screening process" [@raise2025].
+
+@callaghan2024 add practical recommendations. A protocol should state whether and how a stopping rule will be used, and whether the recall target and confidence level were set in advance. Reviews that stop for pragmatic reasons, such as rapid reviews, should still state the rationale and assess the risk of having missed studies.
+
+## A defensible decision to stop {#sec-stop-decision}
+
+A team can defend one of three positions, and each supports a different claim.
+
+**1. Screen everything; use prioritisation for order.** No stopping claim is needed. Report the tool, its version and the model, and that every record was screened. This is what the Cochrane Handbook, Covidence and EPPI-Reviewer currently advise.
+
+**2. Stop on a pre-specified statistical criterion.** Set the recall target and confidence level in the protocol. At the stop, the claim is the test's: that recall *of title-and-abstract eligible records within the screened pool* is unlikely to be below the target, provided the criterion's assumptions hold. It says nothing about studies the searches never admitted (@sec-missing-measures), and with few eligible records it will save little.
+
+**3. Stop for resource reasons.** A rapid review may stop at a budget or a streak. Then say so: report the rule and its threshold, state that recall was not estimated, and, if possible, report the statistical criterion's p-value at the point where screening stopped, so readers can see the risk taken [@callaghan2024].
+
+Two claims are never defensible: that a streak "showed" that no eligible records remained, and that a work saving reported in a published simulation applies to this review.
+
+Whichever position is taken, record enough for another team to reconstruct the screening (@sec-recording):
+
+- the pool: databases, searches, dates and deduplication that produced it;
+- the tool and version; the representation, classifier, query strategy and balancing; how the starting records were chosen;
+- the screening order and labels, including corrections and reconciliation between reviewers;
+- the stopping rule, its parameters and rationale, and when it was chosen;
+- the number of records screened and left unscreened, and what happened to the unscreened records;
+- any second model, known-item check or quality-control pass;
+- an exported project or log, where licences permit.
+
+For the search, record what ended it as well: the sources and routes searched, and the evidence used to stop, whether a capture–recapture estimate with its assumptions, a known-item check or a judgement of saturation.
+
+## Exercises {#sec-stop-exercises}
+
+Inputs are in this chapter and the case pack: `case-pack/data/stopping/`, `case-pack/data/moran-2021/screening-seeds/` and `case-pack/data/clef-2019/CD010558/`.
+
+### Exercise 9.1: How many did both databases miss?
+
+Using the full-text row of @tbl-moran-crc (Web of Science 111, Scopus 115, both 89):
+
+a. Compute the Lincoln–Petersen estimate of the total and the number of included studies missed by both databases.
+b. Say in which direction the estimate is likely to be wrong, and why.
+c. What second route would give a more trustworthy estimate?
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+a. 111 × 115 / 89 = 143.4. The two searches found 89 + 22 + 26 = 137, so about 6 included studies were missed by both. Chapman's estimate is the same to one decimal place: 112 × 116 / 90 − 1 = 143.4.
+
+b. Too low. Both databases were searched with one strategy, so studies whose titles and abstracts lack its terms are missed by both and studies that match are found by both. That positive dependence inflates the overlap, and an inflated overlap shrinks the estimate. Studies that are hard to find by any route, and studies in sources neither database covers, push the same way. Read 143 as a floor: at least about 6 were missed, possibly many more.
+
+c. A route that finds studies differently: forward and backward citation searching from the included studies, a hand search of key journals, or a search of a source with different coverage using a different kind of query. The less a study's chance of being found by one route depends on its chance by the other, the closer the estimate is to unbiased. Record the routes, the overlap and the assumption.
+:::
+
+### Exercise 9.2: Three stops on one run
+
+In the Moran run `elas_u4_s5` (`case-pack/data/moran-2021/screening-seeds/summary.json` and `case-pack/data/stopping/statistical-stop.csv`), 95% of title-and-abstract eligible records had been found after 2,098 records. Three rules stop as follows:
+
+| Rule | Stops at | Title-and-abstract recall | Included records unseen (of 137) |
+|---|---|---|---|
+| 50-record streak | 1,892 | 0.92 | 6 |
+| 100-record streak | 2,641 | 0.99 | 0 |
+| Statistical criterion | 2,870 | 0.99 | 0 |
+
+For each rule, say what the team could have known at the moment of stopping, and what it could truthfully have written in its methods section.
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+At the moment of stopping, the team knows only how many records it has screened and how many it has found eligible. It does not know the 2,098, which needs every label.
+
+**50-record streak.** The team would have seen 50 irrelevant records in a row and nothing more. It could truthfully write: "Screening stopped after 50 consecutive records were judged irrelevant; recall was not estimated." It could not claim that few eligible records remained, and in this run six included studies did.
+
+**100-record streak.** This stop happened to find every included study. Nothing at the time showed that. In three other runs with the same model the rule left one included study unseen, and on CD010558 it left four of ten (@tbl-stop-compare). The truthful statement is the same as for the 50-record streak, with a different number.
+
+**Statistical criterion.** The team could write: "Using Callaghan and Müller-Hansen's criterion (buscarpy 0.0.2), we rejected the hypothesis that recall of title-and-abstract eligible records was below 95% at the 5% significance level, after screening 2,870 of 4,882 records (59%)." It cost 229 records more than the 100-record streak and 772 more than the point at which the target was in fact reached. It still saved 2,012 records, and it is the only one of the three stops that supports a statement about recall.
+:::
+
+### Exercise 9.3: Why did the criterion stop so late?
+
+In the Padua BM25 ranking of CD010558 (`case-pack/data/clef-2019/CD010558/padua_bm25_baseline.csv`), the 37th and last title-and-abstract eligible record is at rank 2,360 of 2,815.
+
+a. Why must the statistical criterion rule out that two eligible records remain, rather than one?
+b. If two of the remaining records were eligible, how many more records must be screened, all irrelevant, before the probability of having seen neither falls below 0.05?
+c. Compare your answer with the stop in @tbl-stop-compare, and say what this implies for reviews with few eligible studies.
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+a. With one eligible record remaining, recall would be 37 out of 38, or 97.4%, which meets a 95% target. With two remaining it would be 37 out of 39, or 94.9%, which does not. So the null hypothesis is that at least two eligible records remain.
+
+b. After rank 2,360, 455 records remain. The chance that a screen of *n* of them misses both of two eligible records is (455 − *n*)(454 − *n*) / (455 × 454). This first falls below 0.05 at *n* = 353: 102 × 101 / 206,570 = 0.0499. The stop is at record 2,360 + 353 = 2,713.
+
+c. The case pack reports 2,715 because it checks every five records. The criterion screened 96% of the pool. With 37 eligible records, the test must distinguish between zero, one and two remaining among hundreds of records, which takes most of them. Reviews with few eligible studies, which are common in health, will rarely save much by stopping early on any rule that can support a recall claim, while the rules that do stop early, such as streaks, are least reliable when eligible records are rare.
+:::
+
+### Exercise 9.4: "One hundred was safe"
+
+A colleague has read the Moran results and proposes that the library's guidance for an upcoming health review using ASReview should say: "Stop screening after 100 consecutive irrelevant records. This was safe in every simulation." The review's scoping searches suggest that about 1% of records will be eligible. Write a reply.
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+A good reply makes four points.
+
+1. **The evidence is from one review with a different prevalence.** In the Moran pool, 12% of records passed title and abstract screening. With 1% eligible, long runs of irrelevant records occur early. On CD010558, at about 1.3%, the same rule stopped one BM25 ranking at record 292 with 4 of 10 included records unseen (@tbl-stop-compare).
+2. **No single threshold can be known in advance.** The right streak length depends on the ranking and the prevalence, which the team does not know before screening [@callaghan2024]. In larger comparisons, streak rules missed a 95% target in 39% of runs [@callaghan2020] and had a mean recall of 34% [@repke2026].
+3. **"Safe in every simulation" was twenty runs on one topic.** Ten starting pairs per model show variation but do not bound it (@sec-validation-variability).
+4. **An alternative.** Either screen every record and use ASReview for order, or pre-specify a statistical criterion with a recall target and confidence level and report it. If the team must stop for time, it should say so and report the criterion's p-value at the stopping point, without claiming that recall was achieved.
+:::
+
+### Exercise 9.5: Writing the stopping section
+
+A team plans a systematic review of a social-care intervention and wants to use prioritised screening with early stopping. Draft the stopping paragraph of its protocol, and the sentence its methods section will contain if screening stops early.
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+**Protocol.** "Titles and abstracts will be screened in ASReview LAB (version to be recorded), with records prioritised by the tool's default model, starting from a random sample of 1% of records screened independently by two reviewers. Screening will stop early only when Callaghan and Müller-Hansen's (2020) statistical criterion, implemented in buscarpy, rejects the hypothesis that recall of eligible records is below 95% at the 5% significance level. The target and confidence level are set here and will not be changed. If the criterion is not met before the screening budget is exhausted, all remaining records will be screened. Records left unscreened will be listed in the review's data. The search will be supplemented by backward and forward citation searching from the included studies; studies found only by citation searching will be reported, as an indication of what the database searches and screening missed."
+
+**Methods.** "Screening stopped after 3,120 of 5,400 records (58%), when the stopping criterion rejected the hypothesis that recall was below 95% (p = 0.049). This statement concerns records retrieved by our database searches; it does not estimate recall of studies the searches did not retrieve."
+
+The protocol fixes the claim before the data are seen, names the implementation, says what happens if the criterion is never met and adds a route whose results reveal some of what was missed. The methods sentence states the claim and its scope. The numbers are illustrative.
+:::

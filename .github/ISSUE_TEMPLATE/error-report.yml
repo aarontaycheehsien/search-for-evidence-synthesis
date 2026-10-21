@@ -1,0 +1,38 @@
+name: Error report
+description: Report something wrong in the book or the case pack, such as a fact, a number, a citation or an out-of-date product claim.
+title: "[Error] "
+labels: ["error"]
+body:
+  - type: input
+    id: location
+    attributes:
+      label: Where is it?
+      description: The page address, or the chapter and section heading, or the case-pack file.
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of error is it?
+      options:
+        - Fact or explanation
+        - Number or calculation
+        - Citation or reference
+        - Product behaviour or documentation (possibly out of date)
+        - Exercise or worked answer
+        - Spelling, grammar or formatting
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is wrong?
+      description: Quote the text if you can.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: What should it say, and how do you know?
+      description: A source, a database record, current product documentation with its date, or your own check.

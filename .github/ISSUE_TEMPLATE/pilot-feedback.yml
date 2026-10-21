@@ -1,0 +1,63 @@
+name: Pilot feedback
+description: Feedback on one chapter, for participants in the pilot of Chapters 1, 3 and 10.
+title: "[Pilot] "
+labels: ["pilot"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking part. Please fill in one form per chapter. Issues are public; if you would rather not post publicly, email your answers to the author instead. Please do not include personal information about anyone else.
+  - type: dropdown
+    id: chapter
+    attributes:
+      label: Which chapter is this about?
+      options:
+        - "Chapter 1: Where eligible studies go missing"
+        - "Chapter 3: Subject indexing, search filters and inherited classifiers"
+        - "Chapter 10: Validating a search, route or tool"
+        - "Another chapter"
+    validations:
+      required: true
+  - type: input
+    id: time
+    attributes:
+      label: Roughly how long did you spend reading, and how long on the exercises?
+      placeholder: "For example: 50 minutes reading, 40 minutes on exercises"
+  - type: textarea
+    id: exercises
+    attributes:
+      label: Core exercises
+      description: For each core exercise, did your answer match the worked answer, partly match, or not match? What did you miss or do differently? If you think a worked answer is wrong, say so.
+    validations:
+      required: true
+  - type: textarea
+    id: unclear
+    attributes:
+      label: Which sections were unclear, and why?
+      description: Quote a phrase or give the section heading.
+  - type: textarea
+    id: cut
+    attributes:
+      label: Which sections were longer than they needed to be, or could be cut?
+  - type: textarea
+    id: missing
+    attributes:
+      label: What is missing that you expected?
+  - type: dropdown
+    id: depth
+    attributes:
+      label: How much detail about how search systems work did the chapter give?
+      options:
+        - Far too little
+        - A little too little
+        - About right
+        - A little too much
+        - Far too much
+  - type: textarea
+    id: practice
+    attributes:
+      label: What, if anything, will you do differently in your work after reading it?
+  - type: textarea
+    id: other
+    attributes:
+      label: Anything else

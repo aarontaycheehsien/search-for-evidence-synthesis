@@ -13,12 +13,14 @@ sys.path.insert(0, str(HERE.parent / "scripts"))
 
 from analyser_checks import hyphen_kept, min_gap  # noqa: E402
 from build_moran_pool import build  # noqa: E402
+from capture_recapture import estimate  # noqa: E402
 from clef import read_qrels, read_topic  # noqa: E402
 from clef_label_scope import scope  # noqa: E402
 from common import normalise_doi  # noqa: E402
 from fetch_pubmed import parse_efetch  # noqa: E402
 from indexing_checks import Adj, Record, Terms, cd010558_row, words  # noqa: E402
 from ranking_checks import bm25_scores, expand, ranks, recall_at  # noqa: E402
+from stopping_checks import first_stop, read_log  # noqa: E402
 
 FIXTURES = HERE / "fixtures"
 
@@ -227,3 +229,39 @@ class MoranSourcesTest(unittest.TestCase):
         table = aggregate_markdown(aggregate(runs))
         self.assertIn("| Measure | m (2 runs) |", table)
         self.assertIn("Records screened to find every full-text inclusion | 1 (1 to 1) |", table)
+
+
+class StoppingChecksTest(unittest.TestCase):
+    def test_read_log_pads_missing_ranks(self):
+        path = FIXTURES / "stopping_log_synthetic.csv"
+        path.write_text("rank,id,label_title_abstract,label_full_text\n1,a,1,1\n3,c,1,\n")
+        try:
+            ta, ft = read_log(path, 5)
+        finally:
+            path.unlink()
+        self.assertEqual(ta, [1, 0, 1, 0, 0])
+        self.assertEqual(ft, [1, 0, 0, 0, 0])
+
+    def test_first_stop_checks_every_five_once_something_is_relevant(self):
+        calls = []
+
+        def fake_h0(labels, n_total, recall_target):
+            calls.append(len(labels))
+            return 0.01 if len(labels) >= 12 else 0.5
+
+        self.assertEqual(first_stop([0] * 6 + [1] + [0] * 13, 20, fake_h0), 15)
+        self.assertEqual(calls, [10, 15])
+
+    def test_first_stop_never(self):
+        self.assertIsNone(first_stop([1] * 10, 10, lambda *args, **kwargs: 0.5))
+
+
+class CaptureRecaptureTest(unittest.TestCase):
+    def test_reproduces_spoor_1996(self):
+        # Spoor et al. (1996): 115 found by both, 35 by hand search only,
+        # 8 by Medline only; reported total 160 (95% CI 158 to 164).
+        result = estimate(115, 35, 8)
+        self.assertEqual(result["found"], 158)
+        self.assertEqual(round(result["chapman"]), 160)
+        self.assertEqual(result["chapman_low"], 158)
+        self.assertEqual(round(result["chapman_high"]), 164)
