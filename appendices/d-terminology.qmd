@@ -1,0 +1,9 @@
+# Terminology map {#sec-terminology}
+
+::: {.callout-note}
+## Not yet drafted
+:::
+
+## Planned contents
+
+- Equivalent terms across information retrieval, evidence-synthesis methods and database documentation, such as sensitivity and recall, or record, report and study.

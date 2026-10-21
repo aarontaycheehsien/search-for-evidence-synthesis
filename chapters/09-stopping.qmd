@@ -1,0 +1,16 @@
+# Stopping in searching and screening {#sec-stopping}
+
+::: {.callout-note}
+## Not yet drafted
+
+This chapter is an outline. See the [plan](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/plan.md) and [chapter map](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/chapter-map.md) for its sources and status.
+:::
+
+**After this chapter you should be able to** separate ranking efficiency from a defensible decision to stop.
+
+## Planned contents
+
+- Stopping a search [@booth2010; @kastner2009] and stopping screening as one problem with an unknown denominator.
+- Prioritised screening, active learning and what a better order does and does not change.
+- Heuristic and statistical stopping criteria [@callaghan2020].
+- Published screening logs for the Moran and CD010558 cases, so the exercises need no code.

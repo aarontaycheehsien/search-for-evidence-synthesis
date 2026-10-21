@@ -1,0 +1,10 @@
+# Measures reference {#sec-measures}
+
+::: {.callout-note}
+## Not yet drafted
+:::
+
+## Planned contents
+
+- Precision, recall, relative recall, number needed to read, recall at fixed effort, recall at the stopping point and work saved over sampling, each with a worked example from the case pack.
+- Mean average precision and nDCG, briefly, and why they suit ranking research better than review decisions.

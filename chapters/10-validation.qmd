@@ -1,0 +1,263 @@
+# Validating a search, route or tool {#sec-validation}
+
+Claims about searches and tools arrive constantly. A filter "retains 99% of trials". A semantic search "finds studies Boolean searching misses". A screening tool "saves 70% of the workload". A stopping rule "is safe". Each claim can be true of what was measured and still say little about the decision a review team faces.
+
+The joint position statement of Cochrane, the Campbell Collaboration, JBI and the Collaboration for Environmental Evidence puts the burden plainly. Review teams remain responsible for their synthesis, and they "can use AI and automation as long as they can demonstrate that it will not compromise the methodological rigour or integrity of their synthesis" [@flemyng2025]. The statement supports the RAISE recommendations [@raise2025] and asks tool developers to follow them, so that there is "clear, transparent and publicly available information to inform decisions about whether an AI system or tool could and should be used". This chapter is about producing and reading that demonstration. Nothing in it is specific to AI: the same reasoning applies to a search filter, an extra database or a round of citation searching.
+
+The chapter's argument is that **the claim decides the comparison**. Most weak evaluations are not wrong about what they measured; they measured something other than what the claim needs.
+
+**After this chapter you should be able to** choose the comparison a claim needs, build or judge the reference set it rests on, and state what the evaluation cannot show.
+
+## Start from the claim {#sec-validation-claims}
+
+@tbl-claims lists the claims that come up most often and the comparison each one needs.
+
+| Claim | Main comparison | Essential qualification |
+|---|---|---|
+| A route adds useful evidence | Eligible records the route adds to the existing search, with the extra screening and searching effort | Useful additions do not establish complete recall or justify replacing the baseline |
+| A route can replace an existing one | Recovery and misses against an explicitly bounded reference set, across several topics | Recovering familiar seed studies on one topic does not support broad substitution |
+| A component performs better | Methods compared on the same corpus, fields and labels | Isolates a mechanism; says little about commercial products with different collections |
+| One product is better than another | Services compared as used, documenting coverage, access and limits | Coverage differences are part of the result; do not attribute them all to ranking |
+| Screening prioritisation helps | Eligible records found at fixed effort, on a fixed pool | A better order does not enlarge the pool |
+| Early stopping is safe | Eligible records missed at the stopping point in labelled simulations, with their variability | Ranking efficiency does not show that a live review reached its target |
+| An update is adequate | New eligible reports, indexing delays, revised strategies and changed product behaviour | Rerunning a saved query does not establish stable coverage |
+
+: Claims about searches and tools, and the comparisons they need. {#tbl-claims}
+
+Two pairs in the table are confused most often.
+
+**Supplementing and replacing.** A supplementary route earns its place by adding eligible studies the main search missed, at an acceptable cost. It does not have to find everything; it has to find something else. A replacement has to find what the current route finds, and its misses are the result that matters. The evidence needed differs accordingly. Three eligible additions in one review are reasonable support for keeping a supplementary route; they are no support at all for dropping the main search.
+
+The Moran case shows the arithmetic in a real pair of searches. Of the 137 full-text inclusions in the case pack's pool, 89 were found by both Web of Science and Scopus, 22 by Web of Science alone and 26 by Scopus alone. Either database used alone would have missed 16% to 19% of the eligible studies the pair found. Across 58 reviews at one institution, @bramer2017 found 16% of included references in only one database, and the combination of Embase, MEDLINE, Web of Science Core Collection and Google Scholar reached 98.3% overall recall, and complete recall in 72% of the reviews. Both are statements about these reviews and these searches. They show what a supplementary source added in practice; they do not show what a combination would add to a review on another topic.
+
+**Prioritisation and stopping.** A screening tool that orders records well lets reviewers see eligible records earlier. That is a claim about order, and it can be tested on a fixed pool by counting eligible records found at each level of effort. Stopping early is a different claim: that the records left unscreened contain few or no eligible ones. Good ordering makes a safe stop possible but does not make any particular stop safe. @sec-validation-variability shows how far apart the two can be.
+
+## Reference sets {#sec-validation-reference}
+
+Every recall figure is a count out of something. A **reference set** is that something: a set of eligible records, reports or studies known independently of the method being tested. Its quality bounds the quality of every recall figure computed against it.
+
+Reference sets come from four main sources, each with a different bias.
+
+- **A review's own included studies.** The most relevant reference set for that review, and the one this book builds for its running cases. It was found by the review's searches, so it favours what those searches could find.
+- **Included studies pooled across many reviews.** @sampson2006 validated search filters for randomised trials against the included studies of 105 Cochrane reviews instead of against a hand-searched gold standard. They called the result *relative recall*, because the reference set is itself the product of searching. 72% of the reviews' included studies were indexed in MEDLINE, and the filters' relative recall ranged from 0.91 to 0.98.
+- **Hand-searching.** Screening every issue of selected journals gives a reference set that does not depend on any database's indexing, but only for the journals searched.
+- **Benchmark labels.** Shared collections such as CLEF TAR [@kanoulas2019] and SYNERGY [@debruin2023] attach a review's screening decisions to the records its search returned. They are convenient and comparable across studies, and they inherit everything about how they were built (@sec-validation-benchmarks).
+
+### What a reference set cannot see
+
+Information retrieval met this problem decades ago in the *pooling* used to build test collections. Relevance is judged only for records that at least one of the systems being compared retrieved; everything else is assumed irrelevant. @zobel1998 found that pooling in the TREC experiments left the systems' relative performance reliable, "but that recall is overestimated: it is likely that many relevant documents have not been found". @buckley2007 showed that when the pool is small relative to the collection, the relevant documents it finds are biased towards those containing the topic's title words, so a system that finds relevant documents by other means is unfairly ranked.
+
+Both results transfer to evidence synthesis directly.
+
+- **Recall against a reference set built by searching is an upper estimate.** Eligible studies that every contributing search missed are invisible, so the measured recall of any of those searches is higher than its true recall.
+- **A reference set built by Boolean searching favours what Boolean searching finds.** Suppose a citation route or a semantic search finds an eligible study that no Boolean strategy admitted. If the reference set was built from the Boolean results, that study is not in it. The new route gets no credit for it, and if no one screens it, it may even count against the route as a false positive. The method is penalised exactly where it adds value.
+
+The remedy is not to abandon reference sets but to state how each was found, and to look at every record a new method retrieves that the reference set does not contain. Some will be eligible.
+
+### The running cases, measured three ways
+
+The running cases show how much the choice of denominator matters (@tbl-three-denominators).
+
+| | CD010558 | CD011787 |
+|---|---|---|
+| Included studies in the review | 6 | 38 |
+| Included studies with a PubMed record | 5 | 34 |
+| Included studies with a record in the re-run pool | 4 | 31 |
+| Included-study records labelled eligible in CLEF's screening labels | 10 records (4 studies) | 28 records (28 studies) |
+| Re-run strategy's recall against its own screening labels | 100% | 100% |
+| Re-run strategy's recall against the review's included studies | 67% | 82% |
+
+: Two Cochrane reviews measured against their screening labels and against their reference sets. From the case pack's reference sets, built from each review's included-studies list and checked against PubMed and OpenAlex on 21 October 2026. {#tbl-three-denominators}
+
+For CD010558 (@sec-missing-case), the gap comes from one study absent from PubMed and one excluded by the date limit. For CD011787, a qualitative evidence synthesis on communication about childhood vaccination [@ames2017], it has three parts: four studies have no PubMed record; three were indexed after the strategy's entry-date limit; and three are in the pool but labelled ineligible because CLEF mapped their references to the wrong PubMed records (@sec-validation-benchmarks). A screening method scored on CLEF's labels for this topic is told that 28 records are eligible. The true figure within the pool is 31, and the review has 38.
+
+## Development and validation sets {#sec-validation-dev}
+
+A method cannot be validated on the items used to build it. This is obvious for a machine-learning classifier and easy to forget for a search strategy.
+
+The *objective approach* to strategy development makes the separation explicit [@hausner2012]. A test set of relevant references is assembled, here from earlier systematic reviews, and split. The development set supplies terms through text analysis; the strategy is then run against the validation set, which played no part in building it. In Hausner and colleagues' worked example, 38 references from three reviews were split into 25 for development and 13 for validation, and the strategy found all 13. In a later comparison across Cochrane reviews, strategies built this way reached a mean sensitivity of 96% across 13 searches and were non-inferior to the conceptual approach used in the reviews themselves [@hausner2015].
+
+The same separation applies wherever a method starts from known studies:
+
+- **Citation searching** begins from seed studies. Finding the seeds proves nothing; the measure is eligible studies found that were not seeds.
+- **Similar-articles features and AI research assistants** given example studies should be scored on the eligible studies they find beyond the examples.
+- **Language models** asked to draft strategies or screen records for published reviews may have seen those reviews, their search strategies or the benchmark labels during training. The case pack records this contamination risk for every public topic it uses. A model's performance on a published review is not evidence of its performance on a new question.
+
+## Benchmarks and their labels {#sec-validation-benchmarks}
+
+A benchmark's labels are a reference set someone else built. Check them before relying on them. The case pack's two benchmarks both failed a check, in different ways.
+
+**CLEF TAR has two label sets with different scopes.** The 2019 collection gives each topic a screening-task label set, which judges every record in the re-run pool and nothing outside it, and a search-task label set, which lists the review's included and excluded references mapped to PubMed identifiers. The overview says that cited studies outside the re-run's results were left out of both [@kanoulas2019]. The distributed search-task labels do contain them: in 24 of the 31 test topics, at least one included-reference label is absent from the pool, 458 of 1,340 in all, nearly half of them from a single prognosis topic. The overview's per-topic table for CD010558 reports 75 and 16 relevant records, which are the search-task counts; the screening labels have 37 and 10. An evaluation that quotes the table's counts while scoring on the screening labels mixes two denominators. The case pack's `label-scope.csv` gives the counts for every topic.
+
+**Mapping a reference to a record can go wrong.** For CD011787, CLEF's search-task labels map three included studies to the wrong PubMed records, in each case another article in the same journal and year as the review's citation, which has an error in its volume, page or author name. One of them, an article on alcohol and mortality given in place of a vaccination study, is exactly the record PubMed's own citation matcher returned when the case pack was built; checking every match against a second source caught it. The correct records are in the pool, labelled ineligible, so a method that ranks them highly is marked down for it.
+
+**A whole label set can describe the wrong records.** SYNERGY's version 1 labels for the Moran review were built from a file in the authors' repository that turned out to be the export of their update search, 120 records, rather than their inclusions. Of the 107 records version 1 labels as included that have a DOI, 2 are full-text inclusions in the corrected labels. The maintainers added a corrected variant in January 2025 and kept version 1 unchanged so that published results remain comparable. Anyone citing a score on version 1's Moran topic is citing a score against the wrong labels. The details are in the case pack's `case-pack/data/moran-2021/README.md`.
+
+None of these errors is exotic, and none was visible from the benchmarks' documentation. Three checks would have caught all of them:
+
+1. Compare the label counts with the review's own report: the number of included studies, and the number screened at each stage.
+2. Look up a sample of labelled-eligible records and confirm that each is a report of an included study.
+3. Record which label set, version and commit an evaluation used.
+
+## Choosing measures {#sec-validation-measures}
+
+@sec-measures defines the measures formally. Four choices matter more than the formulas.
+
+**The unit.** Recall can be counted over records, reports or studies, and the figures differ (@sec-missing-units). For a review team, studies are usually the unit that matters; for a method compared within one database, records in that database are fairer.
+
+**The stage.** Recall of a search, recall of screening within a pool and recovery from end to end are different quantities (@sec-missing-measures). State which one a figure is.
+
+**The target.** For a ranked screening order, *work saved over sampling* (WSS) at 95% recall is common. @cohen2006 introduced it to value a citation classifier. For a ranked order it is the proportion of records left unscreened at the point where 95% of the eligible records have been found, minus 5%: the saving over screening a random sample to the same recall. It depends on which records count as eligible. The CLEF runs on CD010558 show the effect (@tbl-clef-runs). The active-learning run finds all ten included records after 178 records, far sooner than either BM25 ranking, but needs 1,792 records to find 95% of the 37 records that passed title and abstract screening, more than the Sheffield ranking. Report the target that matches the decision: for a review team, usually the included studies.
+
+| | Sheffield BM25 | Padua BM25 | Padua active learning |
+|---|---|---|---|
+| Records screened to find all 10 included records | 1,220 | 1,686 | 178 |
+| Records screened to find 95% of the 37 title-and-abstract eligible records | 1,589 | 2,320 | 1,792 |
+| WSS at 95% (title and abstract) | 0.39 | 0.13 | 0.31 |
+
+: Three CLEF 2019 participant runs on CD010558's pool of 2,815 records. From the case pack's screening logs (`case-pack/data/clef-2019/CD010558/`). {#tbl-clef-runs}
+
+**The size of the denominator.** With ten included records, each one is ten percentage points of recall. A difference of one record between two methods is within what a different starting point or a single labelling error could produce.
+
+The same table carries a warning about names. Both teams submitted a run they called a "BM25 baseline", and their WSS figures are 0.39 and 0.13. The Sheffield query was built from the review's title and terms extracted from its Boolean strategy; the Padua run is described as a simple BM25 baseline. "BM25" names a scoring formula, not a query, a field selection or a configuration. A comparison of components has to report all of them.
+
+## Variability {#sec-validation-variability}
+
+A single run of a method with any random element, a starting sample, a model seed or sampling in a language model, is one draw from a distribution. The case pack's Moran simulations show how much a single draw can mislead.
+
+ASReview was run on the Moran pool of 4,882 records with three strategies, each from ten different starting pairs of one eligible and one ineligible record (@tbl-moran-seeds).
+
+| Across ten starting pairs | TF-IDF and SVM | TF-IDF and naive Bayes | Random order |
+|---|---|---|---|
+| WSS at 95% (title and abstract) | 0.52 (0.52 to 0.52) | 0.46 (0.45 to 0.47) | 0.00 (−0.02 to 0.01) |
+| Included records unseen at a 50-record streak | 1.5 (0 to 6) | 6.5 (1 to 12) | 74.5 (0 to 123) |
+| Included records unseen at a 100-record streak | 0 (0 to 1) | 1 (0 to 1) | 0 (0 to 0) |
+| Proportion of the pool screened at a 100-record streak | 54% | 56% | 100% |
+
+: Median (range) across ten ASReview simulations per strategy on the Moran pool of 4,882 records with 137 included. A "streak" rule stops screening after that many consecutive records judged irrelevant at title and abstract. From `case-pack/data/moran-2021/screening-seeds/`. {#tbl-moran-seeds}
+
+Four lessons follow.
+
+- **Ranking efficiency is stable while stopping is not.** WSS hardly moves with the starting records, yet the 50-record rule leaves anywhere from 0 to 6 included studies unseen with the same model. A separate single run, from another starting pair, left 16.
+- **One run can reverse the conclusion.** That single run had the better-ranking model missing more studies at the 50-record stop than naive Bayes. Across ten starts the reverse was typical: medians of 1.5 against 6.5.
+- **Random order makes a streak rule arbitrary.** With no ranking, the 50-record rule stopped anywhere from record 483 to never.
+- **Thresholds do not transfer.** A 100-record streak left at most one included study unseen here, where 12% of records pass title and abstract screening. On CD010558, where about 1% do, the same rule on the Padua BM25 ranking left 4 of the 10 included records unseen.
+
+The general finding is consistent with this. @callaghan2020 showed that previously proposed stopping heuristics gave "inconsistent recall and work reductions across datasets". Their statistical criterion, which stops only when the hypothesis that a recall target has been missed can be rejected at a stated confidence, reached reliable recall with work reductions averaging 17%. A defensible stop costs much of the saving a ranking appears to promise. @sec-stopping develops this.
+
+For validation, the consequence is simple. Run anything with a random element more than once, report the range as well as the average, and test a general claim on more than one topic.
+
+## A validation protocol {#sec-validation-protocol}
+
+The following steps apply to any of the claims in @tbl-claims, whether you are running the evaluation or reading someone else's.
+
+1. **State the claim and the decision.** Which row of @tbl-claims is it? What will the review team do differently if it holds?
+2. **Fix the comparison.** Name the baseline, the corpus, the fields searched, and the product version and date. For a product comparison, record coverage and limits as part of the result.
+3. **Choose or build the reference set, and say how it was found.** Keep development and validation items apart. Note any risk that the method has seen the items before.
+4. **Choose measures at the right unit, stage and target,** with the effort each method costs: records screened, searches run, time.
+5. **Repeat.** Run more than once where anything is random, and on several topics where the claim is general.
+6. **Inspect every miss.** Locate each one at a boundary (@tbl-boundaries). A miss caused by coverage calls for a different response from one caused by query logic or by stopping.
+7. **Inspect every unexpected find.** A record the method retrieves that the reference set lacks may be eligible. Screen it before counting it against the method.
+8. **State what the evaluation cannot show.** Every design in @tbl-claims has an essential qualification; write it down.
+
+The report of an evaluation should let a reader check each step. If a vendor's or author's evaluation does not say how its reference set was built, which labels it used, or how much its results varied, that is the first question to ask, and the position statement's call for "clear, transparent and publicly available information" is the basis for asking it [@flemyng2025].
+
+## Exercises {#sec-validation-exercises}
+
+Inputs are in this chapter and the case pack.
+
+### Exercise 10.1: Match the claim to the comparison
+
+For each statement, name the claim type from @tbl-claims, the comparison it needs and one thing the stated evidence cannot show.
+
+a. "Adding citation searching to our MEDLINE and Embase searches found three more eligible studies in our last review."
+b. "Our semantic search retrieves 95% of the included studies from 50 Cochrane reviews, so Boolean searching is no longer necessary."
+c. "Model X outperforms model Y on the CLEF 2019 collection."
+d. "With our tool you can stop after screening 30% of the records."
+e. "Re-running last year's saved strategy found 40 new records, so the update search is complete."
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+a. **Supplement.** The comparison is eligible additions beyond the baseline, with the extra effort. It is the right kind of evidence for keeping citation searching, but one review cannot show how often it adds studies, and it says nothing about the recall of the combined search.
+
+b. **Replacement.** It needs recovery and misses against bounded reference sets across topics. The included studies of Cochrane reviews were found mostly by Boolean searching, so 95% recall means the semantic search missed 1 in 20 of the studies Boolean searching found; replacing Boolean searching would lose them. The reference sets cannot show what both methods miss, and published reviews may be in the tool's training data.
+
+c. **Component.** It needs the same corpus, fields and labels, and the claim should say which CLEF label set was used, since the screening and search-task labels have different scopes. It says little about either model inside a commercial product with a different collection.
+
+d. **Early stopping.** It needs the eligible records missed at the stopping point, across many reviews and runs. A fixed proportion cannot be safe in general: the proportion of eligible records and the quality of the ranking vary between reviews (@tbl-moran-seeds).
+
+e. **Update.** Rerunning a saved strategy checks one thing: what that strategy now admits. It cannot show that records were not lost to indexing delays, as the entry-date limits in CD010558 and CD011787 show, or to changes in indexing or in the product since the first search.
+:::
+
+### Exercise 10.2: Account for a benchmark's view of CD011787
+
+CLEF's screening labels mark 28 records in the CD011787 pool as included. The review included 38 studies, each with one listed report. Using `case-pack/reference-sets/CD011787.csv`, account for the difference, and compute the re-run strategy's recall at study level.
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+| Cause | Studies | Boundary |
+|---|---|---|
+| No PubMed record | 4 | Coverage |
+| Indexed after the strategy's entry-date limit | 3 | Query limits |
+| In the pool but mapped by CLEF to a different PubMed record, so labelled ineligible | 3 | Benchmark labelling, not retrieval |
+| Labelled eligible | 28 | |
+| **Total** | **38** | |
+
+The re-run strategy admitted 31 of the 38 studies' reports: recall of 82% at study level. Against the review's 34 PubMed-indexed studies it is 31 of 34, or 91%. Against its screening labels it is 100%. The three mislabelled studies matter for evaluating screening methods, not for the strategy: they are in the pool, and a method that ranks them highly is penalised for being right.
+:::
+
+### Exercise 10.3: What does the ten-run table support?
+
+Using @tbl-moran-seeds and `case-pack/data/moran-2021/screening-seeds/aggregate.md`, say whether each statement is supported, for this review.
+
+a. The SVM model ranks records better than naive Bayes.
+b. The 50-record streak rule is safe with the SVM model.
+c. A 200-record streak never misses an included study.
+d. Naive Bayes tends to leave more included studies unseen at the 50-record stop than SVM.
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+a. **Supported.** WSS at 95% is 0.52 in all ten SVM runs and 0.45 to 0.47 for naive Bayes; the records needed to reach 95% recall are 2,081 to 2,102 against 2,352 to 2,419. The ranges do not overlap.
+
+b. **Not supported.** It left up to 6 included studies unseen across ten runs, and 16 in a further run. "Safe" needs a stated tolerance, and these results exceed any tolerance a review would accept.
+
+c. **Supported only narrowly.** No run missed an included study at a 200-record streak, but only after screening a median of 70% (SVM) and 76% (naive Bayes) of the pool, and only for this review, where 12% of records pass title and abstract screening. Ten runs show variation but do not bound it, and the threshold will not transfer to a review with far fewer eligible records.
+
+d. **Supported as a tendency.** The medians are 6.5 and 1.5, but the ranges overlap (1 to 12 and 0 to 6), so in a given run either could miss more.
+:::
+
+### Exercise 10.4: Two baselines with the same name
+
+Using @tbl-clef-runs and `case-pack/data/clef-2019/CD010558/README.md`, explain why the two "BM25 baseline" runs differ, and say what you would report to a review team considering prioritised screening for a review like CD010558.
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+They are different queries scored by the same formula. Sheffield built its query from the review title and terms extracted from the Boolean strategy; Padua's run is described as a simple baseline. What a query contains matters as much as how it is scored.
+
+For the review team, report the records screened before all included records were found (178 to 1,686 across the three runs), and how a stopping rule behaved: a 50-record streak stopped the Sheffield ranking at record 146 with 2 of 10 included records found, and stopped the active-learning run at record 298 with all 10 found. Then state the limits. These are single runs on one topic, with settings chosen for a shared task; the labels judge only the re-run pool, which holds four of the review's six studies; and with ten included records, one record is ten points of recall.
+:::
+
+### Exercise 10.5: Design an evaluation
+
+A colleague proposes adding an AI research assistant as a supplementary search route for your library's rapid reviews. Write an evaluation protocol following @sec-validation-protocol.
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+A good answer covers each step; the details below are one reasonable design, not the only one.
+
+1. **Claim and decision.** A supplement: the route adds eligible studies to the rapid review's usual searches at acceptable cost. The decision is whether to run it routinely.
+2. **Comparison.** Baseline: the library's usual rapid-review searches. Record the tool's name, version and date of use, the prompt or query given, and any documented coverage and result limits.
+3. **Reference set.** For several completed rapid reviews, take the included studies, recording how they were found. Do not give the tool those studies as examples, or count them separately if you do. Prefer reviews completed after the tool's documented training cut-off, where one is published, and say so where it is not.
+4. **Measures.** For each review: eligible studies found by the tool that the baseline missed (the main outcome); included studies the tool did not find (to describe its coverage, not to judge it as a replacement); records the tool returned and the time spent screening them.
+5. **Repeat.** Run each query at least twice on different days, since results may vary between runs, and report the range.
+6. **Misses.** For a sample of included studies the tool did not return, check whether its index holds them, to separate coverage from ranking.
+7. **Unexpected finds.** Screen every returned record not in the reference set; eligible ones are the route's contribution.
+8. **Limits.** A handful of reviews will not show how often the tool adds studies in general; results describe this version on these dates; and the evaluation cannot support dropping any part of the baseline.
+
+If the library adopts the route, report its use in each review, as the position statement asks for any AI or automation that makes or suggests judgements [@flemyng2025], and record it in the search record (@sec-recording).
+:::

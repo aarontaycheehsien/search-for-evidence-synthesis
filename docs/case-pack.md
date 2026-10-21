@@ -10,6 +10,7 @@ The case pack supplies the inputs and worked answers for every exercise in the b
 | Artefact | Location | Supports |
 |---|---|---|
 | Reference sets for CD010558 (6 studies, 20 references) and CD011787 (38 qualitative studies), mapped to identifiers and compared with the CLEF pools and labels | [`case-pack/reference-sets/`](../case-pack/reference-sets/README.md) | Chapters 1, 2, 3, 8, 10, 11 |
+| Counts of CLEF 2019's search-task and screening-task labels against each topic's pool | [`case-pack/data/clef-2019/label-scope.csv`](../case-pack/data/clef-2019/README.md) | Chapter 10 |
 | CD010558 screening logs from three CLEF 2019 participant runs | [`case-pack/data/clef-2019/CD010558/`](../case-pack/data/clef-2019/CD010558/README.md) | Chapter 9 |
 | Moran et al. (2021) labels (4,882 records), three detailed ASReview simulation logs and 30 more across ten starting pairs | [`case-pack/data/moran-2021/`](../case-pack/data/moran-2021/README.md) | Chapters 9, 10 |
 | Moran deduplication and database-contribution analysis | [`case-pack/data/moran-2021/`](../case-pack/data/moran-2021/README.md) | Chapters 8, 10, 11 |
@@ -30,9 +31,9 @@ Run the tests with `python -m unittest discover -s case-pack/tests`.
 
 ## What these datasets can and cannot show
 
-All the candidate sources build their labels from a review's own search results. A study that the review found only by another route, or that its search missed entirely, is usually absent.
+Most of the candidate sources build their labels from a review's own search results. A study that the review found only by another route, or that its search missed entirely, is usually absent.
 
-- **CLEF TAR** gives the PubMed records returned when the organisers re-ran each review's Ovid MEDLINE strategy with the review's date range, and drops cited studies outside that result (Kanoulas et al., 2019). It can test screening order and stopping, and whether an *alternative* query loses records the original admitted. It cannot show what the original strategy missed.
+- **CLEF TAR** gives the PubMed records returned when the organisers re-ran each review's Ovid MEDLINE strategy with the review's date range. Its screening-task (Task 2) labels judge only those records, so they can test screening order and stopping, and whether an *alternative* query loses records the original admitted, but cannot show what the original strategy missed. The overview says cited studies outside that result were dropped from both label sets (Kanoulas et al., 2019), but the search-task (Task 1) qrels at commit `dbc13d0` list them: in 24 of the 31 test topics, at least one included reference in those labels is absent from the pool, 458 of 1,340 content-level labels in all (nearly half from one prognosis topic). See [`case-pack/data/clef-2019/label-scope.csv`](../case-pack/data/clef-2019/label-scope.csv), built by `case-pack/scripts/clef_label_scope.py`. Those labels depend on CLEF's mapping of references to PMIDs, which is wrong for three included studies in CD011787.
 - **SYNERGY** labels each review's screened pool. The same limit applies.
 
 The CD010558 reference set shows the size of the gap in one case: the CLEF pool contains reports of 4 of the review's 6 included studies, and 10 of its 16 PubMed-indexed publications. One missing study has no PubMed record. The other, and three further reports, were excluded because Ovid's `ed` field holds the Date Completed (Wolters Kluwer, n.d.): a PubMed completion-date search shows all four were completed after the review's 16 May 2017 limit, so re-running that limit in 2019 dropped them, including two reports published in 2016.

@@ -16,6 +16,8 @@ Record the source commit in the commit message whenever adapted text is added.
 
 ### 1. Where eligible studies go missing
 
+**Drafted 2026-10-21** as new text built on the case pack; no source text was adapted. The source sections below remain available if a later revision needs them.
+
 | Source section | Anchor | Treatment |
 |---|---|---|
 | Ch 1 The retrieval problem: "What does 'relevant' actually mean?" | `#intro` | Adapt |
@@ -126,6 +128,8 @@ PubMed is the running case through this part. Every PubMed and NLM claim goes in
 **Claims to verify:** ASReview documentation; the stopping-method comparisons cited in App F.
 
 ### 10. Validating a search, route or tool
+
+**Drafted 2026-10-21** as new text built on the case pack; no source text was adapted. The source sections below remain available if a later revision needs them.
 
 | Source section | Anchor | Treatment |
 |---|---|---|

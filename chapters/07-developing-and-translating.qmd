@@ -1,0 +1,17 @@
+# Developing and translating the strategy {#sec-developing}
+
+::: {.callout-note}
+## Not yet drafted
+
+This chapter is an outline. See the [plan](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/plan.md) and [chapter map](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/chapter-map.md) for its sources and status.
+:::
+
+**After this chapter you should be able to** turn eligibility criteria into a strategy, use term mining and LLM drafting with checks, and translate a strategy without changing its intent.
+
+## Planned contents
+
+- Eligibility criteria versus search concepts, and why not every criterion becomes a block.
+- Term mining and the objective approach [@hausner2012; @hausner2015].
+- LLM-drafted Boolean strategies and their evaluation [@wang2023; @staudinger2024].
+- The Moran translation case: one worked translation with a quiet error.
+- The separate roles of PRESS [@mcgowan2016] and PRISMA-S [@rethlefsen2021].

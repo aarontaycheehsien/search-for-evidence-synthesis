@@ -1,0 +1,40 @@
+# Preface {.unnumbered}
+
+::: {.callout-warning}
+## Working draft
+
+This is an incomplete draft. Chapters marked "Not yet drafted" are outlines. Figures, counts and product claims may change before the first public edition. Please report errors through the repository's issue tracker.
+:::
+
+This book is for librarians and information specialists who already build structured Boolean searches and who support or conduct systematic, scoping, rapid or other evidence syntheses. It does not teach how to conduct a review or how to search a database for the first time. It explains how search systems decide which records a review team ever sees, so that you can:
+
+- explain how a retrieval decision changes the evidence available to a review;
+- diagnose where an eligible study was lost; and
+- evaluate a proposed search tool or workflow against the claim actually being made for it.
+
+## How the book is organised
+
+Part I defines the problem: the places between a study's existence and a reviewer's decision where it can drop out. Part II explains the mechanisms behind those places, from Boolean admission and subject indexing to ranking, learnt representations and multi-stage pipelines. Part III turns to practice: developing and translating strategies, supplementary routes, stopping, validation, and recording and updating a search.
+
+@sec-validation carries the book's central argument. Different claims about a search or tool need different comparisons, and most published evaluations answer a narrower question than the one a review team is asking.
+
+## Running cases
+
+Two real reviews run through the book.
+
+- **Health:** the Cochrane review *Psychological therapies for treatment-resistant depression in adults* [@ijaz2018], review CD010558, using the MEDLINE strategy and labels distributed by the CLEF 2019 Technology Assisted Review task [@kanoulas2019].
+- **Non-health contrast:** a behavioural-ecology review of nutritional condition and risk-taking [@moran2021], using the authors' Web of Science and Scopus searches and the corrected labels in the SYNERGY dataset [@debruin2023].
+
+A small synthetic collection, a fictional review of peer tutoring and reading comprehension, supports exercises in which every eligible study is known. It is always labelled as synthetic.
+
+The data, scripts and worked answers for every exercise are in the [case pack](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/tree/main/case-pack). Third-party titles and abstracts are not redistributed; the scripts fetch them from their sources.
+
+## Conventions
+
+- Every product claim carries the date it was checked and the documentation it rests on. Products change; the mechanisms the book explains should not depend on an undated claim.
+- A *record* is a database entry, a *report* is a publication or other document describing a study, and a *study* is the investigation a review includes. @sec-missing explains why the distinction matters.
+- The book uses UK spelling, except in quoted titles and product names.
+
+## Licence and relationship to other work
+
+The text is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Third-party datasets keep their own licences, stated where each is described. Some explanations are adapted from the author's [*How Search Decides What You See*](https://aarontaycheehsien.github.io/Information-retrieval-crashcourse/), also CC BY 4.0, and rewritten around evidence-synthesis examples. This book is independent of it and does not require it.

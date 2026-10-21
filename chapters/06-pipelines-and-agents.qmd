@@ -1,0 +1,16 @@
+# Multi-stage pipelines, AI research assistants and agentic search {#sec-pipelines}
+
+::: {.callout-note}
+## Not yet drafted
+
+This chapter is an outline. See the [plan](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/plan.md) and [chapter map](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/chapter-map.md) for its sources and status.
+:::
+
+**After this chapter you should be able to** locate which stage of a pipeline can add evidence, which only reorders it, and what an execution trace shows.
+
+## Planned contents
+
+- Reranking, hybrid retrieval and rank fusion as stages with different powers.
+- Retrieval-augmented generation and agentic search, evaluated as possible supplementary searches.
+- What an inspectable execution trace must show.
+- Documented, observed and unknown behaviour kept apart, with every product claim dated.

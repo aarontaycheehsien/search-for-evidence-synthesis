@@ -1,0 +1,16 @@
+# Learnt representations and what they were trained to find {#sec-representations}
+
+::: {.callout-note}
+## Not yet drafted
+
+This chapter is an outline. See the [plan](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/plan.md) and [chapter map](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/chapter-map.md) for its sources and status.
+:::
+
+**After this chapter you should be able to** assess whether a model's training signal and the text it indexes suit the review's task.
+
+## Planned contents
+
+- Embeddings and retrieval encoders, compressed to what a searcher needs.
+- The training signal decides what "related" means: citation links, searchers' clicks [@jin2023] or eligibility decisions.
+- A worked contrast between a topically related report and an eligible one.
+- Abstract versus full-text indexing, and what a "searches full text" claim does not settle.

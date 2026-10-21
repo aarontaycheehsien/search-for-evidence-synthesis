@@ -1,0 +1,16 @@
+# Citation, similarity and other supplementary routes {#sec-supplementary}
+
+::: {.callout-note}
+## Not yet drafted
+
+This chapter is an outline. See the [plan](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/plan.md) and [chapter map](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/chapter-map.md) for its sources and status.
+:::
+
+**After this chapter you should be able to** decide what a supplementary route can add, under what coverage, and how to record it.
+
+## Planned contents
+
+- Citation searching terminology and reporting [@hirt2024].
+- Citation-index coverage as a boundary; seed selection and iteration.
+- Similar-articles features and AI research assistants as supplementary routes.
+- Registers, theses and other sources treated as coverage questions, using CD011787's four studies absent from PubMed.

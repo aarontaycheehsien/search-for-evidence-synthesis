@@ -1,0 +1,16 @@
+# Ranking, relevance sorts and result limits {#sec-ranking}
+
+::: {.callout-note}
+## Not yet drafted
+
+This chapter is an outline. See the [plan](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/plan.md) and [chapter map](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/chapter-map.md) for its sources and status.
+:::
+
+**After this chapter you should be able to** distinguish a change in the order of results from a change in what can be exported or screened.
+
+## Planned contents
+
+- BM25 and ranked lexical retrieval.
+- A relevance sort changes order, not the Boolean result set; a display or export limit changes what can be screened.
+- PubMed's Best Match as a lexical ranking followed by a learnt reranker trained on search logs [@fiorini2018].
+- The suitability of search systems for systematic searching [@gusenbauer2020].
