@@ -84,7 +84,7 @@ Sources, licences and selection reasons are recorded in [`case-pack.md`](case-pa
 - **Scells et al. (2017)**: not adopted, because no licence is stated.
 - **Synthetic teaching collection:** small and fully labelled, for controlled experiments. Always labelled as synthetic.
 
-These labels cover only records that each review's own search returned, so they cannot show what the original search missed. Chapter 10's reference sets are therefore built separately from each review's published included studies.
+The screening labels cover only records that each review's own search returned, so they cannot show what the original search missed. CLEF's search-task labels do list some included references outside the pool, despite the overview's description, but they rest on a reference-to-PMID mapping that is sometimes wrong and they do not group reports into studies. Chapter 10's reference sets are therefore built separately from each review's published included studies.
 
 ## Assessment
 

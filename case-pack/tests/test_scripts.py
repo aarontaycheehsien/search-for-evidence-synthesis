@@ -13,6 +13,7 @@ sys.path.insert(0, str(HERE.parent / "scripts"))
 
 from build_moran_pool import build  # noqa: E402
 from clef import read_qrels, read_topic  # noqa: E402
+from clef_label_scope import scope  # noqa: E402
 from common import normalise_doi  # noqa: E402
 from fetch_pubmed import parse_efetch  # noqa: E402
 
@@ -46,6 +47,17 @@ class ClefTest(unittest.TestCase):
         finally:
             path.unlink()
         self.assertEqual(qrels, {"SYN0001": {"900000001": 1, "900000002": 0}})
+
+
+class ClefLabelScopeTest(unittest.TestCase):
+    def test_counts_labels_outside_pool(self):
+        pool = {"1", "2", "3"}
+        task1 = {"1": 1, "4": 1, "5": 1, "6": 0}
+        task2 = {"1": 1, "2": 0, "3": 0}
+        self.assertEqual(
+            scope(pool, task1, task2),
+            {"task1": 3, "task1_outside_pool": 2, "task2": 1, "task2_not_in_task1": 0},
+        )
 
 
 class ParseEfetchTest(unittest.TestCase):
