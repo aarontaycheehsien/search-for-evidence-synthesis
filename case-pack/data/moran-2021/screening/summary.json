@@ -1,0 +1,179 @@
+[
+  {
+    "run": "random",
+    "model": [
+      {
+        "feature_extractor": "tfidf",
+        "classifier": "nb",
+        "querier": "random",
+        "balancer": null
+      }
+    ],
+    "pool_size": 4882,
+    "relevant_title_abstract": 586,
+    "relevant_full_text": 137,
+    "records_in_log": 4869,
+    "screened_to_reach_title_abstract_recall": {
+      "0.8": 4015,
+      "0.9": 4461,
+      "0.95": 4655,
+      "1.0": 4869
+    },
+    "screened_to_reach_full_text_recall": {
+      "0.8": 4138,
+      "0.9": 4461,
+      "0.95": 4670,
+      "1.0": 4867
+    },
+    "recall_at_effort": {
+      "0.1": {
+        "screened": 488,
+        "title_abstract": 0.1024,
+        "full_text": 0.0657
+      },
+      "0.2": {
+        "screened": 976,
+        "title_abstract": 0.186,
+        "full_text": 0.1387
+      },
+      "0.3": {
+        "screened": 1465,
+        "title_abstract": 0.2765,
+        "full_text": 0.2409
+      }
+    },
+    "stopping": {
+      "50_consecutive_irrelevant": {
+        "screened": 957,
+        "title_abstract_recall": 0.1792,
+        "full_text_recall": 0.1387,
+        "full_text_inclusions_unseen": 118
+      },
+      "fixed_20_percent": {
+        "screened": 976,
+        "title_abstract_recall": 0.186,
+        "full_text_recall": 0.1387,
+        "full_text_inclusions_unseen": 118
+      }
+    },
+    "wss_at_95_title_abstract": -0.0035
+  },
+  {
+    "run": "tfidf_nb",
+    "model": [
+      {
+        "feature_extractor": "tfidf",
+        "classifier": "nb",
+        "querier": "max",
+        "balancer": "balanced"
+      }
+    ],
+    "pool_size": 4882,
+    "relevant_title_abstract": 586,
+    "relevant_full_text": 137,
+    "records_in_log": 3891,
+    "screened_to_reach_title_abstract_recall": {
+      "0.8": 1442,
+      "0.9": 1982,
+      "0.95": 2379,
+      "1.0": 3891
+    },
+    "screened_to_reach_full_text_recall": {
+      "0.8": 1096,
+      "0.9": 1410,
+      "0.95": 1975,
+      "1.0": 2832
+    },
+    "recall_at_effort": {
+      "0.1": {
+        "screened": 488,
+        "title_abstract": 0.4232,
+        "full_text": 0.5182
+      },
+      "0.2": {
+        "screened": 976,
+        "title_abstract": 0.6621,
+        "full_text": 0.7737
+      },
+      "0.3": {
+        "screened": 1465,
+        "title_abstract": 0.8089,
+        "full_text": 0.9197
+      }
+    },
+    "stopping": {
+      "50_consecutive_irrelevant": {
+        "screened": 2168,
+        "title_abstract_recall": 0.913,
+        "full_text_recall": 0.9708,
+        "full_text_inclusions_unseen": 4
+      },
+      "fixed_20_percent": {
+        "screened": 976,
+        "title_abstract_recall": 0.6621,
+        "full_text_recall": 0.7737,
+        "full_text_inclusions_unseen": 31
+      }
+    },
+    "wss_at_95_title_abstract": 0.4627
+  },
+  {
+    "run": "elas_u4",
+    "model": [
+      {
+        "feature_extractor": "tfidf",
+        "classifier": "svm",
+        "querier": "max",
+        "balancer": "balanced"
+      }
+    ],
+    "pool_size": 4882,
+    "relevant_title_abstract": 586,
+    "relevant_full_text": 137,
+    "records_in_log": 3845,
+    "screened_to_reach_title_abstract_recall": {
+      "0.8": 1205,
+      "0.9": 1713,
+      "0.95": 2057,
+      "1.0": 3845
+    },
+    "screened_to_reach_full_text_recall": {
+      "0.8": 921,
+      "0.9": 1426,
+      "0.95": 1885,
+      "1.0": 2297
+    },
+    "recall_at_effort": {
+      "0.1": {
+        "screened": 488,
+        "title_abstract": 0.4642,
+        "full_text": 0.6277
+      },
+      "0.2": {
+        "screened": 976,
+        "title_abstract": 0.7372,
+        "full_text": 0.8029
+      },
+      "0.3": {
+        "screened": 1465,
+        "title_abstract": 0.8481,
+        "full_text": 0.9051
+      }
+    },
+    "stopping": {
+      "50_consecutive_irrelevant": {
+        "screened": 1367,
+        "title_abstract_recall": 0.8225,
+        "full_text_recall": 0.8832,
+        "full_text_inclusions_unseen": 16
+      },
+      "fixed_20_percent": {
+        "screened": 976,
+        "title_abstract_recall": 0.7372,
+        "full_text_recall": 0.8029,
+        "full_text_inclusions_unseen": 27
+      }
+    },
+    "wss_at_95_title_abstract": 0.5287
+  }
+]

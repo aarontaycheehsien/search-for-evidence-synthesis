@@ -98,3 +98,24 @@ class BuildMoranTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ScreeningMetricsTest(unittest.TestCase):
+    def test_reach_and_recall(self):
+        from screening_logs import recall_at, screened_to_reach
+
+        labels = [1, 0, 1, 0, 0, 1]
+        self.assertEqual(screened_to_reach(labels, 3, 1.0), 6)
+        self.assertEqual(screened_to_reach(labels, 3, 0.6), 3)
+        self.assertEqual(recall_at(labels, 3, 3), 0.6667)
+
+    def test_consecutive_stop(self):
+        from screening_logs import consecutive_stop
+
+        # Two prior records are not counted towards the streak.
+        labels = [1, 0, 0, 0, 1, 0, 0, 0]
+        self.assertEqual(consecutive_stop(labels, 3, 100), 8)
+        # The log ends after the last relevant record: the stop is projected
+        # into the unlabelled, all-irrelevant remainder.
+        self.assertEqual(consecutive_stop([1, 0, 1, 0], 3, 100), 6)
+        self.assertEqual(consecutive_stop([1, 0, 1, 0], 3, 5), 5)
