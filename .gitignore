@@ -1,0 +1,11 @@
+# Third-party records fetched at build time (abstracts, database exports).
+# Never commit these: see docs/case-pack.md.
+case-pack/cache/
+
+# Quarto build output
+_site/
+_freeze/
+.quarto/
+
+__pycache__/
+*.pyc

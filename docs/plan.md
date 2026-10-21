@@ -8,6 +8,9 @@ Status: Planning. Nothing has been drafted.
 | Date | Decision |
 |---|---|
 | 2026-10-21 | Write a separate, independent textbook in its own repository. Do not restructure *How Search Decides What You See*, and do not write a companion that depends on links into it. |
+| 2026-10-21 | Source format: Quarto, with citations managed in BibTeX. |
+| 2026-10-21 | Disciplinary balance: health-led, with one sustained non-health contrast case. The case selected is Moran et al. (2021), a behavioural-ecology review; see [`case-pack.md`](case-pack.md). |
+| 2026-10-21 | Product claims: the author re-checks them annually, with an agent drafting each re-check against current documentation for the author to approve. |
 
 This plan descends from three planning records in the earlier book's repository: the [initial proposal](https://github.com/aarontaycheehsien/Information-retrieval-crashcourse/blob/ce9db34/reviews/evidence-synthesis-plan-2026-10-21.md), the [reconsidered recommendation](https://github.com/aarontaycheehsien/Information-retrieval-crashcourse/blob/342cd92/reviews/evidence-synthesis-plan-reconsidered-2026-10-21.md) and the [third iteration](https://github.com/aarontaycheehsien/Information-retrieval-crashcourse/blob/bec8eb3/reviews/evidence-synthesis-plan-rethought-2026-10-21.md). The third iteration recommended a linked companion volume. The decision above supersedes that recommendation; the rest of its analysis still applies.
 
@@ -71,10 +74,15 @@ A synthetic example runs throughout: a fully labelled teaching collection holds 
 
 ## Case pack
 
-- **SYNERGY** (De Bruin et al., 2023): 26 reviews, 169,288 records and 2,834 inclusions, released under CC0. Run screening simulations once and publish the logs, so stopping exercises need no code.
-- **CLEF TAR 2017–2019** (Kanoulas et al., 2017) and **Scells et al. (2017)**: review topics with Boolean queries, PubMed identifiers and relevance labels, for diagnosis, translation and validation exercises. Confirm reuse terms before redistributing. Public labels may have appeared in model training data; say so wherever they are used to test AI tools.
-- **Non-health contrast case:** check whether any SYNERGY topic outside health is suitable before building one. If a new one is needed, keep it small and document how it was labelled.
+Sources, licences and selection reasons are recorded in [`case-pack.md`](case-pack.md). In brief:
+
+- **SYNERGY** (De Bruin et al., 2023), CC0: screening and stopping exercises. Run simulations once and publish the logs, so stopping exercises need no code.
+- **CLEF TAR 2017–2019** (Kanoulas et al., 2017), MIT: the health running case, translation and screening, using Cochrane reviews' Ovid MEDLINE strategies.
+- **Moran et al. (2021)**, in SYNERGY: the non-health contrast case, with its Web of Science and Scopus strategies.
+- **Scells et al. (2017)**: not adopted, because no licence is stated.
 - **Synthetic teaching collection:** small and fully labelled, for controlled experiments. Always labelled as synthetic.
+
+These labels cover only records that each review's own search returned, so they cannot show what the original search missed. Chapter 10's reference sets are therefore built separately from each review's published included studies.
 
 ## Assessment
 
@@ -90,15 +98,15 @@ The final assessment is a short recommendation to a review team about a proposed
 
 | Decision | Recommendation | Why it matters |
 |---|---|---|
-| Source format | Decide before drafting Chapter 1. A mainstream book toolchain with managed citations (for example Quarto with BibTeX) suits a citation-heavy book and avoids rebuilding bespoke tooling. Reusing the earlier book's single-HTML format keeps the author's existing editor and scripts. | Changing format after drafting is expensive |
-| Disciplinary balance | Health-led, with one sustained non-health contrast case | Balanced coverage roughly doubles the case work, because vocabularies and labelled datasets differ |
-| Product-claim maintenance | Keep a dated evidence register from the first chapter and set an annual re-check | PubMed, NLM and AI-tool behaviour changes faster than the mechanisms |
 | Final title | Keep the working title until the pilot | Title should match what readers find most useful |
+| Health running case | Confirm one of the three CLEF TAR candidates in [`case-pack.md`](case-pack.md) after reading the strategies | Every Part II chapter uses it |
+
+Format, disciplinary balance and product-claim maintenance were decided on 2026-10-21; see the decision record.
 
 ## Implementation sequence
 
-1. Settle the open decisions above.
-2. Build the case pack and record provenance and licences.
+1. Settle the open decisions above. (Format, disciplinary balance and claim maintenance settled on 2026-10-21.)
+2. Build the case pack and record provenance and licences. (Sources selected and licences checked on 2026-10-21; data work outstanding.)
 3. Draft Chapter 1 and Chapter 10 first: they define the problem and the evidence needed to judge a solution.
 4. Draft Chapter 3, the largest gap, then Chapters 2 and 4 around the PubMed running case. Register every product claim with a check date.
 5. Pilot Chapters 1, 3 and 10 and their exercises with a small group of practising evidence-synthesis librarians. Record where they fail.
@@ -126,6 +134,8 @@ Kanoulas, E., Li, D., Azzopardi, L., & Spijker, R. (2017). CLEF 2017 technologic
 Kastner, M., Straus, S. E., McKibbon, K. A., & Goldsmith, C. H. (2009). The capture–mark–recapture technique can be used as a stopping rule when searching in systematic reviews. *Journal of Clinical Epidemiology, 62*(2), 149–157. https://doi.org/10.1016/j.jclinepi.2008.06.001
 
 McGowan, J., Sampson, M., Salzwedel, D. M., Cogo, E., Foerster, V., & Lefebvre, C. (2016). PRESS Peer Review of Electronic Search Strategies: 2015 guideline statement. *Journal of Clinical Epidemiology, 75*, 40–46. https://doi.org/10.1016/j.jclinepi.2016.01.021
+
+Moran, N. P., Sánchez-Tójar, A., Schielzeth, H., & Reinhold, K. (2021). Poor nutritional condition promotes high-risk behaviours: A systematic review and meta-analysis. *Biological Reviews, 96*(1), 269–288. https://doi.org/10.1111/brv.12655
 
 RAISE. (2025). *Responsible use of AI in evidence synthesis (RAISE): Recommendations and guidance*. Open Science Framework. https://osf.io/fwaud/
 

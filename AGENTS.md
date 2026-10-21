@@ -43,5 +43,8 @@ An explicit user instruction such as "do not commit" overrides this default.
   book without a fresh rights assessment.
 - Label synthetic examples and data as synthetic. State the provenance and
   licence of any real records, labels or datasets.
+- Never commit third-party titles, abstracts or database exports. Fetch them
+  into `case-pack/cache/`, which Git ignores, and record each source in
+  `case-pack/sources.csv`.
 - Every exercise needs supplied inputs and worked answers, not only
   instructions to obtain them.

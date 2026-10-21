@@ -4,7 +4,7 @@ An independent textbook on how search systems find and miss studies, written for
 
 Working title: *How Search Finds and Misses Studies: Information Retrieval for Evidence Synthesis*.
 
-**Status:** planning. No chapters have been drafted. Start with the [plan](docs/plan.md) and the [chapter map](docs/chapter-map.md).
+**Status:** planning. No chapters have been drafted. Start with the [plan](docs/plan.md), the [chapter map](docs/chapter-map.md) and the [case pack](docs/case-pack.md).
 
 ## Who it is for
 
@@ -30,6 +30,8 @@ Third-party figures and product screenshots in the earlier book are not carried 
 |---|---|
 | `docs/plan.md` | Scope, structure, principles, open decisions and implementation sequence |
 | `docs/chapter-map.md` | For each planned chapter: source sections, treatment, new material and product claims to verify |
+| `docs/case-pack.md` | Datasets for the exercises: what each can show, licences checked, and the chosen cases |
+| `case-pack/sources.csv` | Machine-readable provenance and licence record for every case-pack source |
 | `AGENTS.md` | Working rules for contributors and coding agents |
 | `LICENSE` | CC BY 4.0, with the exclusions listed there |
 
