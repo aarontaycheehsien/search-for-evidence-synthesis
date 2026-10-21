@@ -44,6 +44,8 @@ PubMed is the running case through this part. Every PubMed and NLM claim goes in
 
 ### 3. Subject indexing, search filters and inherited classifiers
 
+**Drafted 2026-10-22** as new text built on the case pack (`case-pack/data/indexing/`); no source text was adapted. All product claims are in `claims/register.csv`. The MTIX date, NLM's re-indexing practice, Ovid's qualitative limit and Embase's indexing method were verified on 2026-10-22. ERIC and the Cochrane RCT Classifier's current deployment were not checked; the chapter makes no claim about either.
+
 | Source section | Anchor | Treatment |
 |---|---|---|
 | Ch 11: controlled-term and structured-expression routes | `#query-transformation` | Compress |

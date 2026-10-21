@@ -6,4 +6,240 @@ Each of these is a classifier: a rule that sorts records into "about this" and "
 
 **After this chapter you should be able to** judge when a subject heading, search filter or study-design classifier can be relied on for a review, and test it against the review's own known studies.
 
-<!-- DRAFT-SECTIONS-BELOW -->
+## What a subject heading records {#sec-indexing-headings}
+
+A subject heading is a judgement about an article, recorded on its database record in a controlled vocabulary: MeSH for MEDLINE, Emtree for Embase, a thesaurus for ERIC or PsycInfo. Its value to a searcher is that it gathers articles that describe the same concept in different words. In the book's synthetic collection, a fictional review of peer tutoring for reading comprehension, three eligible studies are described in words a narrow strategy does not use: one describes "reading buddies", one has no abstract and a title without *peer* or *reading*, and one has pupils who "coached one another" in "reading for meaning". A narrow free-text strategy misses all three. A strategy built only from the collection's headings finds them, and eight of the nine eligible studies in all.
+
+The ninth shows what a heading-only strategy inherits. Its record was assigned *Reading Fluency* instead of *Reading Comprehension*, and no tutoring heading at all. Free text finds it; headings cannot. The synthetic collection plants one more lesson: the same article has records in both of its fictional databases, and they carry different headings, because each database indexes in its own vocabulary. A heading strategy written for one database does not carry over to another.
+
+Using a heading means inheriting three things.
+
+**The indexer's judgement.** There is no single correct set of headings for an article. When @funk1983 compared 760 MEDLINE articles that had been indexed twice, headings were applied more consistently to an article's central concepts than to peripheral points, and adding subheadings lowered consistency further. A review's eligibility criteria often turn on what an indexer would treat as peripheral: a subgroup, a secondary outcome, a comparator, a setting.
+
+**The vocabulary at the time of indexing.** Headings are added as concepts become established, and older records are not normally re-indexed. NLM states that it "does not retroactively re-index MEDLINE citations with new MeSH heading concepts" as a rule, so a new heading effectively limits retrieval to citations indexed after it was introduced [@nlm2024amp]. The exceptions have been publication types: Systematic Review in 2019, and Network Meta-Analysis and Scoping Review for 2025.
+
+**Whether the record was indexed at all.** Records waiting for indexing, records from journals that are in PubMed but not indexed for MEDLINE, and some report types carry no headings. From December 2026, citations in scope for MEDLINE that have no abstract in PubMed are marked as not indexed and receive no MeSH terms unless an abstract is later supplied [@nlm2026baseline].
+
+### The running case: a heading introduced mid-way
+
+CD010558's strategy opens with the heading *Depressive Disorder, Treatment-Resistant*. The heading was introduced into MeSH in 2012; the MeSH record gives *Depressive Disorder* as its previous indexing from 1981 to 2011 [@meshd061218]. The trials in the review span 2008 to 2017.
+
+The case pack applies each line of the strategy to every included-study record as PubMed holds it today (`case-pack/data/indexing/`). The emulation approximates Ovid; the README lists its simplifications. Of the 16 PubMed records of the six included studies, 11 carry the heading. @tbl-trd-heading lists the five that do not.
+
+| Record | Published | Depression heading on the record | Admitted by the strategy's text lines for the condition |
+|---|---|---|---|
+| Harley 2008 | 2008 | Major Depressive Disorder | Yes |
+| Feldman 2009 (Harley trial) | 2009 | Major Depressive Disorder | Yes |
+| ACP Journal Club commentary (CoBalT) | 2013 | None: the record has no MeSH headings | Yes |
+| Simmonds 2013 (CoBalT) | 2013 | Depressive Disorder | Yes |
+| Nakagawa 2014 (protocol) | 2014 | Major Depressive Disorder | Yes |
+
+: CD010558 included-study records without the heading *Depressive Disorder, Treatment-Resistant*. Headings as held by PubMed on 22 October 2026. From `case-pack/data/indexing/CD010558-lines.csv`. {#tbl-trd-heading}
+
+Two records predate the heading, and their indexers used the vocabulary they had. Two were indexed after 2012 and still received other depression headings: the indexer judged the article to be about depression in general, or chose a sibling heading. One has no headings at all. Meanwhile the CoBalT protocol, published in 2011, carries the new heading, presumably because it was indexed after the heading arrived; it is the date of indexing, not of publication, that matters.
+
+Searched on its own, the heading line would have found the Harley trial through neither of its reports. The strategy does not depend on it: its text lines for the condition admit all 16 records. That is the pattern to look for. A heading line is safest as one route among several, and its contribution can be measured by asking which known studies it alone admits.
+
+## Indexing in MEDLINE is now automated {#sec-indexing-automated}
+
+Most of what librarians learned about MeSH was learned when people assigned it. That is no longer how MEDLINE is indexed.
+
+- Since April 2022, every journal indexed for MEDLINE has been indexed automatically, with human review and curation of selected sets of citations, such as clinical trials, and random samples [@nlmindexfaq].
+- Since 2024, the algorithm has been MTIX, a neural network trained on MEDLINE citations published between 2007 and 2022. It learns how a citation's title, abstract, publication year, indexing year and journal name relate to the headings indexers assigned [@nlmindexfaq; @nlm2024]. Automated indexing is based on the title and abstract, not the full text [@nlmindexfaq].
+- Automated indexing is generally completed within a day of a citation's receipt. In financial year 2021, fully human indexing took 145 days on average [@nlmindexfaq].
+
+Embase still indexes most journal articles by hand from the full text against Emtree, but indexes articles in press, in-process records, preprints and conference abstracts automatically from the title, abstract and author keywords [@embaseindexing]. These are product facts, dated in the book's claims register, and they will change.
+
+For a searcher, five consequences follow.
+
+**A recent heading is a prediction from the title and abstract.** It still does what headings are for, gathering varied wording under one concept, and the model may infer a concept the abstract implies but does not name. But it does not read the methods or results, so a concept an indexer would once have picked up from the full text is now assigned only if the title, abstract and journal suggest it.
+
+**The evidence on quality is mixed and moving.** In a sample of records indexed by the previous algorithm in February and March 2023, @amarzifkin2025 judged that 47% "had inadequacies in the indexing which could impact their retrieval". @askin2025 found that the familiar line `exp animals/ not humans.sh` wrongly excluded human studies "at nearly double the rate" for automatically indexed records as for manually indexed ones, and for human randomised trials at seven times the rate. Repeating the test on records indexed by MTIX, the same authors found that only 1.1% of the excluded records were human studies, an improvement on both the earlier algorithm and the human indexers in their comparison [@askin2026]. A scoping review of 25 years of research concludes that MTIX "has not yet achieved full equivalence to human indexing" [@giustini2026]. A heading's behaviour is therefore a dated claim, to be re-tested, not a settled property.
+
+**Errors become systematic.** Human indexers disagree with each other idiosyncratically. An algorithm applied to millions of records can repeat the same kind of error wherever the same wording appears, the kind of pattern the studies of the `animals` line were designed to detect. A systematic error is easier to measure than an idiosyncratic one, and more damaging if no one does.
+
+**One database now contains several indexing regimes.** A strategy run today searches records indexed fully by people before 2022, records indexed by an algorithm and checked by people, and records indexed by an algorithm alone. PubMed lets a searcher separate them: `indexingmethod_automated` and `indexingmethod_curated` retrieve the last two, and `medline[sb] NOT (indexingmethod_curated OR indexingmethod_automated)` retrieves records indexed fully by people [@nlmindexfaq]. That makes the regime testable: run a heading line within each set and compare.
+
+**The indexing gap has shrunk.** In @sec-missing-case, four reports fell outside a date limit on Ovid's `ed` field because their indexing was completed months after they appeared. For records indexed automatically, completion follows arrival within days, so a limit on the completion date now behaves almost like a limit on the date of entry. For older records the gap remains, and an update search that re-runs an old limit inherits it.
+
+## Search filters are classifiers built by hand {#sec-indexing-filters}
+
+A search filter is a block of terms designed to retrieve one kind of study: randomised trials, qualitative research, diagnostic accuracy studies. It is a classifier, and it is built the way any classifier is. Candidate terms are chosen, a reference set of records is labelled by people, the terms are combined to optimise performance on that set, and the result is validated, ideally on records not used to build it. @jenkins2004 identified these four stages in the filter literature (term selection, a gold standard, evaluation and validation) and found that methods varied most "in the extent to which search filters are tested and validated".
+
+Filters are judged by **sensitivity** (the proportion of the target studies they retrieve), **specificity** (the proportion of other records they exclude) and **precision** (the proportion of retrieved records that are target studies). Developers usually publish several versions trading these off. For studies of treatment, @haynes2005 reached a peak sensitivity of 99.3% at a specificity of 70.4%, while a version maximising specificity reached 97.4%.
+
+### What a filter inherits
+
+The qualitative filters in CD011787's strategy show what comes with a filter.
+
+The strategy ends its subject search with `limit 85 to "qualitative (maximizes sensitivity)"`, one of Ovid's built-in Clinical Queries. Ovid documents it as:
+
+```
+interview:.tw. or px.fs. or exp health services administration/
+```
+
+with a sensitivity of 95% and a specificity of 70% [@ovidgoqual]. It comes from McMaster's Hedges project. @wong2004 hand-searched every issue of 161 core health-care journals for the year 2000, classified each of the 49,028 articles, and found 366 (0.75%) to be clinically relevant qualitative studies. Combinations of terms reached peak sensitivities of 95% against that reference set.
+
+Using the limit in a 2016 review therefore means inheriting:
+
+- **a reference set** of clinical journals from a single year, 2000, labelled by research assistants applying McMaster's definition of a clinically relevant qualitative study;
+- **the indexing of that time**, since two of its three parts depend on subject indexing, the *psychology* subheading (`px.fs.`) and the exploded heading *Health Services Administration*, which were then assigned by people and are now assigned by an algorithm;
+- **a purpose**: the Hedges filters were designed to help clinicians find sound, clinically relevant studies, not to retrieve every qualitative study a review might include.
+
+An independent validation shows why the purpose matters. Against a reference set built by relative recall from the included studies of qualitative evidence syntheses, @wagner2020 found Wong and colleagues' filter the most sensitive of 13 MEDLINE filters (93.63%), while the heading *Qualitative Research* alone had the best precision but the lowest sensitivity (22.56%). @booth2016, reviewing the methods literature, concluded that "poor empirical evidence underpins current information practice in information retrieval of qualitative research".
+
+### Two filters in one strategy
+
+CD011787's authors did not rely on Ovid's limit alone. Line 87 of their strategy adds a block of their own:
+
+```
+Qualitative Research/ or Interviews as Topic/ or (qualitative or group discussion? or focus group? or themes).ti,ab.
+```
+
+and line 89 combines the subject search filtered either way. @tbl-two-filters shows what each filter contributes for the review's 34 included studies with PubMed records. Only the text part of Ovid's limit can be emulated, because the cached records carry no subheadings and no MeSH tree.
+
+| Filter or part | Included studies admitted (of 34) | Of the 31 in the CLEF pool |
+|---|---|---|
+| The review's own block (line 87) | 31 | 29 |
+| of which, through its two headings | 17 | 15 |
+| of which, through its text words | 31 | 29 |
+| Text part of Ovid's limit (`interview:` in title or abstract) | 25 | 22 |
+| Either filter (the emulated parts) | 34 | 31 |
+
+: Qualitative filters in the CD011787 strategy, applied to the review's included-study records as PubMed holds them on 22 October 2026. From `case-pack/data/indexing/CD011787-lines.csv`. {#tbl-two-filters}
+
+Three readings follow.
+
+- **The headings alone would have lost half the studies.** *Qualitative Research* or *Interviews as Topic* is assigned to 17 of the 34 records, close to the low sensitivity @wagner2020 found for the *Qualitative Research* heading. Two records, Brunson 2015 and Harmsen 2012, have no MeSH headings at all.
+- **Each filter rescues studies the other misses.** The review's block misses three studies whose titles and abstracts never say *qualitative*, *focus group*, *group discussion* or *themes*; all three mention interviews, so Ovid's limit admits them. Two of them, Brunson 2015 and Hussain 2012, are in the pool; without Ovid's limit they would have been lost. Conversely, nine studies matched by the review's block do not mention interviews in their titles or abstracts, and would have depended on the limit's subheading and heading parts.
+- **The two published versions of the filter differ.** Ovid documents the first term as `interview:`, which matches *interviewed* and *interviewing*; McMaster's hedges page shows it as `interview?`, which matches only *interview* and *interviews*. For one included study, Sobo 2016, the difference decides whether the filter admits it. A filter's exact syntax is part of what is inherited, and it should be checked on the platform where it runs.
+
+Combining two filters with `OR` cost the review some precision, which these data cannot measure, because they include only the included studies. It bought two included studies.
+
+### The trial-design block in CD010558
+
+CD010558's design block (lines 8 to 15) combines publication types with text words. Of the 16 included-study records, 13 carry a trial publication type, and the text words admit 14. Every in-pool record is admitted by both routes. The one record admitted only by its text is Abel 2016, a later analysis of the CoBalT trial without a trial publication type. The two records the block admits by neither route are the CoBalT letter and commentary, which have no abstracts (@sec-missing-case).
+
+Here the publication types and the text words are almost redundant for the included studies. That is good news for this review, and it is not a general result. Records without abstracts, secondary analyses and protocols are where the two routes diverge, and those are exactly the reports a review following a study across its publications needs.
+
+## Learnt classifiers for study design {#sec-indexing-classifiers}
+
+A machine-learning classifier does what a filter does, with terms and weights learnt from labelled examples rather than chosen by people. @marshall2018 trained support vector machine and neural network models on the titles and abstracts of the Cochrane Crowd's randomised trial set and evaluated them on the Clinical Hedges data, the same hand-searched reference set behind the McMaster filters. The models "better discriminate between RCTs and non-RCTs than widely used traditional database search filters at all sensitivity levels".
+
+@thomas2021 developed and evaluated the Cochrane RCT Classifier for use in Cochrane's study identification workflow.
+
+- **Training:** 280,620 Embase title-and-abstract records labelled by the Cochrane Crowd, 20,454 of them reports of trials.
+- **Calibration:** a threshold set on 49,025 Clinical Hedges records, aiming for 99% recall; the calibrated classifier had recall of 0.99 and precision of 0.08 on that set.
+- **Validation:** it retrieved 43,783 (99.5%) of 44,007 trials included in Cochrane Reviews and missed 224. "Older records were more likely to be missed than those more recently published."
+
+A review team using such a classifier inherits the Crowd's definition of a randomised trial, the Embase records of the period it was trained on, a threshold chosen to reach 99% recall on another reference set, and a validation population: trials that Cochrane reviews had included and whose records "had abstracts of sufficient length to allow machine classification". That last condition is the same blind spot as automated indexing. A classifier that reads titles and abstracts cannot classify a record without an abstract, and letters, commentaries, conference abstracts and older records are exactly where reports of included studies most often lack one.
+
+The validation is also a relative-recall design (@sec-validation-reference). The 44,007 trials were found by the searches of Cochrane reviews, so they may be easier to classify than trials those searches missed. The figure is strong evidence for the component claim, that the classifier recognises trials Cochrane reviews include; it is weaker evidence that no other trials are lost.
+
+## Fields that look like free text but are not {#sec-indexing-nonhealth}
+
+Outside health, the inherited classifier is often hidden inside a field the searcher thinks of as free text.
+
+The non-health running case searched Web of Science with the `TS=` field and Scopus with `TITLE-ABS-KEY`. In Web of Science, `TS=` searches title, abstract, author keywords and Keywords Plus [@wostags]. Keywords Plus are words and phrases taken from the titles of the articles a record cites [@wosqrg], so a record can match a topic search because the works it cites have the search words in their titles. In Scopus, `KEY` combines author keywords, index terms, trade names and chemical names [@scopustips]. Neither field is free text in the sense of the article's own words, and neither is documented in enough detail to know how a given record's terms were assigned.
+
+This cuts both ways. Keywords Plus can admit an eligible study whose own title and abstract use unexpected words, because its references use expected ones. It can also admit records only loosely related to the topic, and it makes a strategy's behaviour depend on citation practices in the field. When the Moran strategies are translated into another database (@sec-developing), these fields have no equivalent, which is one reason a faithful translation can still admit different records.
+
+## Testing a heading, filter or classifier for your review {#sec-indexing-testing}
+
+The question is never whether a heading, filter or classifier is good in general. It is whether it admits the studies this review needs. The test follows the validation logic of @sec-validation, on a small scale.
+
+1. **Collect known eligible studies.** Use studies identified while scoping, those included in earlier reviews, and those suggested by experts. Keep some aside, so the block is not judged only on the studies used to build it (@sec-validation-dev).
+2. **Look at their records.** Note the headings, publication types and language, whether each has an abstract, when it was indexed and, in PubMed, by which method. A known study published before a heading existed, or without an abstract, is a warning.
+3. **Run each block alone against the known studies.** Combine the block with the studies' identifiers and record which studies each block admits. A block that admits no known study on its own contributes nothing the others do not; a block that is the only route to a study is load-bearing and needs scrutiny.
+4. **Check the filter's definitions against the eligibility criteria.** A filter for randomised trials in a review that includes non-randomised controlled studies is not a filter for that review, however sensitive it is.
+5. **Check the syntax where it runs.** Built-in limits and published filters can differ between platforms and between documents, as `interview:` and `interview?` do.
+6. **Record the result.** State which blocks were tested, against which studies, and what each admitted (@sec-recording).
+
+None of this establishes recall for studies the team does not know about. It does show whether a block fails on the studies it does know, which is the failure most often discovered too late.
+
+## Exercises {#sec-indexing-exercises}
+
+Inputs are in this chapter and the case pack (`case-pack/data/indexing/`, `case-pack/reference-sets/` and `case-pack/synthetic/`).
+
+### Exercise 3.1: A heading introduced mid-review
+
+A colleague proposes shortening CD010558's condition block to its first line, the heading *Depressive Disorder, Treatment-Resistant*, because "the heading now covers the concept". Using @tbl-trd-heading and `CD010558-lines.csv`, say what the shortened block would have lost, and why.
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+Of the 16 PubMed records of the six included studies, 5 lack the heading, and 4 of those 5 are in the CLEF pool. At study level:
+
+- **Harley 2008 would be lost.** Both of its reports (2008 and 2009) predate the heading's introduction in 2012 and are indexed under *Major Depressive Disorder*. NLM does not normally re-index older citations with new headings [@nlm2024amp].
+- **Nakagawa would be lost from the pool**, since its only in-pool report, the 2014 protocol, carries *Major Depressive Disorder*. Its results paper has the heading but was outside the date limit.
+- Souza 2016 survives, and so does CoBalT, because five of its six reports in the pool carry the heading; Simmonds 2013 does not.
+
+The heading line alone would have kept two of the four studies in the pool.
+
+The colleague's premise is half right: the heading does describe the concept, but only for records indexed after 2012, and only when the indexer judged the concept central. For a review whose studies span the heading's introduction, the text lines are what make the block work. If the heading is kept, add the previous indexing (*Depressive Disorder*, with suitable text words) for earlier years.
+:::
+
+### Exercise 3.2: Which qualitative filter earned its place?
+
+Using @tbl-two-filters and `CD011787-lines.csv`, decide whether CD011787's strategy needed both qualitative filters. Which studies depend on each, and what can these data not tell you?
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+Each filter is the only emulated route for some studies:
+
+- Ovid's limit, through `interview:`, is the only route for Brunson 2015 and Hussain 2012, both in the pool, and for Sobo 2016, which was outside the date limit in any case.
+- The review's own block is the only emulated route for the nine studies that never mention interviews in their titles or abstracts. They may also have been admitted by the limit's `px.fs.` or `exp health services administration/` parts, which the case pack cannot emulate.
+
+So on the included studies, the combination is justified: dropping Ovid's limit would have lost two studies from the pool. What the data cannot show is the cost. They contain only included studies, so they say nothing about how many extra records each filter added for screening. A full answer needs the number of records each filter admits on its own, which can be obtained by running the strategy with and without each filter. The data also reflect today's indexing, not 2016's.
+:::
+
+### Exercise 3.3: A design heading in the synthetic collection
+
+In the synthetic collection, strategy D (broad free text or headings, both databases) admits 14 records, including all 9 eligible studies. A colleague suggests adding `AND Randomized Trials` (a heading in the fictional thesaurus) to cut screening. Using `records.json` and `studies.csv`, work out what that would keep and lose, and give two separate reasons why it is a poor idea.
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+Four records carry the heading: R001 (S01), R010 (S07) and R013 (S09), which are eligible, and R014 (S10), which is not. Three of the nine eligible studies survive; six are lost.
+
+The first reason is a mismatch with the criteria. The review includes non-randomised controlled studies, so S02, S04, S05, S06 and S08, with non-random or matched allocation, are eligible but are not randomised trials. A design filter must match the eligibility criteria, not a general preference for trials.
+
+The second reason is incomplete indexing. S03 is a randomised trial ("thirty elementary classrooms were randomly assigned"), but its record lacks the design heading. Even in a review restricted to trials, the heading would have lost it. Design headings and publication types are assigned by an indexer or an algorithm and inherit their errors, as the synthetic collection's mis-indexed S05 shows for subject headings.
+:::
+
+### Exercise 3.4: Reading a classifier's validation
+
+A vendor's tool uses the Cochrane RCT Classifier and cites its "99.5% recall". Using @sec-indexing-classifiers and @tbl-claims, identify which claim the figure supports, what population it was measured on, and two kinds of trial report for which you would want separate evidence before relying on it in a review of psychological therapies.
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+The figure supports a **component** claim: on 44,007 trials included in Cochrane Reviews, with abstracts long enough to classify, the classifier retrieved 99.5% [@thomas2021]. It does not show the recall of the vendor's tool, whose collection, record fields and threshold may differ, nor the recall for trials that Cochrane's own searches missed.
+
+Two kinds of report deserve separate evidence:
+
+- **Records without abstracts or with short ones**, such as letters, commentaries and conference abstracts. They were outside the validation population by design. In CD010558, two CoBalT reports have no abstract.
+- **Older records**, which the authors report were more likely to be missed. Psychological-therapy trials span decades, and CD010558's earliest included report dates from 2008.
+
+Secondary reports of trials, such as cost-effectiveness analyses, qualitative process evaluations and protocols, are a third candidate. Whether the classifier counts them as trial reports depends on how the Crowd labelled such records, which the validation does not settle.
+:::
+
+### Exercise 3.5: Testing a heading across indexing regimes
+
+You are updating a review whose MEDLINE strategy relies on a heading introduced in 2015. The update covers 2023 to 2026. Using @sec-indexing-automated and @sec-indexing-testing, design a test of whether the heading line still behaves as it did in the original review.
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+One reasonable design:
+
+1. Take the original review's included studies indexed with the heading, and any new eligible studies already known for 2023 to 2026.
+2. In PubMed, check each known study's indexing method: `indexingmethod_automated`, `indexingmethod_curated`, or neither (fully human).
+3. Run the heading line and the text lines separately against the known studies, and record which admit each study under each indexing method.
+4. Run the heading line within each indexing set for 2023 to 2026 and compare its share of records with the text lines' share. A heading that admits markedly fewer records in the automated set than the text lines do is a signal to inspect a sample of those records.
+5. Check for known studies without abstracts. From December 2026, MEDLINE marks such citations as not indexed and gives them no MeSH [@nlm2026baseline], so only text lines can find them.
+6. Record the dates of the tests, since the algorithm and its calibration change [@askin2025; @askin2026].
+
+The test cannot show recall for unknown studies. It can show whether the heading behaves differently for automatically indexed records, which is the specific risk the update introduces.
+:::
