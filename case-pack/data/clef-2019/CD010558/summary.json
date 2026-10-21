@@ -1,0 +1,164 @@
+[
+  {
+    "run": "sheffield_bm25_baseline",
+    "model": [],
+    "pool_size": 2815,
+    "relevant_title_abstract": 37,
+    "relevant_full_text": 10,
+    "records_in_log": 2815,
+    "screened_to_reach_title_abstract_recall": {
+      "0.8": 1257,
+      "0.9": 1501,
+      "0.95": 1589,
+      "1.0": 2055
+    },
+    "screened_to_reach_full_text_recall": {
+      "0.8": 613,
+      "0.9": 695,
+      "0.95": 1220,
+      "1.0": 1220
+    },
+    "recall_at_effort": {
+      "0.1": {
+        "screened": 282,
+        "title_abstract": 0.3514,
+        "full_text": 0.5
+      },
+      "0.2": {
+        "screened": 563,
+        "title_abstract": 0.4595,
+        "full_text": 0.6
+      },
+      "0.3": {
+        "screened": 844,
+        "title_abstract": 0.7027,
+        "full_text": 0.9
+      }
+    },
+    "stopping": {
+      "50_consecutive_irrelevant": {
+        "screened": 146,
+        "title_abstract_recall": 0.1892,
+        "full_text_recall": 0.2,
+        "full_text_inclusions_unseen": 8
+      },
+      "fixed_20_percent": {
+        "screened": 563,
+        "title_abstract_recall": 0.4595,
+        "full_text_recall": 0.6,
+        "full_text_inclusions_unseen": 4
+      }
+    },
+    "wss_at_95_title_abstract": 0.3855,
+    "records_ranked_by_run": 2815,
+    "source_file": "Intervention_sheffield-baseline"
+  },
+  {
+    "run": "padua_cal_p10_t1500",
+    "model": [],
+    "pool_size": 2815,
+    "relevant_title_abstract": 37,
+    "relevant_full_text": 10,
+    "records_in_log": 2815,
+    "screened_to_reach_title_abstract_recall": {
+      "0.8": 206,
+      "0.9": 598,
+      "0.95": 1792,
+      "1.0": 2027
+    },
+    "screened_to_reach_full_text_recall": {
+      "0.8": 155,
+      "0.9": 169,
+      "0.95": 178,
+      "1.0": 178
+    },
+    "recall_at_effort": {
+      "0.1": {
+        "screened": 282,
+        "title_abstract": 0.8649,
+        "full_text": 1.0
+      },
+      "0.2": {
+        "screened": 563,
+        "title_abstract": 0.8919,
+        "full_text": 1.0
+      },
+      "0.3": {
+        "screened": 844,
+        "title_abstract": 0.9189,
+        "full_text": 1.0
+      }
+    },
+    "stopping": {
+      "50_consecutive_irrelevant": {
+        "screened": 298,
+        "title_abstract_recall": 0.8649,
+        "full_text_recall": 1.0,
+        "full_text_inclusions_unseen": 0
+      },
+      "fixed_20_percent": {
+        "screened": 563,
+        "title_abstract_recall": 0.8919,
+        "full_text_recall": 1.0,
+        "full_text_inclusions_unseen": 0
+      }
+    },
+    "wss_at_95_title_abstract": 0.3134,
+    "records_ranked_by_run": 2815,
+    "source_file": "distributed_effort_p10_t1500"
+  },
+  {
+    "run": "padua_bm25_baseline",
+    "model": [],
+    "pool_size": 2815,
+    "relevant_title_abstract": 37,
+    "relevant_full_text": 10,
+    "records_in_log": 2815,
+    "screened_to_reach_title_abstract_recall": {
+      "0.8": 1777,
+      "0.9": 1972,
+      "0.95": 2320,
+      "1.0": 2360
+    },
+    "screened_to_reach_full_text_recall": {
+      "0.8": 508,
+      "0.9": 861,
+      "0.95": 1686,
+      "1.0": 1686
+    },
+    "recall_at_effort": {
+      "0.1": {
+        "screened": 282,
+        "title_abstract": 0.2162,
+        "full_text": 0.6
+      },
+      "0.2": {
+        "screened": 563,
+        "title_abstract": 0.2973,
+        "full_text": 0.8
+      },
+      "0.3": {
+        "screened": 844,
+        "title_abstract": 0.3784,
+        "full_text": 0.8
+      }
+    },
+    "stopping": {
+      "50_consecutive_irrelevant": {
+        "screened": 62,
+        "title_abstract_recall": 0.027,
+        "full_text_recall": 0.1,
+        "full_text_inclusions_unseen": 9
+      },
+      "fixed_20_percent": {
+        "screened": 563,
+        "title_abstract_recall": 0.2973,
+        "full_text_recall": 0.8,
+        "full_text_inclusions_unseen": 2
+      }
+    },
+    "wss_at_95_title_abstract": 0.1258,
+    "records_ranked_by_run": 2815,
+    "source_file": "baseline_bm25_t1500"
+  }
+]

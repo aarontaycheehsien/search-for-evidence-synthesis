@@ -64,7 +64,7 @@ def recall_at(labels, total, screened):
     return round(sum(labels[:screened]) / total, 4) if total else None
 
 
-def consecutive_stop(labels, run_length, pool_size):
+def consecutive_stop(labels, run_length, pool_size, priors=PRIOR_RECORDS):
     """Position at which run_length irrelevant records in a row have been seen.
 
     Counting starts after the prior records. If the log ends first, the
@@ -73,7 +73,7 @@ def consecutive_stop(labels, run_length, pool_size):
     """
     streak = 0
     for position, label in enumerate(labels, start=1):
-        if position <= PRIOR_RECORDS:
+        if position <= priors:
             continue
         streak = 0 if label else streak + 1
         if streak == run_length:
@@ -81,9 +81,9 @@ def consecutive_stop(labels, run_length, pool_size):
     return min(len(labels) + (run_length - streak), pool_size)
 
 
-def summarise(name, settings, ta, ft, pool_size):
+def summarise(name, settings, ta, ft, pool_size, priors=PRIOR_RECORDS):
     total_ta, total_ft = sum(ta), sum(ft)
-    stop_streak = consecutive_stop(ta, CONSECUTIVE_IRRELEVANT, pool_size)
+    stop_streak = consecutive_stop(ta, CONSECUTIVE_IRRELEVANT, pool_size, priors)
     stop_fixed = round(FIXED_EFFORT * pool_size)
     summary = {
         "run": name,
