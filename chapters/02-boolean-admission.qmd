@@ -77,11 +77,52 @@ Every part of a Boolean strategy becomes an operation on these lists.
 
 Seen this way, a strategy is a sequence of dictionary lookups and set operations. Every one of them depends on what the analyser put in the dictionary.
 
-<!-- PLATFORMS -->
+## Truncation, phrases and proximity are platform decisions {#sec-boolean-platforms}
+
+Every platform offers truncation, phrases and proximity, and the symbols look alike. What they do is not alike. @tbl-proximity and @tbl-platforms compare the six platforms most used for evidence synthesis, from each vendor's documentation as checked on 22 October 2026. Each entry is in the book's claims register with its source and date.
+
+| Platform | Operator | Order | Words allowed between the terms | Equivalent of Ovid `adj3` |
+|---|---|---|---|---|
+| Ovid | `adjN` (N from 1 to 99) | Any | Up to N − 1 (`adj1`: adjacent) | `adj3` |
+| Embase.com | `NEAR/n`; `NEXT/n` | Any; in order | Up to n − 1 (`NEAR/1`: adjacent) | `NEAR/3` |
+| PubMed | `"a b"[tiab:~N]`, in title, title and abstract or affiliation only | Any | Up to N (`~0`: adjacent); ignored if a term is truncated | `~2` |
+| EBSCOhost | `Nn`; `Wn` (n up to 255) | Any; in order | Up to n (`tax N5 reform` matches five words between) | `N2` |
+| Web of Science | `NEAR/x` (`NEAR` alone means 15) | Not stated | Up to x (`NEAR/0`: adjacent) | `NEAR/2` |
+| Scopus | `W/n`; `PRE/n` | Any; in order | Up to n (`PRE/0`: adjacent) | `W/2` |
+
+: Proximity operators on six platforms, as documented on 22 October 2026. Sources: Ovid [@ovidmedlineguide; @ovidstopwords]; Embase.com [@embaseoperators]; PubMed [@pubmedhelp]; EBSCOhost [@ebscoproximity]; Web of Science [@wosoperators]; Scopus [@scopussearch]. {#tbl-proximity}
+
+| Platform | Truncation and wildcards | Phrases | Hyphens |
+|---|---|---|---|
+| Ovid | `*` or `$`; `$n` limits the characters added; `#` one character; `?` one or none | Words separated by a space are searched as an adjacent phrase | Ignored; converted to a space when indexing |
+| Embase.com | `*`; `?` one character; `$` zero or one; wildcards work inside phrases | Quotes | Searched as a hyphen or a space |
+| PubMed | `*`, with at least four characters before it | Quoted phrases must be in PubMed's phrase index, or the quotes are ignored | Forces a phrase search; a hyphenated phrase missing from the phrase index retrieves nothing |
+| EBSCOhost | `*`, removed if fewer than three characters precede it | Quotes give the exact order; stop words are ignored even in quotes | Acts as proximity with distance zero, in the order entered |
+| Web of Science | `*`, with at least three characters before right truncation and after left truncation | Quotes give an exact phrase and turn off lemmatisation | `TS=hydro-power` finds *hydro-power* and *hydro power* |
+| Scopus | `*` and `?` anywhere in a word | Quotes give a loose phrase; braces an exact one | Ignored outside an exact phrase, which is treated as a loose phrase |
+
+: Truncation, phrases and hyphens on six platforms, as documented on 22 October 2026. Sources: Ovid [@ovidmedlineguide; @ovidhyphens; @ovidstopwords]; Embase.com [@embaseoperators; @embasenonalpha]; PubMed [@pubmedhelp]; EBSCOhost [@ebscophrases; @ebscoroadmap]; Web of Science [@wosrules]; Scopus [@scopustips; @scopusadvanced]. {#tbl-platforms}
+
+Five differences matter most when a strategy moves between platforms.
+
+**The same number means different windows.** Ovid's `adjN` and Embase's `NEAR/n` allow up to n − 1 words between the terms; PubMed, EBSCOhost, Web of Science and Scopus allow up to n. So Ovid `adj3` corresponds to Embase `NEAR/3`, but to PubMed `~2`, EBSCOhost `N2`, Web of Science `NEAR/2` and Scopus `W/2`. A number carried across unchanged shifts the window by one word. Feldman 2009 needs a window that allows one intervening word: `adj2` or wider in Ovid, `NEAR/2` in Embase, and `~1`, `N1`, `NEAR/1` or `W/1` elsewhere. A searcher who copied Scopus `W/1` into Ovid as `adj1` would lose the report without any warning.
+
+**Some combinations are not available.** PubMed ignores a proximity operator when one of its terms is truncated [@pubmedhelp], so CD010558's line 4 cannot be carried into PubMed as a truncated proximity search at all. Web of Science does not allow `AND` inside a `NEAR` expression [@wosoperators], and Scopus does not allow `AND` or `AND NOT` inside a proximity expression [@scopussearch].
+
+**Grouped terms inside proximity can behave unexpectedly.** Ovid's own guide warns that `stroke adj4 (blood pressure or high blood pressure)` "could potentially miss out on some combinations" and recommends one-to-one operations [@ovidmedlineguide]. CD010558's lines 2 and 3 place phrases and a nested adjacency inside grouped terms, which is the construction the guide warns about. Line 4, with single words in its group, is the safer form.
+
+**Stop words are handled differently.** Ovid ignores a short list of stop words in phrases by default but counts them towards `adj` distances; its support article shows `n-of-1.ti,ab.` retrieving 70,157 records with this processing on and 514 with it off [@ovidstopwords]. EBSCOhost ignores stop words even inside quotation marks but counts them for proximity [@ebscophrases]. A phrase containing *of*, *for* or *to* is a different search on each platform.
+
+**Operator precedence differs, and is changing.** Web of Science applies `NEAR` first, then `SAME`, `NOT`, `AND` and `OR` [@wosoperators]. Embase.com reads left to right after parentheses, with no operator taking precedence [@embaseoperators]. Scopus's support pages list `OR` first [@scopussearch; @scopusadvanced], but Elsevier announced a change to `AND NOT`, then `AND`, then `OR`, to be completed in early 2026 [@feldner2025], and the support page updated in August 2026 still shows the old order. The only safe practice is to parenthesise every group, so that precedence never decides the result.
+
+Lemmatisation adds a sixth difference for the two citation indexes. Both reduce English search words to a dictionary form by default: Scopus unless an exact phrase is used [@scopuscomplex], and Web of Science unless quotation marks, wildcards or its Exact Search setting turn it off [@wosrules]. Ovid and PubMed search the words as written, apart from PubMed's automatic term mapping, which @sec-developing covers.
+
+For the running case, one cell of @tbl-platforms matters directly. Ovid converts hyphens to spaces when indexing titles and abstracts [@ovidstopwords], so *treatment-resistant* is indexed as two words, as the case pack's emulation assumes. The hyphen thought experiment in @sec-boolean-cases describes a different analyser, not Ovid's.
+
 
 ## Analyser choices on real records {#sec-boolean-cases}
 
-The running case shows how much rides on these choices. @tbl-line4 summarises the emulation of CD010558's condition block on the review's 16 included-study records. The emulation splits text at every character that is not a letter or digit, so *treatment-resistant* becomes two words, and reads `adjN` as "within N words, in either order"; the case pack's README lists its other simplifications.
+The running case shows how much rides on these choices. @tbl-line4 summarises the emulation of CD010558's condition block on the review's 16 included-study records. The emulation splits text at every character that is not a letter or digit, so *treatment-resistant* becomes two words, and reads `adjN` as Ovid documents it: the terms in either order, with up to N − 1 words between them. The case pack's README lists its other simplifications.
 
 | | Records |
 |---|---|
@@ -97,7 +138,7 @@ Three lessons follow.
 
 **Proximity width is not a detail.** Feldman 2009 describes "treatment-resistant major depressive disorder": one word, *major*, separates *resistant* from *depressive*. A phrase search for "treatment resistant depression" would miss it, and so would a proximity condition that allows no intervening word. The original `adj3` admits it comfortably. A translation that narrows the window by one word, through a misreading of how another platform counts, would lose the report silently.
 
-**Hyphen handling can decide a study.** If a platform indexed *treatment-resistant* as a single token, `resistan*` would not match it, because the token begins *treatment*. Under that analyser, the condition block would lose Feldman 2009. The Harley trial would survive only because its other report, Harley 2008, happens to write "treatment resistant depression" without a hyphen in its abstract. A study's admission would then depend on a typographical choice in one abstract. This is a thought experiment about analysers, not a claim about a particular platform; @sec-boolean-platforms shows what the platforms document.
+**Hyphen handling can decide a study.** If a platform indexed *treatment-resistant* as a single token, `resistan*` would not match it, because the token begins *treatment*. Under that analyser, the condition block would lose Feldman 2009. The Harley trial would survive only because its other report, Harley 2008, happens to write "treatment resistant depression" without a hyphen in its abstract. A study's admission would then depend on a typographical choice in one abstract. This is a thought experiment about analysers, not a description of a particular platform; @sec-boolean-platforms shows what the platforms document.
 
 **A heading does not remove the dependence.** Eleven of the 16 records also carry the heading *Depressive Disorder, Treatment-Resistant* and enter through line 1, but the two Harley reports predate the heading (@sec-indexing-headings). For the oldest evidence, the text lines are the only route.
 
@@ -130,7 +171,7 @@ The authors of the Moran review searched Web of Science and Scopus with near-ide
 | Left truncation (`"*nutrition*"`) | Allowed in topic searches, with at least three characters after the wildcard [@wosrules] | Allowed anywhere in a word [@scopustips] |
 | Proximity | `NEAR/x`, within *x* words; `AND` not allowed inside a `NEAR` group [@wosoperators] | `W/n`, within *n* words in any order; `PRE/n`, in order [@scopusadvanced] |
 | Plural forms | As written, with wildcards | Lemmatisation applies unless an exact phrase is used [@scopuscomplex] |
-| Operator order without parentheses | Not checked here | `OR`, then `W/n` and `PRE/n`, then `AND`, then `AND NOT` [@scopusadvanced] |
+| Operator order without parentheses | `NEAR`, `SAME`, `NOT`, `AND`, `OR` [@wosoperators] | `OR`, then `W/n` and `PRE/n`, then `AND`, then `AND NOT` [@scopusadvanced], with a change announced for 2026 [@feldner2025] |
 
 : The Moran review's Web of Science and Scopus searches: what differs beneath near-identical strings. Product behaviour as documented on the dates given in the claims register. {#tbl-moran-translation}
 
@@ -166,6 +207,22 @@ d. R001: *tutoring* 2, *reading* 4, two apart. R010: the same. R004: *reading* 1
 e. **R001, R004, R010.** R017 has no *tutor\** term.
 
 Query (b) admits the ineligible fluency trial (R017) as well as all three eligible records; query (c) loses the eligible "reading buddies" study (R004) and every other record whose title lacks the phrase. Widening a proximity window from 3 to 5 words admits R004, which the narrower window loses.
+:::
+
+### Exercise 2.2: Translate line 4 without moving the window
+
+Translate CD010558's line 4, `(depress* adj3 (refractor* or resistan* or chronic* or persist*)).ti,ab,kf.`, into Embase.com, EBSCOhost (for example APA PsycInfo), Web of Science, Scopus and PubMed, keeping its meaning: up to two words between the terms, in either order, in titles and abstracts. Use @tbl-proximity and @tbl-platforms. Then check each version against Feldman 2009, which needs one intervening word.
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+- **Embase.com:** `depress* NEAR/3 (refractor* OR resistan* OR chronic* OR persist*)`, restricted to title and abstract. The number stays 3, because Embase counts as Ovid does (`NEAR/1` means adjacent).
+- **EBSCOhost:** `depress* N2 (refractor* OR resistan* OR chronic* OR persist*)`, in the title and abstract fields. `N2` allows up to two words between.
+- **Web of Science:** `TS=(depress* NEAR/2 (refractor* OR resistan* OR chronic* OR persist*))`. `TS=` also searches author keywords and Keywords Plus, so the translation admits records Ovid's `.ti,ab,kf.` does not; the wildcards turn off lemmatisation, which is what the strategy intends.
+- **Scopus:** `TITLE-ABS-KEY(depress* W/2 (refractor* OR resistan* OR chronic* OR persist*))`. `KEY` includes index terms, again wider than Ovid's fields. Parenthesise in case the precedence change has taken effect.
+- **PubMed:** no faithful translation exists, because a truncated term switches off proximity. The options are to list the commonest word forms in proximity searches, such as `"resistant depression"[tiab:~2] OR "refractory depression"[tiab:~2] OR "resistant depressive"[tiab:~2]` and so on, which is precise but certain to miss forms not listed; or to replace proximity with `AND`, as in `depress*[tiab] AND (refractor*[tiab] OR resistan*[tiab] OR chronic*[tiab] OR persist*[tiab])`, which admits far more records to screen. A reasonable choice is the listed forms plus a test against every known included record, falling back to `AND` if any is missed.
+
+All five keep Feldman 2009, since each allows two words between and the report needs one. The translations that would lose it are those that allow none: `NEAR/1` in Embase, `N0` in EBSCOhost, `NEAR/0` in Web of Science, `W/0` in Scopus or `~0` in PubMed. Each of these is one plausible slip away from the correct version.
 :::
 
 ### Exercise 2.3: Which records depend on the analyser?

@@ -13,8 +13,8 @@ The emulation approximates Ovid MEDLINE; it is not Ovid:
   a letter or digit, so "double-blind" and "re-uptake" become two words.
 - In search terms, * and : truncate without limit, # stands for exactly one
   character and ? for zero or one character.
-- "adjN" is treated as: within N words of each other, in either order, in
-  the same field.
+- "adjN" is treated as Ovid documents it: the terms in either order, in the
+  same field, with up to N - 1 words between them (adj1 means adjacent).
 - ti is the title, ab the abstract and hw the words of the MeSH headings.
   mp is treated as title, abstract and heading words. Author keywords (kf)
   and other Ovid fields are not available and are treated as empty.
@@ -85,7 +85,7 @@ class Terms:
 
 
 class Adj:
-    """Two expressions within n words of each other, in either order."""
+    """Two expressions in either order, at most n word positions apart (n - 1 words between)."""
 
     def __init__(self, left, right, n):
         self.left, self.right, self.n = left, right, n

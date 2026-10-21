@@ -8,7 +8,7 @@ The PubMed records were fetched on 2026-10-22 through the PubMed connector into 
 
 It is not Ovid. The script's docstring lists every simplification. The main ones:
 
-- Text is split into words at every character that is not a letter or digit; `adjN` is read as "within N words, either order, same field".
+- Text is split into words at every character that is not a letter or digit; `adjN` is read as Ovid documents it: either order, same field, up to N − 1 words between (`adj1` means adjacent).
 - Author keywords (`kf`) and most other Ovid fields are unavailable and treated as empty.
 - `exp` headings are matched without their narrower headings.
 - Headings and publication types are today's, which may differ from when CLEF ran the strategy in 2019.
@@ -28,6 +28,10 @@ It is not Ovid. The script's docstring lists every simplification. The main ones
 | Every line before the date limit | 14 | 10 |
 
 The heading was introduced in 2012, with previous indexing under Depressive Disorder from 1981 to 2011 (MeSH Browser record D061218). Of the five records without it, two date from 2008 and 2009, two from 2013 and 2014 carry other depression headings, and one, a journal-club commentary, has no MeSH headings at all.
+
+### Analyser checks (`CD010558-analyser.csv`)
+
+Built by `case-pack/scripts/analyser_checks.py`. For each record: which condition-block lines (1 to 6) admit it; the smallest word gap line 4 needs between `depress*` and its second group (1 means adjacent); and which lines would admit it under a hypothetical analyser that keeps hyphenated words whole. Line 4 is the only route for four records (both Harley trial reports, Simmonds 2013 and the ACP Journal Club commentary); Feldman 2009 needs one intervening word ("treatment-resistant major depressive disorder"); and the hyphen-preserving analyser would lose Feldman 2009 and the commentary. Ovid documents that it converts hyphens to spaces when indexing, as the main emulation assumes; the hyphen variant describes a different analyser, not Ovid.
 
 ## CD011787 (`CD011787-lines.csv`, 34 records)
 
