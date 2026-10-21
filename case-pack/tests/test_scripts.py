@@ -11,6 +11,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / "scripts"))
 
+from analyser_checks import hyphen_kept, min_gap  # noqa: E402
 from build_moran_pool import build  # noqa: E402
 from clef import read_qrels, read_topic  # noqa: E402
 from clef_label_scope import scope  # noqa: E402
@@ -94,6 +95,12 @@ class IndexingChecksTest(unittest.TestCase):
         letter = Record({"pmid": "2", "title": "Treatment-resistant depression trial", "abstract": "",
                          "mesh_terms": [], "article_types": ["Letter"]})
         self.assertEqual(cd010558_row(letter)["removed_by_not_block"], True)
+
+    def test_line4_gap_and_hyphen_analyser(self):
+        record = Record({"pmid": "3", "title": "Treatment-resistant major depressive disorder", "abstract": "",
+                         "mesh_terms": [], "article_types": []})
+        self.assertEqual(min_gap(record), 2)
+        self.assertEqual(hyphen_kept("Treatment-resistant major depression"), ["treatment-resistant", "major", "depression"])
 
 
 class ParseEfetchTest(unittest.TestCase):

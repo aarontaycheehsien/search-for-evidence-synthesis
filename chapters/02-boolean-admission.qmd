@@ -1,16 +1,215 @@
 # Boolean admission, indexes and analysers {#sec-boolean}
 
-::: {.callout-note}
-## Not yet drafted
+A Boolean strategy reads like a statement about records: these words, in these fields, combined in this way. But a database never compares a strategy with the text of its records. It compares analysed query terms with analysed index terms. Before `AND`, `OR` and `NOT` are applied, each platform has already decided where one word ends and the next begins, what happens to a hyphen, whether *studies* and *study* are the same term, what a truncation symbol expands to, and how many words "near" allows. Those decisions decide which records are admitted, and they differ between platforms.
 
-This chapter is an outline. See the [plan](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/plan.md) and [chapter map](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/chapter-map.md) for its sources and status.
+This chapter follows a strategy from the searcher's text to the records it admits. It shows why a translation that keeps every term and operator can still change the result, and how to test whether it has.
+
+**After this chapter you should be able to** predict how truncation, phrases, proximity, hyphens and fields change which records a strategy admits on each platform, and check a translation against the review's known studies.
+
+## Admission is a yes-or-no decision {#sec-boolean-yes-no}
+
+A Boolean strategy states conditions. A record either satisfies them or it does not; there is no better or worse match, only membership of the admitted set. Strict Boolean search is the model behind the advanced search screens of Ovid, PubMed, EBSCOhost, Embase.com, Scopus and Web of Science, and it is what makes a strategy inspectable and re-runnable.
+
+The consequence that matters most for evidence synthesis is simple. **A record that fails a compulsory condition is gone.** No later step sees it, so no screening order, ranking or classifier can recover it. In the synthetic collection, the strategy `peer AND tutor* AND "reading comprehension"` excludes an eligible study of older pupils tutoring younger ones in "reading buddies" pairs, because its record never says *peer* or *comprehension*. Nothing went wrong in the database: it applied the strategy exactly as written.
+
+In CD010558, the condition block is six lines joined by `OR`, so a record needs to satisfy only one of them. That makes the block forgiving, but it also means that for some records a single line is the only way in. The case pack's emulation of the strategy on the review's included-study records (`case-pack/data/indexing/CD010558-analyser.csv`) shows that line 4,
+
+```
+(depress* adj3 (refractor* or resistan* or chronic* or persist*)).ti,ab,kf.
+```
+
+is the only line that admits four of the 16 records, among them both reports of the Harley trial. For that study, the exact behaviour of `adj3`, of truncation and of the hyphen in *treatment-resistant* decides whether it enters the review's pool at all.
+
+## From text to terms {#sec-boolean-analysis}
+
+A computer needs a rule for dividing text into units. **Tokenisation** is that division; each unit is a **token**, usually a word. Further steps then normalise the tokens: lower-casing, handling punctuation and hyphens, perhaps removing stop words, perhaps reducing words to a stem or a dictionary form. The whole sequence is called **text analysis**, and the software that performs it an **analyser**. Its output is the set of terms a record can be found by.
+
+@tbl-analysis follows one phrase from Feldman 2009, a report of the Harley trial, through a simple analyser. The steps and outputs are illustrative; real platforms make their own choices at each step.
+
+| Step | Output for "treatment-resistant major depressive disorder (MDD)" |
+|---|---|
+| Original text | treatment-resistant major depressive disorder (MDD) |
+| Tokenisation, splitting at hyphens and punctuation | treatment · resistant · major · depressive · disorder · MDD |
+| Tokenisation, keeping hyphenated words whole | treatment-resistant · major · depressive · disorder · MDD |
+| Lower-casing | treatment · resistant · major · depressive · disorder · mdd |
+| Stemming (the Porter stemmer) | treatment · resist · major · depress · disord · mdd |
+
+: One phrase from Feldman 2009 through a simple analyser; the stemming row uses the Porter stemmer [@porter1980]. Illustrative only: platforms differ at every step. {#tbl-analysis}
+
+The query goes through analysis too. A match happens when an analysed query term equals an analysed index term. If the two sides are analysed differently, the failure is silent: the database simply finds no entry for the term, and the result is smaller than it should be, with no error message.
+
+Two points about analysis are often missed.
+
+- **Truncation is not stemming.** Truncation (`resistan*`) is the searcher's instruction to expand a term to every indexed word that begins with those letters. Stemming and lemmatisation are the platform's own normalisation, applied whether the searcher asks or not. Scopus, for example, applies lemmatisation to English words unless an exact phrase is used, so wildcards are not needed for singular and plural forms [@scopuscomplex]. A strategy written for a platform without lemmatisation and translated to one with it admits more; the reverse admits less.
+- **Hyphens are an analyser decision.** Whether *treatment-resistant* is indexed as one token, two tokens, or both, decides whether `resistan*` matches it and how far apart *resistant* and *depression* are. Platforms document this unevenly (@sec-boolean-platforms).
+
+## The inverted index, with positions {#sec-boolean-index}
+
+A database does not reread every record when a query arrives. It builds an **inverted index**: a dictionary of analysed terms, each pointing to a **posting list** of the records that contain it. For phrases and proximity, each posting also stores the word positions at which the term occurs.
+
+@tbl-postings shows part of a positional index for the titles of four records in the synthetic collection, analysed by splitting at every character that is not a letter or digit and lower-casing.
+
+- R001: *Peer tutoring and reading comprehension in Year 4: a cluster-randomised trial* (eligible)
+- R004: *Reading buddies: older pupils as tutors for seven-year-olds* (eligible)
+- R010: *Peer tutoring for reading comprehension with Year 3 pupils: a randomised trial* (eligible)
+- R017: *Paired reading by classmates and oral reading fluency: a randomised trial* (ineligible: fluency only)
+
+| Term | Postings (record: position) |
+|---|---|
+| buddies | R004:2 |
+| classmates | R017:4 |
+| comprehension | R001:5, R010:5 |
+| peer | R001:1, R010:1 |
+| randomised | R001:11, R010:11, R017:10 |
+| reading | R001:4, R004:1, R010:4, R017:2, R017:7 |
+| tutoring | R001:2, R010:2 |
+| tutors | R004:6 |
+
+: Part of a positional inverted index for four synthetic titles (synthetic data). {#tbl-postings}
+
+Every part of a Boolean strategy becomes an operation on these lists.
+
+- **`AND`, `OR` and `NOT`** are set operations: `peer AND reading` intersects two lists (R001, R010); `OR` takes their union; `NOT` removes one list's records from another.
+- **Truncation** expands in the dictionary: `tutor*` looks up every term beginning *tutor*, here *tutoring* and *tutors*, and takes the union of their lists (R001, R004, R010).
+- **A phrase** requires consecutive positions: `"reading comprehension"` needs *reading* at position *p* and *comprehension* at *p* + 1 in the same record, which R001 and R010 satisfy.
+- **Proximity** requires positions within a distance: *reading* and *tutors* are five positions apart in R004, so a proximity condition of three words fails and one of five succeeds, depending on how the platform counts (@sec-boolean-platforms).
+- **Fields** are separate indexes, or separate position ranges, for title, abstract, keywords and headings. A field code chooses which postings the operation reads. A cluster-randomised trial whose only design words are in its abstract is invisible to a title-only design line.
+
+Seen this way, a strategy is a sequence of dictionary lookups and set operations. Every one of them depends on what the analyser put in the dictionary.
+
+<!-- PLATFORMS -->
+
+## Analyser choices on real records {#sec-boolean-cases}
+
+The running case shows how much rides on these choices. @tbl-line4 summarises the emulation of CD010558's condition block on the review's 16 included-study records. The emulation splits text at every character that is not a letter or digit, so *treatment-resistant* becomes two words, and reads `adjN` as "within N words, in either order"; the case pack's README lists its other simplifications.
+
+| | Records |
+|---|---|
+| Admitted by line 4 | 15 of 16 |
+| Admitted by line 4 and no other line in the condition block | 4: Harley 2008 and Feldman 2009 (both reports of the Harley trial), Simmonds 2013 and the ACP Journal Club commentary (CoBalT) |
+| Line 4 match with the two terms adjacent | 14 |
+| Line 4 match needing one intervening word | 1: Feldman 2009, "treatment-resistant major depressive disorder" |
+| Lost from the condition block if hyphenated words were indexed whole | 2: Feldman 2009 and the ACP Journal Club commentary |
+
+: How CD010558's line 4 admits the review's included-study records, emulated on PubMed records as held on 22 October 2026. From `case-pack/data/indexing/CD010558-analyser.csv`. {#tbl-line4}
+
+Three lessons follow.
+
+**Proximity width is not a detail.** Feldman 2009 describes "treatment-resistant major depressive disorder": one word, *major*, separates *resistant* from *depressive*. A phrase search for "treatment resistant depression" would miss it, and so would a proximity condition that allows no intervening word. The original `adj3` admits it comfortably. A translation that narrows the window by one word, through a misreading of how another platform counts, would lose the report silently.
+
+**Hyphen handling can decide a study.** If a platform indexed *treatment-resistant* as a single token, `resistan*` would not match it, because the token begins *treatment*. Under that analyser, the condition block would lose Feldman 2009. The Harley trial would survive only because its other report, Harley 2008, happens to write "treatment resistant depression" without a hyphen in its abstract. A study's admission would then depend on a typographical choice in one abstract. This is a thought experiment about analysers, not a claim about a particular platform; @sec-boolean-platforms shows what the platforms document.
+
+**A heading does not remove the dependence.** Eleven of the 16 records also carry the heading *Depressive Disorder, Treatment-Resistant* and enter through line 1, but the two Harley reports predate the heading (@sec-indexing-headings). For the oldest evidence, the text lines are the only route.
+
+## `NOT` lines and limits {#sec-boolean-not}
+
+`NOT` removes every record in its second set, whatever else the record matches. It is the one Boolean operator whose errors are guaranteed to lose records the rest of the strategy admitted.
+
+In the synthetic collection, a searcher adds `NOT "secondary school*"` to a broad strategy to remove studies of older pupils. It removes two records. One is the intended target, a secondary-school trial. The other is an eligible primary-school trial whose abstract opens "Unlike earlier programmes developed in secondary schools". A `NOT` line built on words that eligible records might use in passing will sooner or later remove one.
+
+CD010558's `NOT` block is safer, because most of its lines use publication types and headings rather than words: `letter/`, `editorial/`, `comment/`, animal headings. It still removes reports a review may want. The CoBalT authors' reply to correspondence and a journal-club commentary on the trial are cited by the review, and both are removed (@sec-missing-case); here they also failed the trial-design block, and the study survived through other reports. A `NOT` line on titles, `(letter or comment*).ti.`, is riskier: it would remove any trial whose title included the word *comment*.
+
+Limits are admission rules too. CD011787's strategy limits to five languages and to an entry-date range. All 34 of the review's PubMed-indexed included studies are in English, so the language limit cost nothing here; the date limit cost three (@sec-validation-reference). Whether a limit is safe depends on the review, and the only way to know is to test it against the studies the team already has.
+
+Three practices reduce the risk:
+
+- Prefer `NOT` lines on publication types, headings or fields the review does not need, over `NOT` lines on words.
+- Test every `NOT` line and limit against the known eligible studies, and screen a sample of the records each one removes.
+- Report every `NOT` line and limit, with what it was designed to remove (@sec-recording).
+
+## Translating a strategy {#sec-boolean-translation}
+
+Translating a strategy between platforms means re-expressing the same admission rules under a different analyser, index and syntax. Keeping every term and operator is not enough. The non-health running case shows how many decisions differ between two databases that look alike.
+
+The authors of the Moran review searched Web of Science and Scopus with near-identical strings (case pack: `case-pack/cases/moran-translation.md`). @tbl-moran-translation sets out what differs, from each platform's documentation as checked on 21 October 2026.
+
+| Feature | Web of Science (`TS=`) | Scopus (`TITLE-ABS-KEY`) |
+|---|---|---|
+| Fields searched | Title, abstract, author keywords and Keywords Plus [@wostags] | Title, abstract and keywords, including index terms [@scopustips] |
+| Quotation marks | Exact phrase [@wostopic] | Loose phrase: punctuation ignored, hyphenated forms treated as the phrase, plurals and spelling variants included; braces give an exact phrase [@scopusadvanced] |
+| Left truncation (`"*nutrition*"`) | Allowed in topic searches, with at least three characters after the wildcard [@wosrules] | Allowed anywhere in a word [@scopustips] |
+| Proximity | `NEAR/x`, within *x* words; `AND` not allowed inside a `NEAR` group [@wosoperators] | `W/n`, within *n* words in any order; `PRE/n`, in order [@scopusadvanced] |
+| Plural forms | As written, with wildcards | Lemmatisation applies unless an exact phrase is used [@scopuscomplex] |
+| Operator order without parentheses | Not checked here | `OR`, then `W/n` and `PRE/n`, then `AND`, then `AND NOT` [@scopusadvanced] |
+
+: The Moran review's Web of Science and Scopus searches: what differs beneath near-identical strings. Product behaviour as documented on the dates given in the claims register. {#tbl-moran-translation}
+
+Each row can change which records are admitted. The strings also differ in one place the authors chose: the Web of Science update used `"risk-taking behavio*"` and the Scopus string `"risk taking behavio*"`. In Scopus, a loose phrase treats the two alike; how Web of Science treats the hyphen inside an exact phrase is not settled by the pages checked.
+
+A translation is therefore a hypothesis that the new strategy admits the same eligible records as the old. It can be tested. Run both versions against the known eligible studies, record which each admits, and look at a sample of records admitted by one version but not the other. @sec-developing returns to translation as a practical task, with a worked case containing a quiet error.
+
+## Exercises {#sec-boolean-exercises}
+
+Inputs are in this chapter and the case pack (`case-pack/synthetic/`, `case-pack/data/indexing/` and `case-pack/cases/moran-translation.md`).
+
+### Exercise 2.1: Evaluate a strategy on postings
+
+Using @tbl-postings only (titles, synthetic data), work out which of R001, R004, R010 and R017 each query admits. Assume proximity counts the difference in word positions, so adjacent words are 1 apart.
+
+a. `peer AND tutor*`
+b. `reading AND (tutor* OR classmates)`
+c. `"reading comprehension" AND randomised`
+d. `reading` within 3 words of `tutor*`
+e. `reading` within 5 words of `tutor*`
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+a. `tutor*` expands to *tutoring* and *tutors*: R001, R004, R010. Intersected with *peer* (R001, R010): **R001, R010**.
+
+b. `tutor* OR classmates`: R001, R004, R010, R017. All four contain *reading*: **R001, R004, R010, R017**.
+
+c. The phrase needs *reading* at *p* and *comprehension* at *p* + 1: R001 (4, 5) and R010 (4, 5). Both contain *randomised*: **R001, R010**.
+
+d. R001: *tutoring* 2, *reading* 4, two apart. R010: the same. R004: *reading* 1, *tutors* 6, five apart. **R001, R010.**
+
+e. **R001, R004, R010.** R017 has no *tutor\** term.
+
+Query (b) admits the ineligible fluency trial (R017) as well as all three eligible records; query (c) loses the eligible "reading buddies" study (R004) and every other record whose title lacks the phrase. Widening a proximity window from 3 to 5 words admits R004, which the narrower window loses.
 :::
 
-**After this chapter you should be able to** predict how truncation, phrases, proximity and fields change which records a strategy admits, on each platform.
+### Exercise 2.3: Which records depend on the analyser?
 
-## Planned contents
+Using `CD010558-analyser.csv`, list the included-study records for which line 4 is the only route into the condition block, and say which of them would be lost if the platform indexed hyphenated words whole. What would you test on a real platform before relying on line 4 as written?
 
-- The inverted index and Boolean admission, with review vocabulary as the examples.
-- Truncation, phrase, proximity and field behaviour as decisions made by each platform's analyser and index, compared across PubMed, Ovid, EBSCOhost, Embase, Scopus and Web of Science.
-- Why a syntax translation can change which records are admitted.
-- `NOT` lines and limits as admission decisions: the CD010558 letter and comment exclusions, and the synthetic collection's `NOT "secondary school*"` line.
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+Line 4 is the only route for Harley 2008, Feldman 2009, Simmonds 2013 and the ACP Journal Club commentary. With hyphenated words indexed whole, Feldman 2009 and the commentary would be lost; Harley 2008 and Simmonds 2013 survive because their matching text is unhyphenated ("treatment resistant depression") somewhere in the record.
+
+Before relying on line 4, test on the platform:
+
+1. Search a known record containing "treatment-resistant" (for example Feldman 2009, PMID 19232571) with `resistan*` alone in title and abstract, combined with its identifier. If it is not retrieved, the hyphenated form is indexed as one token.
+2. Search the same record with the phrase or proximity form you intend to use, to confirm the window admits "treatment-resistant major depressive disorder".
+3. If either fails, add the hyphenated and closed forms explicitly, or widen the window, and re-test.
+:::
+
+### Exercise 2.4: Repair a `NOT` line
+
+In the synthetic collection, `NOT "secondary school*"` removes the eligible study S07. Propose a way to exclude secondary-school studies without that loss, and say how you would check it.
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+There is no safe word-based `NOT` here, because eligible records can mention secondary schools in passing. Options, from safest:
+
+1. **Drop the `NOT` line** and exclude secondary-school studies at screening. In the synthetic collection this costs one extra record to screen (R014).
+2. **Use an assigned heading** for secondary education instead of words, if the database's indexing is reliable for setting; R014 carries *Secondary Education* and R010 does not. Check by running the `NOT` line against the known eligible studies.
+3. **Restrict the words to the title**, where a secondary-school study is likely to name its setting and a passing mention is less likely. R014's title says "lower secondary school"; R010's does not.
+
+Whichever is chosen, test it against every known eligible study, screen a sample of what it removes, and report it. A `NOT` line that saves one record of screening and risks one eligible study is a poor trade.
+:::
+
+### Exercise 2.5: Same string, different records
+
+Using @tbl-moran-translation, describe three records that the Moran Web of Science string would admit and the Scopus string would not, or the reverse, despite the identical search terms.
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+1. **Keywords Plus.** A Web of Science record whose own title, abstract and keywords never use *boldness*, but which cites papers with *boldness* in their titles: Keywords Plus may contain the word, so `TS=` admits it. Scopus does not.
+2. **Hyphens inside phrases.** A record that writes *condition-dependent*: Scopus's loose phrase `"condition depend*"` treats the hyphenated form as the phrase, while whether Web of Science's exact phrase admits it depends on hyphen handling its pages do not settle.
+3. **Index terms.** A Scopus record whose assigned index terms contain a search word absent from its title, abstract and author keywords: `TITLE-ABS-KEY` admits it, while Web of Science has no equivalent field.
+
+Each is a property of the platform, not of the string. The Moran case pack shows that, of the 137 full-text inclusions in the pool, 22 were found only by Web of Science and 26 only by Scopus; how many of those differences come from fields and analysis rather than coverage is not known.
+:::
