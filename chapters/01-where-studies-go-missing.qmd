@@ -26,7 +26,7 @@ The review's reference list tells a different story. @tbl-cd010558 sets the six 
 | Souza 2016 | 1, plus a registry record | 1 | 1 | None (the registry record is not a MEDLINE record) |
 | Town 2017 | 1, plus a registry record | 1 | 0 | The trial report: indexing completed after the date limit |
 | Wiles 2007 (CoBalT pilot) | 1 | 0 | 0 | The pilot report: no PubMed record |
-| Wiles 2016 (CoBalT) | 10 | 10 | 6 | Two 2016 papers: indexing completed after the date limit. A letter and a journal-club commentary: removed by the `NOT` block |
+| Wiles 2016 (CoBalT) | 10 | 10 | 6 | Two 2016 papers: indexing completed after the date limit. A letter and a journal-club commentary: no match in the trial-design block, and removed by the `NOT` block in any case |
 | **Total** | **17, plus 2 registry records** | **16** | **10** | |
 
 : The six studies included in CD010558 and what the re-run MEDLINE strategy returned. Built from the review's reference list and checked against PubMed and OpenAlex on 21 October 2026; the case pack's reference set gives every identifier. {#tbl-cd010558}
@@ -37,7 +37,7 @@ Three different mechanisms account for the gaps.
 
 **Four reports were indexed too late for the date limit.** In Ovid MEDLINE the `ed` field holds the date NLM completed the record's indexing, not the date it was published or first appeared [@ovidmedline]. PubMed's completion dates for all four reports fall between 17 May and 31 December 2017, after the limit's end date, while three in-pool reports checked for comparison, and the letter and commentary discussed below, were completed before it. Re-running the strategy in 2019 with its original limit therefore excluded them, including two papers published in 2016. One of them, the Town trial report, is the study's only journal publication; another is the Nakagawa results paper, leaving that study represented in the pool only by its protocol. This is an *admission* loss: the records were in the database, but the query's limit did not let them through.
 
-**Two reports were removed by the `NOT` block.** A letter by the CoBalT authors and a journal-club commentary on the trial carry the Letter and Comment publication types, and the strategy's `NOT` block removes every record with those types whatever else it matches. This is also an admission loss, and a deliberate one. Here it cost two reports but no study, because other CoBalT reports were admitted.
+**Two reports were excluded twice over.** A letter by the CoBalT authors and a journal-club commentary on the trial have no abstract, no trial publication type and no design words in their titles, so they match nothing in the strategy's trial-design block. They also carry the Letter and Comment publication types, which the `NOT` block removes whatever else a record matches. These are admission losses too, and deliberate ones. Here they cost two reports but no study, because other CoBalT reports were admitted.
 
 This is not a story of a review that failed. The review team included all six studies, so they found the missing reports by some route: the database's in-process records, another database, a registry, or contact with investigators. The record of the search does not say which. What the case shows is that the strategy as recorded, run again, does not reproduce the review's evidence base, and that a score computed on the re-run's own labels reports complete recall for a pool that lacks a third of the review's studies.
 
@@ -69,7 +69,7 @@ In CD010558, the 10 included records in the re-run pool are reports of four stud
 The distinction matters for four reasons.
 
 1. **Recall depends on the unit.** Against the review's PubMed-indexed publications, the re-run strategy recovers 10 of 16 (63%); against all publications, 10 of 17 (59%); against studies, 4 of 6 (67%); against its own screening labels, 10 of 10. Each figure is correct, and each answers a different question.
-2. **A study needs only one report to be found.** The `NOT` block cost two CoBalT reports but not the study. A loss of a study's only report, as with the Town trial, costs the study.
+2. **A study needs only one report to be found.** The design and `NOT` blocks cost two CoBalT reports but not the study. A loss of a study's only report, as with the Town trial, costs the study.
 3. **Finding a study is not finding its results.** A protocol or registry record can lead a reviewer to a study whose results paper the search did not admit, but only if someone follows it up.
 4. **Deduplication works on records; eligibility is judged on studies.** Merging two records of the same article is correct; merging an abstract with the article it previews, or two different studies with similar titles, is not. The synthetic collection's interim abstract is a second report of its study, not a duplicate record.
 
@@ -166,14 +166,14 @@ Using @tbl-cd010558 and the strategy's last two lines, assign each of the seven 
 | Town 2017 trial report | 3. Query limits: as above |
 | Wiles 2016 (*Lancet Psychiatry*) | 3. Query limits: as above |
 | Abel 2016 (*Journal of Consulting and Clinical Psychology*) | 3. Query limits: as above |
-| Wiles 2013 letter (authors' reply) | 3. Query logic: the `NOT` block's Letter and Comment lines |
-| ACP Journal Club commentary, 2013 | 3. Query logic: the `NOT` block's Comment line |
+| Wiles 2013 letter (authors' reply) | 3. Query logic: no match in the trial-design block, and the `NOT` block's Letter and Comment lines |
+| ACP Journal Club commentary, 2013 | 3. Query logic: no match in the trial-design block, and the `NOT` block's Comment line |
 
 The two registry records are coverage losses for a MEDLINE search, since registries are separate sources.
 
 Two studies would have been lost: Wiles 2007, through coverage, and Town 2017, through the date limit, since the limit removed its only journal publication. The Nakagawa study survives only through its protocol; a reviewer would need to follow the protocol up to find the results. CoBalT survives its four losses because six other reports were admitted.
 
-Two points are easy to miss. None of the losses needs a missing synonym to explain it: coverage, the date limit and the `NOT` block account for all seven, and the date limit accounts for four. And the `ed` losses are an artefact of re-running a dated strategy later, which matters for updates (@sec-recording) and for any benchmark built on a re-run.
+Two points are easy to miss. None of the losses needs a missing synonym to explain it: coverage, the date limit and the strategy's design and `NOT` blocks account for all seven, and the date limit accounts for four. And the `ed` losses are an artefact of re-running a dated strategy later, which matters for updates (@sec-recording) and for any benchmark built on a re-run.
 :::
 
 ### Exercise 1.2: Count at four levels

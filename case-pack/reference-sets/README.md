@@ -29,11 +29,11 @@ Built on 2026-10-21 from the included-studies reference list of Ijaz et al. (201
 The two studies with no report in the pool:
 
 - **Wiles 2007** (the CoBalT pilot trial). Its only publication has no PubMed record, so no MEDLINE strategy could have found it. This is a coverage boundary.
-- **Town 2017** (the Halifax ISTDP trial). Its report is in PubMed and appears to satisfy the strategy's search terms, but its indexing was completed after the strategy's date limit (see below).
+- **Town 2017** (the Halifax ISTDP trial). Its report is in PubMed and satisfies every other line of the strategy when emulated on its current PubMed record (`case-pack/data/indexing/`), but its indexing was completed after the strategy's date limit (see below).
 
 Of the reports missing from the pool:
 
-- **Two carry the Letter or Comment publication types** (PMIDs 23706799 and 23588772). The strategy's exclusion lines (`letter/`, `comment/`) are designed to remove such records. Here the exclusion cost two reports but no study, because other reports of CoBalT were retrieved.
+- **Two carry the Letter or Comment publication types** (PMIDs 23706799 and 23588772). The strategy's exclusion lines (`letter/`, `comment/`) are designed to remove such records. They also match nothing in the trial-design block (lines 8 to 15): neither has an abstract or a trial publication type, and neither title has a design word. `case-pack/data/indexing/CD010558-lines.csv` records this. Here the exclusion cost two reports but no study, because other reports of CoBalT were retrieved.
 - **Four were indexed after the date limit** (PMIDs 28252882, 28266318, 26777773 and 27100125). The strategy ends with `limit 32 to ed = "19480101-20170516"`. In Ovid MEDLINE, `ed` holds NLM's Date Completed, the date indexing finished, not the date the record first appeared (Wolters Kluwer, n.d.). A PubMed search on the completion-date field (`[DCOM]`) on 2026-10-21 shows that all four were completed between 17 May and 31 December 2017, while three in-pool controls (23219570, 25335963, 26799332) and both letter or comment records were completed by 16 May 2017. So when CLEF re-ran the strategy in 2019, the limit excluded them, although two of them (26777773 and 27100125) had been published in 2016. Completion dates can change when records are revised, so this reflects PubMed today rather than the database in 2019; the pattern across all four makes the explanation very likely.
 
 Whether the review's own search in May 2017 found these records by another route, such as the in-process segment or other databases, cannot be told from these data.
@@ -43,7 +43,7 @@ Whether the review's own search in May 2017 found these records by another route
 - **Chapter 1, record, report and study.** Ten eligible records in the pool are reports of four studies; six of them are CoBalT. The Nakagawa study is represented only by its protocol.
 - **Chapter 10, validation.** Measured against the review's included studies, the re-run MEDLINE strategy recovers 4 of 6 studies and 10 of 16 PubMed-indexed publications. A score computed on the screening labels, which judge only the pool, would report complete recall.
 - **Chapter 11, updating.** The entry-date case shows why the field behind a date limit matters when a strategy is re-run: four reports, two of them published in 2016, fall outside a limit that ends in May 2017 because their indexing finished later.
-- **Chapter 2, exclusions.** The `NOT` block's effect on letters and comments that a review later cites.
+- **Chapter 2, exclusions.** The design and `NOT` blocks' effect on letters and comments that a review later cites.
 
 ### To confirm before publication
 

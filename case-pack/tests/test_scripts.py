@@ -16,6 +16,7 @@ from clef import read_qrels, read_topic  # noqa: E402
 from clef_label_scope import scope  # noqa: E402
 from common import normalise_doi  # noqa: E402
 from fetch_pubmed import parse_efetch  # noqa: E402
+from indexing_checks import Adj, Record, Terms, cd010558_row, words  # noqa: E402
 
 FIXTURES = HERE / "fixtures"
 
@@ -58,6 +59,41 @@ class ClefLabelScopeTest(unittest.TestCase):
             scope(pool, task1, task2),
             {"task1": 3, "task1_outside_pool": 2, "task2": 1, "task2_not_in_task1": 0},
         )
+
+
+class IndexingChecksTest(unittest.TestCase):
+    def test_wildcards_and_phrases(self):
+        self.assertTrue(Terms("randomi#ed").spans(words("A randomised trial")))
+        self.assertTrue(Terms("randomi#ed").spans(words("A randomized trial")))
+        self.assertFalse(Terms("randomi#ed").spans(words("A randomed trial")))
+        self.assertTrue(Terms("group?").spans(words("two groups")))
+        self.assertFalse(Terms("group?").spans(words("grouping")))
+        self.assertTrue(Terms("double-blind*").spans(words("a double blinded design")))
+        self.assertTrue(Terms("interview:").spans(words("semi-structured interviews")))
+
+    def test_adjacency_counts_words_either_order(self):
+        expr = Adj(Terms("depress*"), Terms("resistan*"), 3)
+        self.assertTrue(expr.spans(words("treatment resistant depression")))
+        self.assertTrue(expr.spans(words("depression that was resistant")))
+        self.assertFalse(expr.spans(words("depression in adults who were resistant")))
+
+    def test_cd010558_routes(self):
+        record = Record({
+            "pmid": "1",
+            "title": "Therapy for treatment-resistant depression: a randomised controlled trial",
+            "abstract": "",
+            "mesh_terms": ["Humans"],
+            "article_types": ["Journal Article"],
+        })
+        row = cd010558_row(record)
+        self.assertEqual(row["condition_heading"], False)
+        self.assertEqual(row["condition_text"], True)
+        self.assertEqual(row["design_publication_type"], False)
+        self.assertEqual(row["design_text"], True)
+        self.assertEqual(row["admitted_before_date_limit"], True)
+        letter = Record({"pmid": "2", "title": "Treatment-resistant depression trial", "abstract": "",
+                         "mesh_terms": [], "article_types": ["Letter"]})
+        self.assertEqual(cd010558_row(letter)["removed_by_not_block"], True)
 
 
 class ParseEfetchTest(unittest.TestCase):

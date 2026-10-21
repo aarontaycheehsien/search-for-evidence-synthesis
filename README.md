@@ -4,7 +4,7 @@ An independent textbook on how search systems find and miss studies, written for
 
 Working title: *How Search Finds and Misses Studies: Information Retrieval for Evidence Synthesis*.
 
-**Status:** early draft. Chapters 1 and 10 have first drafts; chapters marked "Not yet drafted" are outlines. Start with the [plan](docs/plan.md), the [chapter map](docs/chapter-map.md) and the [case pack](docs/case-pack.md).
+**Status:** early draft. Chapters 1, 3 and 10 have first drafts; chapters marked "Not yet drafted" are outlines. Start with the [plan](docs/plan.md), the [chapter map](docs/chapter-map.md) and the [case pack](docs/case-pack.md).
 
 ## Who it is for
 
