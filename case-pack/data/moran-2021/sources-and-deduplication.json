@@ -1,0 +1,45 @@
+{
+  "built_on": "2026-10-21",
+  "script": "case-pack/scripts/moran_sources.py",
+  "source": "NPMoran/metah06_condition-dependence-of-boldness_OSF@b25a3c22e2da63cd2fa9e92d05d7991ae0e8564f, wos1-6.bib and scopus1-5.bib",
+  "records": {
+    "web_of_science": 2729,
+    "scopus": 4479,
+    "combined": 7208
+  },
+  "records_with_doi": {
+    "web_of_science": 2531,
+    "scopus": 4089
+  },
+  "reported": {
+    "authors_revtools_deduplicated": 5509,
+    "article_screened_title_abstract": 5453
+  },
+  "deduplicated_counts": {
+    "doi_only": 5552,
+    "doi_only_cleaned": 5544,
+    "exact_title_only": 5454,
+    "doi_or_exact_title": 5402,
+    "doi_or_title_similarity_0.95": 5393,
+    "doi_or_title_similarity_0.90": 5390
+  },
+  "unique_records_by_database_doi_or_exact_title": {
+    "both": 1795,
+    "web_of_science_only": 931,
+    "scopus_only": 2676
+  },
+  "eligible_by_database": {
+    "title_abstract_included": {
+      "both": 271,
+      "wos_only": 73,
+      "scopus_only": 242,
+      "not_matched": 0
+    },
+    "full_text_included": {
+      "both": 89,
+      "wos_only": 22,
+      "scopus_only": 26,
+      "not_matched": 0
+    }
+  }
+}

@@ -119,3 +119,31 @@ class ScreeningMetricsTest(unittest.TestCase):
         # into the unlabelled, all-irrelevant remainder.
         self.assertEqual(consecutive_stop([1, 0, 1, 0], 3, 100), 6)
         self.assertEqual(consecutive_stop([1, 0, 1, 0], 3, 5), 5)
+
+    def test_aggregate_groups_by_seed_suffix(self):
+        from screening_logs import aggregate, summarise
+
+        runs = [
+            summarise(f"model_s{seed}", [], labels, labels, 300, priors=0)
+            for seed, labels in ((1, [1] * 3 + [0] * 7), (2, [0] * 7 + [1] * 3))
+        ]
+        result = aggregate(runs)
+        self.assertEqual(list(result), ["model"])
+        self.assertEqual(result["model"]["runs"], 2)
+        self.assertEqual(result["model"]["screened_to_all_full_text"], {"min": 3, "median": 6.5, "max": 10})
+
+
+class MoranSourcesTest(unittest.TestCase):
+    def test_parse_bib_and_clean_doi(self):
+        from moran_sources import clean_doi, parse_bib
+
+        text = (
+            "@article{ ISI:1,\nTitle = {{A Title\n   Over Two Lines}},\n"
+            "DOI = {{10.1890/0012-9658(1997)078{[}1266:RFLRSO]2.0.CO;2}},\n}\n\n"
+            "@ARTICLE{key2,\ntitle={Second},\ndoi={10.1037//0022-006X.70.5.1119},\n}\n"
+        )
+        entries = parse_bib(text)
+        self.assertEqual(len(entries), 2)
+        self.assertEqual(entries[0]["title"], "A Title Over Two Lines")
+        self.assertEqual(clean_doi(entries[0]["doi"]), "10.1890/0012-9658(1997)078[1266:rflrso]2.0.co;2")
+        self.assertEqual(clean_doi(entries[1]["doi"]), "10.1037/0022-006x.70.5.1119")

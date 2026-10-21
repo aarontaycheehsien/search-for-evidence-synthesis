@@ -9,20 +9,27 @@ Usage:
   python case-pack/scripts/screening_logs.py --pool case-pack/cache/moran-2021/pool.csv \
       --out case-pack/data/moran-2021/screening RUN.asreview [RUN.asreview ...]
 
+With --compact, each log keeps only the prior records and the records
+relevant at title and abstract; every rank not listed is irrelevant at both
+stages. With --aggregate, runs named NAME_sSEED are grouped by NAME and
+summarised across seeds in aggregate.json.
+
 Reads only the standard library, so it runs without ASReview installed.
 """
 
 import argparse
 import csv
 import json
+import re
 import sqlite3
+import statistics
 import sys
 import tempfile
 import zipfile
 from pathlib import Path
 
 PRIOR_RECORDS = 2
-CONSECUTIVE_IRRELEVANT = 50
+STREAKS = (50, 100, 200)
 FIXED_EFFORT = 0.20
 RECALL_TARGETS = (0.8, 0.9, 0.95, 1.0)
 EFFORT_POINTS = (0.1, 0.2, 0.3)
@@ -83,8 +90,6 @@ def consecutive_stop(labels, run_length, pool_size, priors=PRIOR_RECORDS):
 
 def summarise(name, settings, ta, ft, pool_size, priors=PRIOR_RECORDS):
     total_ta, total_ft = sum(ta), sum(ft)
-    stop_streak = consecutive_stop(ta, CONSECUTIVE_IRRELEVANT, pool_size, priors)
-    stop_fixed = round(FIXED_EFFORT * pool_size)
     summary = {
         "run": name,
         "model": [dict(zip(("feature_extractor", "classifier", "querier", "balancer"), s)) for s in settings],
@@ -110,10 +115,9 @@ def summarise(name, settings, ta, ft, pool_size, priors=PRIOR_RECORDS):
     }
     n95 = summary["screened_to_reach_title_abstract_recall"]["0.95"]
     summary["wss_at_95_title_abstract"] = round(0.95 - n95 / pool_size, 4) if n95 else None
-    for label, stop in (
-        (f"{CONSECUTIVE_IRRELEVANT}_consecutive_irrelevant", stop_streak),
-        (f"fixed_{int(FIXED_EFFORT * 100)}_percent", stop_fixed),
-    ):
+    stops = [(f"{n}_consecutive_irrelevant", consecutive_stop(ta, n, pool_size, priors)) for n in STREAKS]
+    stops.append((f"fixed_{int(FIXED_EFFORT * 100)}_percent", round(FIXED_EFFORT * pool_size)))
+    for label, stop in stops:
         summary["stopping"][label] = {
             "screened": stop,
             "title_abstract_recall": recall_at(ta, total_ta, stop),
@@ -123,10 +127,42 @@ def summarise(name, settings, ta, ft, pool_size, priors=PRIOR_RECORDS):
     return summary
 
 
+AGGREGATE_METRICS = {
+    "wss_at_95_title_abstract": lambda s: s["wss_at_95_title_abstract"],
+    "screened_to_95pc_title_abstract": lambda s: s["screened_to_reach_title_abstract_recall"]["0.95"],
+    "screened_to_all_full_text": lambda s: s["screened_to_reach_full_text_recall"]["1.0"],
+    "full_text_recall_at_20pc": lambda s: s["recall_at_effort"]["0.2"]["full_text"],
+    **{
+        f"stop_{n}_screened": (lambda n: lambda s: s["stopping"][f"{n}_consecutive_irrelevant"]["screened"])(n)
+        for n in STREAKS
+    },
+    **{
+        f"stop_{n}_full_text_unseen": (lambda n: lambda s: s["stopping"][f"{n}_consecutive_irrelevant"]["full_text_inclusions_unseen"])(n)
+        for n in STREAKS
+    },
+}
+
+
+def aggregate(summaries):
+    """Group runs named NAME_sSEED by NAME; report min, median and max."""
+    groups = {}
+    for s in summaries:
+        groups.setdefault(re.sub(r"_s\d+$", "", s["run"]), []).append(s)
+    result = {}
+    for name, runs in sorted(groups.items()):
+        result[name] = {"runs": len(runs)}
+        for metric, get in AGGREGATE_METRICS.items():
+            values = [get(r) for r in runs]
+            result[name][metric] = {"min": min(values), "median": statistics.median(values), "max": max(values)}
+    return result
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--pool", type=Path, required=True, help="pool.csv from build_moran_pool.py")
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--compact", action="store_true", help="keep only prior and relevant records")
+    parser.add_argument("--aggregate", action="store_true", help="summarise runs across seeds")
     parser.add_argument("projects", nargs="+", type=Path)
     args = parser.parse_args(argv)
 
@@ -149,10 +185,14 @@ def main(argv=None):
             writer = csv.writer(handle)
             writer.writerow(["rank", "id", "prior", "label_title_abstract", "label_full_text"])
             for rank, (row, a, b) in enumerate(zip(order, ta, ft), start=1):
+                if args.compact and not (a or rank <= PRIOR_RECORDS):
+                    continue
                 writer.writerow([rank, pool[row]["id"], int(rank <= PRIOR_RECORDS), a, b])
         summaries.append(summarise(name, settings, ta, ft, pool_size))
 
     (args.out / "summary.json").write_text(json.dumps(summaries, indent=2) + "\n", encoding="utf-8")
+    if args.aggregate:
+        (args.out / "aggregate.json").write_text(json.dumps(aggregate(summaries), indent=2) + "\n", encoding="utf-8")
     for s in summaries:
         print(s["run"], "WSS@95 =", s["wss_at_95_title_abstract"], "stops:", json.dumps(s["stopping"]))
 

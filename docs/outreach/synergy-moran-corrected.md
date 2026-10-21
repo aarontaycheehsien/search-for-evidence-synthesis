@@ -11,7 +11,8 @@ Thank you for SYNERGY, and for adding the corrected Moran data.
 
 I am preparing an open (CC BY 4.0) textbook for evidence-synthesis librarians that uses Moran et al. (2021) as a teaching case, so I compared the two versions at commit `dc2dadf`. In case it helps the SYNERGY PLUS work:
 
-- Of the 107 records that `Moran_2021` (version 1) labels as included and that have a DOI, 2 are full-text inclusions in `Moran_2021_corrected` and 7 passed title-and-abstract screening. Version 1's labels come from `screening_ref_data_rayyan_final.csv` in the authors' repository, which appears not to contain the review's inclusions.
+- Of the 107 records that `Moran_2021` (version 1) labels as included and that have a DOI, 2 are full-text inclusions in `Moran_2021_corrected` and 7 passed title-and-abstract screening.
+- The cause is in the authors' search script (`01_conditiontreatments_search.R`): `screening_ref_data_rayyan_final.csv` holds the 120 new records from their update search of 4 February 2019 (92 from Web of Science, 42 from Scopus, deduplicated), not their inclusions. Version 1's `compose.py` labels that file as included.
 - `Moran_2021_corrected` reproduces the article's counts (5,453 records screened at title and abstract; 626 sent to full text). Its `openalex_id` column is empty, 497 records have no DOI, and labels are joined on exact title in `compose.py`.
 
 Two questions:

@@ -4,7 +4,7 @@ The non-health contrast case. Built on 2026-10-21.
 
 ## Why not SYNERGY version 1's Moran labels
 
-SYNERGY version 1 built its `Moran_2021` inclusion labels from a file in the authors' repository (`screening_ref_data_rayyan_final.csv`) that does not contain the review's inclusions: its records include, for example, an internet-based health intervention and physical activity in after-school programmes. Of the 107 records version 1 labels as included that have a DOI, 2 are full-text inclusions in the corrected labels and 7 passed title-and-abstract screening. SYNERGY's maintainers added a corrected variant in January 2025 (commit 74b6fde, pull request 128) and have said that version 1 will stay unchanged so that published results remain comparable, with fixes going into a future SYNERGY PLUS (issue 184).
+SYNERGY version 1 built its `Moran_2021` inclusion labels from a file in the authors' repository (`screening_ref_data_rayyan_final.csv`) that does not contain the review's inclusions: its records include, for example, an internet-based health intervention and physical activity in after-school programmes. The authors' search script shows what the file is: the 120 new records from their update search of 4 February 2019 (see below). "Final" meant the final search, not the final inclusions. Of the 107 records version 1 labels as included that have a DOI, 2 are full-text inclusions in the corrected labels and 7 passed title-and-abstract screening. SYNERGY's maintainers added a corrected variant in January 2025 (commit 74b6fde, pull request 128) and have said that version 1 will stay unchanged so that published results remain comparable, with fixes going into a future SYNERGY PLUS (issue 184).
 
 These files therefore use the corrected variant, which reproduces the article's counts: 5,453 records screened at title and abstract, and 626 selected for full text (Moran et al., 2021).
 
@@ -20,6 +20,37 @@ These files therefore use the corrected variant, which reproduces the article's 
 Titles and abstracts are not committed. `case-pack/scripts/build_moran_pool.py` rebuilds them into the ignored cache.
 
 **Losses in the join.** Records are joined by DOI. Of 5,453 labelled records, 497 have no DOI, 5 repeat another record's DOI and 69 do not match the text file, leaving 4,882. The pool keeps 586 of 592 title-and-abstract inclusions and 137 of 139 full-text inclusions that have DOIs (the corrected file has 142 full-text inclusions in all).
+
+## Searches, updates and deduplication
+
+From the authors' search script (`01_conditiontreatments_search.R`) and their exports, read at commit `b25a3c2`.
+
+**Initial searches, 10 November 2018.** Web of Science Core Collection returned 2,729 records and Scopus 4,479; together 7,208. The script header says "10_11_2019", but the Scopus update below is limited to records loaded after 10 November 2018, so the header is a slip.
+
+**Update searches, 4 February 2019.** The two databases were updated by different methods:
+
+- Web of Science: the whole search was re-run (2,813 records) and compared with the initial results by exact title, leaving 92 new records.
+- Scopus: the search was re-run with `ORIG-LOAD-DATE > 20181110`, returning 42 records.
+- Combined and deduplicated by fuzzy title: 120 records, exported as `screening_ref_data_rayyan_final.csv`.
+
+The Web of Science string echoed by the database in the update ("You searched for: …") reads `"asset protection" OR "residual reproductive value"` and `"risk-taking behavio*"`. The hand-typed comment for the initial search reads `"asset protection" residual reproductive value")`, with unbalanced quotation marks, and `"risk taking behavio*"`. The first is almost certainly a slip in the comment rather than the executed search; the second is a real difference between the initial and update strings. Appendix S2 of the article's supporting information should confirm which strings were reported.
+
+**Deduplication.** `sources-and-deduplication.json`, built by `case-pack/scripts/moran_sources.py`, applies different rules to the 7,208 initial records:
+
+| Rule | Records left |
+|---|---|
+| DOI only | 5,552 |
+| DOI only, after removing BibTeX escapes (Web of Science writes `[` as `{[}` in DOIs) | 5,544 |
+| Exact title (letters and digits only) | 5,454 |
+| DOI or exact title | 5,402 |
+| DOI or title similarity of at least 0.95 | 5,393 |
+| DOI or title similarity of at least 0.90 | 5,390 |
+| The authors' tool (revtools, fuzzy title), as reported in their script | 5,509 |
+| Screened at title and abstract, as reported in the article | 5,453 |
+
+The same export yields anywhere from 5,390 to 5,552 "records after duplicates removed", depending on the rule. Some exact-title matches join records with different DOIs; most are the same article under two DOI forms, but not all.
+
+**Database contribution.** Matching by DOI or exact title, the 137 full-text inclusions in the pool came from both databases (89), Web of Science alone (22) or Scopus alone (26). For the 586 title-and-abstract inclusions the figures are 271, 73 and 242. Either database alone would have missed between 16% and 19% of the eligible studies found; these are properties of this review and this pair of searches, not of the databases in general.
 
 ## Simulations
 

@@ -52,7 +52,7 @@ The CD010558 reference set shows the size of the gap in one case: the CLEF pool 
 
 The metadata file lists 46 reviews, of which 20 are inactive with stated reasons, including one licence problem. Use only active reviews.
 
-**Version 1's Moran labels are wrong.** Of the 107 records it labels as included that have a DOI, 2 are full-text inclusions in the corrected labels and 7 passed title-and-abstract screening. The maintainers added a corrected variant in January 2025 and say version 1 will stay unchanged for comparability, with fixes going into a future SYNERGY PLUS (repository issue 184). The case pack uses the corrected variant; details in [`case-pack/data/moran-2021/README.md`](../case-pack/data/moran-2021/README.md). Whether other version 1 reviews have similar problems has not been checked.
+**Version 1's Moran labels are wrong.** Of the 107 records it labels as included that have a DOI, 2 are full-text inclusions in the corrected labels and 7 passed title-and-abstract screening. The labelled file is the authors' update-search export, not their inclusions. The maintainers added a corrected variant in January 2025 and say version 1 will stay unchanged for comparability, with fixes going into a future SYNERGY PLUS (repository issue 184). The case pack uses the corrected variant; details in [`case-pack/data/moran-2021/README.md`](../case-pack/data/moran-2021/README.md). Whether other version 1 reviews have similar problems has not been checked.
 
 ### CLEF TAR 2017–2019 (health running case, translation, screening)
 
@@ -101,7 +101,7 @@ Not adopted, because it cannot be redistributed and CLEF TAR covers the same gro
 
 **Checks.**
 
-1. **Still open:** the search script's comments are inconsistent. The header dates the searches 10 November 2019, while the per-database comments say `10_11_18`; the preregistration is dated 9 November 2018. The Web of Science string reads `"asset protection" residual reproductive value")` where the Scopus string reads `"asset protection" OR "residual reproductive value"`. The article puts the full strategy in Appendix S2 of its supporting information (`brv12655-sup-0001-Supinfo.docx`), which could not be fetched from this environment. If the published Web of Science string has the same defect, it is a genuine example of a quiet translation error; if not, it is a slip in the script comment and must not be presented as the executed search.
+1. **Largely resolved from the script itself:** the Scopus update search is limited to records loaded after 10 November 2018, so the initial searches ran on that date and the header's "2019" is a slip. The defective Web of Science clause (`"asset protection" residual reproductive value")`, with unbalanced quotation marks) appears only in a hand-typed comment; the string Web of Science echoed back in the update search is correct. Treat it as a documentation slip, not an executed error. One real difference remains between the initial and update Web of Science strings (`risk taking` against `risk-taking`). Appendix S2 of the article's supporting information (`brv12655-sup-0001-Supinfo.docx`), which could not be fetched here, should still be checked before quoting a string as published.
 2. **Resolved:** the OSF project (osf.io/3tphj) is licensed CC BY 4.0, checked 2026-10-21. The GitHub repository has no licence file. Quote the strategies with attribution; do not redistribute the `.bib` exports, which contain Web of Science and Scopus records.
 
 Repository checked: `NPMoran/metah06_condition-dependence-of-boldness_OSF` at commit `b25a3c2`, 2026-10-21.
@@ -114,7 +114,7 @@ Version 0.1 is built: a fictional education review with 33 records and 9 eligibl
 
 ## Remaining work
 
-1. Check Appendix S2 of the Moran supplement against the script comments (check 1 above).
+1. Optionally confirm the Moran strings against Appendix S2 of the supporting information (check 1 above).
 2. Confirm Date Completed for PMIDs 28252882 and 28266318, and test why PMIDs 26777773 and 27100125 are missing from the CD010558 pool. `case-pack/scripts/fetch_pubmed.py` records Date Completed but needs network access to NCBI.
 3. Decide whether to post the SYNERGY query ([`docs/outreach/synergy-moran-corrected.md`](outreach/synergy-moran-corrected.md)).
 4. Run the Moran simulations with several prior pairs and seeds to show variation, not one run.
