@@ -14,6 +14,7 @@ The case pack supplies the inputs and worked answers for every exercise in the b
 | Which strategy lines (headings, publication types, text words, qualitative filters) admit each included record of CD010558 and CD011787 | [`case-pack/data/indexing/`](../case-pack/data/indexing/README.md) | Chapters 1, 3 |
 | CD010558 screening logs from three CLEF 2019 participant runs | [`case-pack/data/clef-2019/CD010558/`](../case-pack/data/clef-2019/CD010558/README.md) | Chapter 9 |
 | Moran et al. (2021) labels (4,882 records), three detailed ASReview simulation logs and 30 more across ten starting pairs | [`case-pack/data/moran-2021/`](../case-pack/data/moran-2021/README.md) | Chapters 9, 10 |
+| BM25 ranking of the Moran pool: ranks under two queries, recall within the top k, and per-term weights | [`case-pack/data/moran-2021/ranking/`](../case-pack/data/moran-2021/ranking/README.md) | Chapter 4 |
 | Moran deduplication and database-contribution analysis | [`case-pack/data/moran-2021/`](../case-pack/data/moran-2021/README.md) | Chapters 8, 10, 11 |
 | Moran translation case: the Web of Science and Scopus strings compared against dated documentation, with exercises | [`case-pack/cases/moran-translation.md`](../case-pack/cases/moran-translation.md) | Chapters 2, 7, 11 |
 | Synthetic collection v0.1 (33 records, 9 eligible studies) with generated worked answers | [`case-pack/synthetic/`](../case-pack/synthetic/README.md) | Chapters 1, 2, 3, 7, 8, 11 |

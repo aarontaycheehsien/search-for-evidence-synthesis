@@ -60,6 +60,8 @@ PubMed is the running case through this part. Every PubMed and NLM claim goes in
 
 ### 4. Ranking, relevance sorts and result limits
 
+**Drafted 2026-10-22.** Adapted from Ch 3 "BM25 and ranked lexical retrieval" (`#bm25-ranking`, commit `99bfb9c`): the four questions BM25 asks of each term and the term-frequency arithmetic, rewritten around the Moran pool; the `delulu` examples, the Lucene and Elasticsearch claims and the TF-IDF history were dropped. Ch 4, Ch 7, Ch 9 and App E were not used; the Best Match account comes from the PubMed User Guide and Fiorini et al. (2018) directly. New: the order, batch and cap distinction; the Moran BM25 analysis (`case-pack/data/moran-2021/ranking/`); the product comparison (claims checked 2026-10-22); AI tools as capped rankings; the suitability evidence.
+
 | Source section | Anchor | Treatment |
 |---|---|---|
 | Ch 3 BM25 and ranked lexical retrieval | `#bm25-ranking` | Adapt |

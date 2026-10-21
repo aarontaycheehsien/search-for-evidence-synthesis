@@ -18,6 +18,7 @@ from clef_label_scope import scope  # noqa: E402
 from common import normalise_doi  # noqa: E402
 from fetch_pubmed import parse_efetch  # noqa: E402
 from indexing_checks import Adj, Record, Terms, cd010558_row, words  # noqa: E402
+from ranking_checks import bm25_scores, expand, ranks, recall_at  # noqa: E402
 
 FIXTURES = HERE / "fixtures"
 
@@ -101,6 +102,22 @@ class IndexingChecksTest(unittest.TestCase):
                          "mesh_terms": [], "article_types": []})
         self.assertEqual(min_gap(record), 2)
         self.assertEqual(hyphen_kept("Treatment-resistant major depression"), ["treatment-resistant", "major", "depression"])
+
+
+class RankingChecksTest(unittest.TestCase):
+    def test_expansion(self):
+        vocabulary = {"nutrition", "malnutrition", "nutritional", "diet", "diets"}
+        self.assertEqual(expand("diet*", vocabulary), {"diet", "diets"})
+        self.assertEqual(expand("*nutrition*", vocabulary), {"nutrition", "malnutrition", "nutritional"})
+        self.assertEqual(expand("hunger", vocabulary), set())
+
+    def test_bm25_prefers_rarer_and_more_frequent_terms(self):
+        docs = [["diet", "diet", "boldness"], ["diet", "other"], ["other", "words"]]
+        scores = bm25_scores(docs, ["diet", "boldness"])
+        self.assertGreater(scores[0], scores[1])
+        self.assertEqual(scores[2], 0.0)
+        self.assertEqual(ranks(scores), [1, 2, 3])
+        self.assertEqual(recall_at([1, 2, 3], [0, 1, 1], 2), 0.5)
 
 
 class ParseEfetchTest(unittest.TestCase):
