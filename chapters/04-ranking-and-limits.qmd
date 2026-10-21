@@ -107,9 +107,11 @@ Three readings matter for evidence synthesis.
 
 PubMed's default sort is the best-documented example of a learnt reranker in a database librarians use daily. The user guide describes two stages [@pubmedhelp]. First, each citation that matches the search terms is weighted by how many terms it contains and in which fields, with recently published articles given "a somewhat higher weight". Then "the top articles returned by the weighted term frequency algorithm" are re-ranked by a machine-learning model that "combines over 150 signals", most computed from the query and the document, some from the document alone (publication type, publication year) or the query alone (its length). The model "was built on relevance data extracted from the anonymous and aggregated PubMed search logs".
 
-<!-- FIORINI -->
+The published account adds detail [@fiorini2018]. The first stage is BM25, extended to weight matches in the title and MeSH fields more heavily, and the top 500 results are then re-ranked by LambdaMART, a learning-to-rank method based on gradient-boosted regression trees [@burges2010]. The model was trained on queries from PubMed's logs, treating clicks to read an abstract or to request the full text as signs of relevance. The authors report that the most important signals were "the past usage of an article, publication date, relevance score, and type of article". In an online test in 2017, the share of searches with at least one click among the top 20 results was 0.32 under date sort, 0.36 under the previous relevance sort and 0.39 under Best Match.
 
-The training signal is what matters for a review. A model built on search logs learns which records PubMed users tend to select for the queries they type. That is a reasonable target for a clinician who wants a few good articles quickly. It is not the target of a systematic search, which wants every eligible study, including the obscure, the old and the rarely clicked. Best Match changes the order of the records a strategy admits and nothing else; below PubMed's 10,000-record cap, a review that screens everything is unaffected by it.
+The training signal is what matters for a review. A model built on search logs learns which records PubMed users tend to select for the queries they type, and its strongest signals are an article's past usage and its recency. That is a reasonable target for a clinician who wants a few good articles quickly. It is not the target of a systematic search, which wants every eligible study, including the obscure, the old and the rarely clicked. Best Match changes the order of the records a strategy admits and nothing else; below PubMed's 10,000-record cap, a review that screens everything is unaffected by it.
+
+It can still help a review in a different role. @sampson2021 ran six reviews' MEDLINE strategies in PubMed and compared where the included records fell. Best Match placed 30 relevant records in the first 50 across the six reviews, against 10 under the most-recent sort, and the authors concluded that screening in Best Match order until enough eligible records are found is an efficient way to build a training set for machine-learning screening. That is a prioritisation claim (@sec-validation-claims), and the evidence fits it: a better order on a fixed pool, not a safe place to stop.
 
 ## AI research tools: ranking with a short cut-off {#sec-ranking-ai}
 
@@ -122,7 +124,13 @@ Both make sensible engineering choices for their purpose, and both mean that wha
 
 The documentation itself moves. A library guide dated April 2026 quotes an earlier version of Consensus's page, under which the second stage re-ranked "the top 1,500 most relevant papers" [@corbitt2026]; the current page gives no figure. A cap is a product setting, and it should be checked, dated and recorded each time a tool is used.
 
-<!-- SUITABILITY -->
+## Is a capped system suitable for systematic searching? {#sec-ranking-suitability}
+
+@gusenbauer2020 tested 28 academic search systems against 27 criteria for systematic searching. Among the criteria they classed as necessary were at least 1,000 accessible results per search and results that can be reproduced at different times and places. Google Scholar's cap of 1,000 met their threshold; Google Scholar failed instead on their Boolean tests and on reproducibility, and they judged it unsuitable as a principal search system but suitable as a supplementary source, including for grey literature. None of their criteria concerns the sort order.
+
+Studies of reviews show what the cap costs in practice. Across 120 systematic reviews, @bramer2016 found that Google Scholar's searches retrieved 72.8% of the included references in total, but only 46.4% were among the first 1,000 results that could be downloaded. In environmental-science case studies, @haddaway2015 found that grey literature in Google Scholar results appeared on average around page 80 of full-text searches, far beyond what most searchers view, and recommended that title searches for grey literature screen the first 200 to 300 results.
+
+Together these support one kind of claim about a capped, ranked system: that it can supplement a set of database searches with additional studies, especially grey literature. They do not support using it in place of a database whose results can be exported in full (@sec-validation-claims).
 
 ## Exercises {#sec-ranking-exercises}
 
@@ -200,7 +208,7 @@ A review team plans to add a Google Scholar search to its MEDLINE, Embase and Ps
 
 **Claim:** a supplementary route (@sec-validation-claims). It can add eligible studies the database searches missed; it cannot establish recall or replace any database search.
 
-**Report:** the exact query, the date, the number of results Google Scholar reported, the number screened (1,000, the documented cap), how records were exported (one at a time, or by a third-party tool whose use should itself be reported), and the eligible studies the route added that the databases had not found.
+**Report:** the exact query, the date, the number of results Google Scholar reported, the number screened (1,000, the documented cap), how records were exported (one at a time, or by a third-party tool whose use should itself be reported), and the eligible studies the route added that the databases had not found. In 120 reviews, fewer than half of the included references were within Google Scholar's first 1,000 results [@bramer2016], so the expected yield should be stated modestly.
 
 **Do not claim:** that the Google Scholar search was comprehensive, that it searched "all" of Google Scholar, or that a second run would return the same records. The ranking weights citations and recency [@scholarabout], so the 1,000 records screened favour well-cited and recent work, and nothing in Google Scholar's documentation promises that a second run will return the same records.
 :::
