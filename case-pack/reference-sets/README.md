@@ -45,7 +45,35 @@ Whether the review's own search in May 2017 found these records by another route
 1. Optionally, the exact Date Completed values for the four late-indexed records, with `case-pack/scripts/fetch_pubmed.py` once NCBI is reachable.
 2. The mapping of the ACP Journal Club entry (PMID 23588772), where the review's authors differ from PubMed's.
 
+## CD011787: Parents' and informal caregivers' views and experiences of communication about routine childhood vaccination (qualitative evidence synthesis)
+
+Built on 2026-10-21 from the included-studies reference list of Ames et al. (2017), read from the PubMed Central version (PMC5461870), using the same method as above. CLEF data: 2019 test set, qualitative topics.
+
+| | Count |
+|---|---|
+| Included studies (one listed report each) | 38 |
+| With a PubMed record | 34 |
+| In the CLEF pool | 31 |
+| Labelled eligible at full text in CLEF | 28 |
+
+**Not in PubMed (4).** Figueiredo 2011, Guillaume 2004, Tadesse 2009 and Tomlinson 2013 have no PubMed record that could be found by citation, title, author or DOI. Qualitative studies in nursing, health informatics and regional journals are a familiar coverage gap for MEDLINE-only searching; the review also searched Embase, CINAHL and Anthropology Plus.
+
+**In PubMed, missing from the pool (3).** Blaisdell 2016, Dubé 2016 and Sobo 2016. The strategy ends with `limit 103 to ED=19460101-20160830`, and a PubMed completion-date search shows all three were completed after 30 August 2016, while five in-pool 2014–2015 controls were completed before it. The same entry-date mechanism as CD010558.
+
+**In the pool, labelled not eligible (3).** Barbieri 2015, Berhanel 2000 and Harmsen 2015 are included studies, but CLEF labels them not relevant at both levels. Each has a quirk in the review's citation: a malformed volume (Barbieri), a first-author spelling (Berhanel) and a wrong article number (Harmsen, cited as page 1; it is article 1229). CLEF mapped references to PubMed by title search and edit distance (Kanoulas et al., 2019), so a mapping failure is the likely cause, though it is not documented record by record. A method that ranks these records highly would be marked down for it.
+
+**A mapping error of our own.** PubMed's citation matcher returned PMID 25563658, an article on alcohol mortality, for Harmsen 2015, because the review gives the page as 1. Checking every match against OpenAlex caught it. Automated mapping needs a verification step.
+
+### Uses in the book
+
+- **Chapter 3, search filters and headings.** The MEDLINE strategy combines a large subject-heading block with Ovid's built-in "qualitative (maximizes sensitivity)" filter and a language limit.
+- **Chapter 8, coverage.** Four of 38 included studies are not in PubMed at all.
+- **Chapter 10, validation.** Against the review's included studies, the CLEF labels recover 28 of 38 (74%): 4 lost to coverage, 3 to the entry-date limit and 3 to labelling. A benchmark score computed on the labels cannot see any of these.
+- **Chapter 11, updating.** A second instance of the entry-date mechanism.
+
 ## References
+
+Ames, H. M., Glenton, C., & Lewin, S. (2017). Parents' and informal caregivers' views and experiences of communication about routine childhood vaccination: A synthesis of qualitative evidence. *Cochrane Database of Systematic Reviews*, (2), CD011787. https://doi.org/10.1002/14651858.CD011787.pub2
 
 Ijaz, S., Davies, P., Williams, C. J., Kessler, D., Lewis, G., & Wiles, N. (2018). Psychological therapies for treatment-resistant depression in adults. *Cochrane Database of Systematic Reviews*, (5), CD010558. https://doi.org/10.1002/14651858.CD010558.pub2
 
