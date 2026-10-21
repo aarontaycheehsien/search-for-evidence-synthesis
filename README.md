@@ -6,7 +6,7 @@ Working title: *How Search Finds and Misses Studies: Information Retrieval for E
 
 **Read the draft online:** <https://aarontaycheehsien.github.io/search-for-evidence-synthesis/> (published from `main` by the workflow in `.github/workflows/publish.yml`).
 
-**Status:** early draft. Chapters 1 to 4 and 10 have first drafts; chapters marked "Not yet drafted" are outlines. Start with the [plan](docs/plan.md), the [chapter map](docs/chapter-map.md) and the [case pack](docs/case-pack.md).
+**Status:** early draft. Chapters 1 to 4, 9 and 10 have first drafts; chapters marked "Not yet drafted" are outlines. Start with the [plan](docs/plan.md), the [chapter map](docs/chapter-map.md) and the [case pack](docs/case-pack.md).
 
 ## Who it is for
 
