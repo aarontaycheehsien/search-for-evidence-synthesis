@@ -24,6 +24,12 @@ The emulation approximates Ovid MEDLINE; it is not Ovid:
 - MeSH headings and publication types are as PubMed holds them on the
   fetch date, which may differ from when the strategy was run.
 - Entry-date (ed) limits are not emulated; see the reference-set README.
+- Ovid's "qualitative (maximizes sensitivity)" limit in the CD011787
+  strategy is emulated only in its text part; see
+  ovid_qualitative_text_part. Records in the CLEF pool passed the whole
+  strategy, so an in-pool record that fails both the text part and the
+  review's own qualitative block must have been admitted by the limit's
+  subheading or heading parts.
 
 Usage:
   python case-pack/scripts/indexing_checks.py
@@ -244,12 +250,17 @@ COMMUNICATION_HEADINGS = [
 LANGUAGES = {"dan", "eng", "fre", "nor", "swe"}
 
 
-def ovid_qualitative_sensitive(r):
-    """Ovid's "qualitative (maximizes sensitivity)" limit; see QUALITATIVE_FILTER_SOURCE."""
-    return r.has(Terms("interview:", "experience:"), "mp") or r.has(Terms("qualitative"), "ti,ab")
+def ovid_qualitative_text_part(r):
+    """The text part of Ovid's "qualitative (maximizes sensitivity)" limit.
 
-
-QUALITATIVE_FILTER_SOURCE = "set after checking the Ovid and HIRU documentation"
+    Ovid documents the limit as: interview:.tw. or px.fs. or exp health
+    services administration/ (OvidGO, "Clinical Queries - Qualitative -
+    Maximized Sensitivity - Ovid MEDLINE", reviewed 2024-11-25; HIRU
+    hedges page, after Wong, Wilczynski and Haynes, 2004). The cached
+    records carry no subheadings and no MeSH tree, so px.fs. and the
+    exploded heading cannot be emulated; only interview:.tw. is.
+    """
+    return r.has(Terms("interview:"), "ti,ab")
 
 
 def cd011787_lines(r):
@@ -273,12 +284,13 @@ def cd011787_lines(r):
     line[83] = any(r.all_of([group, vti], "ti") or r.has(Adj(group, vab, 6), "ab") for group, vti, vab in pairs)
     line[84] = line[83] and line[24]
     line[85] = line[70] or line[84]
-    line[86] = line[85] and ovid_qualitative_sensitive(r)
+    line["86_text_part"] = line[85] and ovid_qualitative_text_part(r)
     line[87] = r.heading("Qualitative Research", "Interviews as Topic") or r.has(
         Terms("qualitative", "group discussion?", "focus group?", "themes"), "ti,ab"
     )
     line[88] = line[85] and line[87]
-    line[89] = line[86] or line[88]
+    # Line 86 cannot be emulated in full, so line 89 is a lower bound.
+    line["89_lower_bound"] = line["86_text_part"] or line[88]
     animals_only = r.heading("Animals") and not r.heading("Humans")
     excluded_types = r.pub_type("Review", "Meta-Analysis", "News", "Comment", "Editorial")
     line[101] = (
@@ -287,8 +299,6 @@ def cd011787_lines(r):
         or r.journal == "the cochrane database of systematic reviews"
         or r.has(Terms("systematic review", "literature review"), "ti")
     )
-    line[102] = line[89] and not line[101]
-    line[103] = line[102] and r.language in LANGUAGES
     return line
 
 
@@ -298,12 +308,11 @@ def cd011787_row(r):
         "subject_route_headings": line[70],
         "subject_route_text": line[84],
         "subject_block": line[85],
-        "ovid_qualitative_filter": ovid_qualitative_sensitive(r),
+        "ovid_filter_text_part": ovid_qualitative_text_part(r),
         "custom_qualitative_block": line[87],
-        "qualitative_requirement_met": line[89],
-        "removed_by_not_block": line[89] and line[101],
+        "qualitative_met_by_text_or_custom_block": line["89_lower_bound"],
+        "matches_not_block": line[101],
         "language_limit_met": r.language in LANGUAGES,
-        "admitted_before_date_limit": line[103],
     }
 
 

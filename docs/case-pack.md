@@ -11,6 +11,7 @@ The case pack supplies the inputs and worked answers for every exercise in the b
 |---|---|---|
 | Reference sets for CD010558 (6 studies, 20 references) and CD011787 (38 qualitative studies), mapped to identifiers and compared with the CLEF pools and labels | [`case-pack/reference-sets/`](../case-pack/reference-sets/README.md) | Chapters 1, 2, 3, 8, 10, 11 |
 | Counts of CLEF 2019's search-task and screening-task labels against each topic's pool | [`case-pack/data/clef-2019/label-scope.csv`](../case-pack/data/clef-2019/README.md) | Chapter 10 |
+| Which strategy lines (headings, publication types, text words, qualitative filters) admit each included record of CD010558 and CD011787 | [`case-pack/data/indexing/`](../case-pack/data/indexing/README.md) | Chapters 1, 3 |
 | CD010558 screening logs from three CLEF 2019 participant runs | [`case-pack/data/clef-2019/CD010558/`](../case-pack/data/clef-2019/CD010558/README.md) | Chapter 9 |
 | Moran et al. (2021) labels (4,882 records), three detailed ASReview simulation logs and 30 more across ten starting pairs | [`case-pack/data/moran-2021/`](../case-pack/data/moran-2021/README.md) | Chapters 9, 10 |
 | Moran deduplication and database-contribution analysis | [`case-pack/data/moran-2021/`](../case-pack/data/moran-2021/README.md) | Chapters 8, 10, 11 |
