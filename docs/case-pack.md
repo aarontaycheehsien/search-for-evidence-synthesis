@@ -11,7 +11,7 @@ The case pack supplies the inputs and worked answers for every exercise in the b
 |---|---|---|
 | Reference sets for CD010558 (6 studies, 20 references) and CD011787 (38 qualitative studies), mapped to identifiers and compared with the CLEF pools and labels | [`case-pack/reference-sets/`](../case-pack/reference-sets/README.md) | Chapters 1, 2, 3, 8, 10, 11 |
 | CD010558 screening logs from three CLEF 2019 participant runs | [`case-pack/data/clef-2019/CD010558/`](../case-pack/data/clef-2019/CD010558/README.md) | Chapter 9 |
-| Moran et al. (2021) labels (4,882 records) and three ASReview simulation logs | [`case-pack/data/moran-2021/`](../case-pack/data/moran-2021/README.md) | Chapters 9, 10 |
+| Moran et al. (2021) labels (4,882 records), three detailed ASReview simulation logs and 30 more across ten starting pairs | [`case-pack/data/moran-2021/`](../case-pack/data/moran-2021/README.md) | Chapters 9, 10 |
 | Moran deduplication and database-contribution analysis | [`case-pack/data/moran-2021/`](../case-pack/data/moran-2021/README.md) | Chapters 8, 10, 11 |
 | Moran translation case: the Web of Science and Scopus strings compared against dated documentation, with exercises | [`case-pack/cases/moran-translation.md`](../case-pack/cases/moran-translation.md) | Chapters 2, 7, 11 |
 | Synthetic collection v0.1 (33 records, 9 eligible studies) with generated worked answers | [`case-pack/synthetic/`](../case-pack/synthetic/README.md) | Chapters 1, 2, 3, 7, 8, 11 |
@@ -119,9 +119,8 @@ Version 0.1 is built: a fictional education review with 33 records and 9 eligibl
 1. Optionally confirm the Moran strings against Appendix S2 of the supporting information (check 1 above).
 2. Optionally record the exact Date Completed values for the four late-indexed CD010558 records with `case-pack/scripts/fetch_pubmed.py`, which needs network access to NCBI. The explanation itself is confirmed.
 3. Decide whether to post the SYNERGY query ([`docs/outreach/synergy-moran-corrected.md`](outreach/synergy-moran-corrected.md)).
-4. Run the Moran simulations with several prior pairs and seeds to show variation, not one run.
-5. Build a reference set for CD012069 if it is used (CD011787 is done).
-6. Pilot the synthetic collection's exercises and extend it after feedback.
+4. Build a reference set for CD012069 if it is used (CD011787 is done).
+5. Pilot the synthetic collection's exercises and extend it after feedback.
 
 ## References
 
