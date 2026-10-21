@@ -24,26 +24,26 @@ Built on 2026-10-21 from the included-studies reference list of Ijaz et al. (201
 The two studies with no report in the pool:
 
 - **Wiles 2007** (the CoBalT pilot trial). Its only publication has no PubMed record, so no MEDLINE strategy could have found it. This is a coverage boundary.
-- **Town 2017** (the Halifax ISTDP trial). Its report is in PubMed and appears to satisfy the strategy, but it is not in the pool.
+- **Town 2017** (the Halifax ISTDP trial). Its report is in PubMed and appears to satisfy the strategy's search terms, but its indexing was completed after the strategy's date limit (see below).
 
 Of the reports missing from the pool:
 
 - **Two carry the Letter or Comment publication types** (PMIDs 23706799 and 23588772). The strategy's exclusion lines (`letter/`, `comment/`) are designed to remove such records. Here the exclusion cost two reports but no study, because other reports of CoBalT were retrieved.
-- **Two are 2017 trial reports** (Nakagawa 2017 and Town 2017). The strategy ends with `limit 32 to ed = "19480101-20170516"`. In Ovid MEDLINE, `ed` holds NLM's Date Completed, the date indexing finished, not the date the record first appeared (Wolters Kluwer, n.d.). When CLEF re-ran the strategy in 2019, any record indexed after 16 May 2017 would fall outside the limit even if it was published before. **This is the leading explanation but has not been confirmed**: it needs the Date Completed values for PMIDs 28252882 and 28266318, which this environment could not fetch.
-- **Two 2016 reports are absent for no reason identified** (PMIDs 26777773 and 27100125). Both carry the subject heading `Depressive Disorder, Treatment-Resistant`, and their records appear to satisfy the strategy. Possible causes include the content of the Ovid demonstration interface CLEF used, but that is untested.
+- **Four were indexed after the date limit** (PMIDs 28252882, 28266318, 26777773 and 27100125). The strategy ends with `limit 32 to ed = "19480101-20170516"`. In Ovid MEDLINE, `ed` holds NLM's Date Completed, the date indexing finished, not the date the record first appeared (Wolters Kluwer, n.d.). A PubMed search on the completion-date field (`[DCOM]`) on 2026-10-21 shows that all four were completed between 17 May and 31 December 2017, while three in-pool controls (23219570, 25335963, 26799332) and both letter or comment records were completed by 16 May 2017. So when CLEF re-ran the strategy in 2019, the limit excluded them, although two of them (26777773 and 27100125) had been published in 2016. Completion dates can change when records are revised, so this reflects PubMed today rather than the database in 2019; the pattern across all four makes the explanation very likely.
+
+Whether the review's own search in May 2017 found these records by another route, such as the in-process segment or other databases, cannot be told from these data.
 
 ### Uses in the book
 
 - **Chapter 1, record, report and study.** Ten eligible records in the pool are reports of four studies; six of them are CoBalT. The Nakagawa study is represented only by its protocol.
 - **Chapter 10, validation.** Measured against the review's included studies, the re-run MEDLINE strategy recovers 4 of 6 studies and 10 of 16 PubMed-indexed publications. A benchmark that counts only the pool would report complete recall.
-- **Chapter 11, updating.** The entry-date case shows why a date limit's field matters when a strategy is re-run.
+- **Chapter 11, updating.** The entry-date case shows why the field behind a date limit matters when a strategy is re-run: four reports, two of them published in 2016, fall outside a limit that ends in May 2017 because their indexing finished later.
 - **Chapter 2, exclusions.** The `NOT` block's effect on letters and comments that a review later cites.
 
 ### To confirm before publication
 
-1. Date Completed for PMIDs 28252882 and 28266318.
-2. Whether PMIDs 26777773 and 27100125 are retrieved when the strategy is run in Ovid MEDLINE today without the date limit.
-3. The mapping of the ACP Journal Club entry (PMID 23588772), where the review's authors differ from PubMed's.
+1. Optionally, the exact Date Completed values for the four late-indexed records, with `case-pack/scripts/fetch_pubmed.py` once NCBI is reachable.
+2. The mapping of the ACP Journal Club entry (PMID 23588772), where the review's authors differ from PubMed's.
 
 ## References
 

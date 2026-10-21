@@ -35,7 +35,7 @@ All the candidate sources build their labels from a review's own search results.
 - **CLEF TAR** gives the PubMed records returned when the organisers re-ran each review's Ovid MEDLINE strategy with the review's date range, and drops cited studies outside that result (Kanoulas et al., 2019). It can test screening order and stopping, and whether an *alternative* query loses records the original admitted. It cannot show what the original strategy missed.
 - **SYNERGY** labels each review's screened pool. The same limit applies.
 
-The CD010558 reference set shows the size of the gap in one case: the CLEF pool contains reports of 4 of the review's 6 included studies, and 10 of its 16 PubMed-indexed publications. One missing study has no PubMed record; for the other, the leading explanation is that Ovid's `ed` field holds the Date Completed, so re-running the review's entry-date limit later excludes records indexed after the cut-off (Wolters Kluwer, n.d.). That explanation is not yet confirmed.
+The CD010558 reference set shows the size of the gap in one case: the CLEF pool contains reports of 4 of the review's 6 included studies, and 10 of its 16 PubMed-indexed publications. One missing study has no PubMed record. The other, and three further reports, were excluded because Ovid's `ed` field holds the Date Completed (Wolters Kluwer, n.d.): a PubMed completion-date search shows all four were completed after the review's 16 May 2017 limit, so re-running that limit in 2019 dropped them, including two reports published in 2016.
 
 ## Sources
 
@@ -117,7 +117,7 @@ Version 0.1 is built: a fictional education review with 33 records and 9 eligibl
 ## Remaining work
 
 1. Optionally confirm the Moran strings against Appendix S2 of the supporting information (check 1 above).
-2. Confirm Date Completed for PMIDs 28252882 and 28266318, and test why PMIDs 26777773 and 27100125 are missing from the CD010558 pool. `case-pack/scripts/fetch_pubmed.py` records Date Completed but needs network access to NCBI.
+2. Optionally record the exact Date Completed values for the four late-indexed CD010558 records with `case-pack/scripts/fetch_pubmed.py`, which needs network access to NCBI. The explanation itself is confirmed.
 3. Decide whether to post the SYNERGY query ([`docs/outreach/synergy-moran-corrected.md`](outreach/synergy-moran-corrected.md)).
 4. Run the Moran simulations with several prior pairs and seeds to show variation, not one run.
 5. Build reference sets for CD011787 and CD012069 if they are used.
