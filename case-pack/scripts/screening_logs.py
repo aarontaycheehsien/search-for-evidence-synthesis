@@ -157,6 +157,36 @@ def aggregate(summaries):
     return result
 
 
+AGGREGATE_LABELS = {
+    "wss_at_95_title_abstract": "WSS@95 (title and abstract)",
+    "screened_to_95pc_title_abstract": "Records screened to find 95% of title-and-abstract inclusions",
+    "screened_to_all_full_text": "Records screened to find every full-text inclusion",
+    "full_text_recall_at_20pc": "Full-text recall after screening 20%",
+    **{f"stop_{n}_screened": f"Stop after {n} consecutive irrelevant: records screened" for n in STREAKS},
+    **{f"stop_{n}_full_text_unseen": f"Stop after {n} consecutive irrelevant: full-text inclusions unseen" for n in STREAKS},
+}
+
+
+FRACTION_METRICS = {"wss_at_95_title_abstract", "full_text_recall_at_20pc"}
+
+
+def aggregate_markdown(result):
+    """Render aggregate() output as a Markdown table of median (min to max)."""
+    names = list(result)
+    lines = [
+        "| Measure | " + " | ".join(f"{n} ({result[n]['runs']} runs)" for n in names) + " |",
+        "|---|" + "---|" * len(names),
+    ]
+    for metric, label in AGGREGATE_LABELS.items():
+        cells = []
+        for n in names:
+            v = result[n][metric]
+            fmt = (lambda x: f"{x:.2f}") if metric in FRACTION_METRICS else (lambda x: f"{x:,.1f}".replace(".0", ""))
+            cells.append(f"{fmt(v['median'])} ({fmt(v['min'])} to {fmt(v['max'])})")
+        lines.append(f"| {label} | " + " | ".join(cells) + " |")
+    return "\n".join(lines) + "\n"
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--pool", type=Path, required=True, help="pool.csv from build_moran_pool.py")
@@ -192,7 +222,9 @@ def main(argv=None):
 
     (args.out / "summary.json").write_text(json.dumps(summaries, indent=2) + "\n", encoding="utf-8")
     if args.aggregate:
-        (args.out / "aggregate.json").write_text(json.dumps(aggregate(summaries), indent=2) + "\n", encoding="utf-8")
+        result = aggregate(summaries)
+        (args.out / "aggregate.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+        (args.out / "aggregate.md").write_text(aggregate_markdown(result), encoding="utf-8")
     for s in summaries:
         print(s["run"], "WSS@95 =", s["wss_at_95_title_abstract"], "stops:", json.dumps(s["stopping"]))
 

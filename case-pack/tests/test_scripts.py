@@ -147,3 +147,11 @@ class MoranSourcesTest(unittest.TestCase):
         self.assertEqual(entries[0]["title"], "A Title Over Two Lines")
         self.assertEqual(clean_doi(entries[0]["doi"]), "10.1890/0012-9658(1997)078[1266:rflrso]2.0.co;2")
         self.assertEqual(clean_doi(entries[1]["doi"]), "10.1037/0022-006x.70.5.1119")
+
+    def test_aggregate_markdown(self):
+        from screening_logs import aggregate, aggregate_markdown, summarise
+
+        runs = [summarise(f"m_s{i}", [], [1, 0, 1, 0], [1, 0, 0, 0], 100, priors=0) for i in (1, 2)]
+        table = aggregate_markdown(aggregate(runs))
+        self.assertIn("| Measure | m (2 runs) |", table)
+        self.assertIn("Records screened to find every full-text inclusion | 1 (1 to 1) |", table)
