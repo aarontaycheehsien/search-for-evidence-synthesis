@@ -1,0 +1,21 @@
+review,study_id,report_no,reference_short,pmid,doi,mapping_method,mapping_confidence,in_clef_pool,clef_abstract_label,clef_fulltext_label,note
+CD010558,Harley 2008,1,"Feldman 2009, Behav Res Ther 47:316-21",19232571,10.1016/j.brat.2009.01.005,citation lookup; PubMed metadata checked,high,1,1,1,
+CD010558,Harley 2008,2,"Harley 2008, J Nerv Ment Dis 196(2):136-43",18277222,10.1097/NMD.0b013e318162aa3f,citation lookup; PubMed metadata checked,high,1,1,1,
+CD010558,Nakagawa 2017,1,"Nakagawa 2017, J Clin Psychiatry 78(8):1126-35",28252882,10.4088/JCP.15m10511,PMID given in review; PubMed metadata checked,high,0,,,Results paper absent from pool; the study is represented in CLEF only by its protocol
+CD010558,Nakagawa 2017,2,"Nakagawa 2014, BMJ Open 4:e006359",25335963,10.1136/bmjopen-2014-006359,citation lookup; PubMed metadata checked,high,1,1,1,Review cites the journal as British Medical Journal; it is BMJ Open
+CD010558,Souza 2016,1,ClinicalTrials.gov NCT01896349,,,trial registry record,not applicable,0,,,Not a bibliographic record
+CD010558,Souza 2016,2,"Souza 2016, J Affect Disord 193:373-80",26799332,10.1016/j.jad.2016.01.004,citation lookup; PubMed metadata checked,high,1,1,1,
+CD010558,Town 2017,1,ClinicalTrials.gov NCT01141426,,,trial registry record,not applicable,0,,,Not a bibliographic record
+CD010558,Town 2017,2,"Town 2017, J Affect Disord 214:15-25",28266318,10.1016/j.jad.2017.02.035,PMID given in review; PubMed metadata checked,high,0,,,Absent from pool; leading explanation is the entry-date limit (see README)
+CD010558,Wiles 2007,1,"Wiles 2008, Behav Cogn Psychother 36:21-33",,10.1017/S135246580700389X,DOI from OpenAlex; NCBI ID converter returned no PMID,high,0,,,Not in PubMed; no MEDLINE strategy could retrieve it
+CD010558,Wiles 2016,1,"Abel 2016, J Consult Clin Psychol 84(8):726-37",27100125,10.1037/ccp0000101,citation lookup; PubMed metadata checked,high,0,,,Absent from pool; cause not identified
+CD010558,Wiles 2016,2,"ACP Journal Club 2013, Ann Intern Med 158(8):JC7",23588772,10.7326/0003-4819-158-8-201304160-02007,title and page match,medium,0,,,Review lists authors Abel A et al.; PubMed lists McKnight R and Geddes J. Publication type Comment
+CD010558,Wiles 2016,3,"Button 2015, J Affect Disord 174:272-80",25527998,10.1016/j.jad.2014.11.057,citation lookup; PubMed metadata checked,high,1,1,1,
+CD010558,Wiles 2016,4,"Hollinghurst 2014, Br J Psychiatry 204(1):69-76",24262818,10.1192/bjp.bp.112.125286,citation lookup; PubMed metadata checked,high,1,1,1,
+CD010558,Wiles 2016,5,"Simmonds 2013, Fam Pract 30(6):705-11",23851972,10.1093/fampra/cmt028,citation lookup; PubMed metadata checked,high,1,1,1,
+CD010558,Wiles 2016,6,"Thomas 2012, Contemp Clin Trials 33(2):312-9",22101205,10.1016/j.cct.2011.10.016,citation lookup; PubMed metadata checked,high,1,1,1,
+CD010558,Wiles 2016,7,"Wiles 2016, Lancet Psychiatry 3(2):137-44",26777773,10.1016/S2215-0366(15)00495-2,citation lookup; PubMed metadata checked,high,0,,,Absent from pool; cause not identified
+CD010558,Wiles 2016,8,"Wiles 2013, Lancet 381(9880):1814-5 (authors' reply)",23706799,10.1016/S0140-6736(13)61119-8,author and journal search; PubMed metadata checked,high,0,,,Publication types Letter and Comment; the strategy's exclusion lines target these
+CD010558,Wiles 2016,9,"Wiles 2014, Health Technol Assess 18(31)",24824481,10.3310/hta18310,citation lookup; PubMed metadata checked,high,1,1,1,
+CD010558,Wiles 2016,10,"Wiles 2013, Lancet 381(9864):375-84",23219570,10.1016/S0140-6736(12)61552-9,citation lookup; PubMed metadata checked,high,1,1,1,
+CD010558,Wiles 2016,11,"Wiles 2016, Lancet Psychiatry 3:137-44 (listed again)",26777773,10.1016/S2215-0366(15)00495-2,citation lookup,high,0,,,Duplicate of report 7 in the review's own reference list; author initials differ between the two entries
