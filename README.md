@@ -41,6 +41,8 @@ Third-party figures and product screenshots in the earlier book are not carried 
 | `case-pack/scripts/`, `case-pack/tests/` | Scripts that rebuild the data, and their offline tests |
 | `case-pack/cases/` | Worked teaching cases built on the data, such as the Moran translation case |
 | `claims/register.csv` | Dated register of product claims and the documentation each rests on |
+| `docs/pilot/` | Materials for piloting Chapters 1, 3 and 10 with practising librarians: protocol, guides, knowledge check, findings log |
+| `.github/ISSUE_TEMPLATE/` | Feedback forms: pilot feedback and error reports |
 | `docs/outreach/` | Drafts of messages to other projects, not sent |
 | `AGENTS.md` | Working rules for contributors and coding agents |
 | `LICENSE` | CC BY 4.0, with the exclusions listed there |

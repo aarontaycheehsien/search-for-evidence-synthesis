@@ -110,7 +110,7 @@ Format, disciplinary balance, product-claim maintenance and the health running c
 2. Build the case pack and record provenance and licences. (First version built on 2026-10-21: a reference set, screening logs for both cases and the synthetic collection. Remaining items are listed in [`case-pack.md`](case-pack.md).)
 3. Draft Chapter 1 and Chapter 10 first: they define the problem and the evidence needed to judge a solution. (First drafts written on 2026-10-21, with the book skeleton and a GitHub Pages workflow.)
 4. Draft Chapter 3, the largest gap, then Chapters 2 and 4 around the PubMed running case. Register every product claim with a check date. (Chapters 2, 3 and 4 first drafts written on 2026-10-22.)
-5. Pilot Chapters 1, 3 and 10 and their exercises with a small group of practising evidence-synthesis librarians. Record where they fail.
+5. Pilot Chapters 1, 3 and 10 and their exercises with a small group of practising evidence-synthesis librarians. Record where they fail. (Materials prepared on 2026-10-22 in [`pilot/`](pilot/README.md): protocol, participant and facilitator guides, knowledge check, capstone task, findings log and GitHub feedback forms. Participants not yet recruited.)
 6. Draft the remaining chapters, adjusting the depth of Part II to what the pilot showed readers needed.
 7. Publish a first public draft on GitHub Pages.
 
