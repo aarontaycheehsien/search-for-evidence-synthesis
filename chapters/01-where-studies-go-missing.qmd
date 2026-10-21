@@ -1,17 +1,237 @@
 # Where eligible studies go missing {#sec-missing}
 
-::: {.callout-note}
-## Not yet drafted
+A review's findings rest on the studies it includes. Between a study being reported and a reviewer deciding to include it, there are several places where it can drop out, and most of them leave no trace in the finished review. A search strategy that returns 2,815 records looks thorough whatever it failed to admit; a screening log that ends with ten inclusions looks complete whether or not an eleventh was waiting further down.
 
-This chapter is an outline. See the [plan](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/plan.md) and [chapter map](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/chapter-map.md) for its sources and status.
+This chapter names those places. It gives the vocabulary the rest of the book uses, and it argues that most disputes about search tools are really disputes about which of these places a tool affects.
+
+**After this chapter you should be able to** locate a loss at coverage, record content and indexing, query admission, display and export limits, deduplication, or prioritisation and stopping, and say which measurement would reveal it.
+
+## A strategy, run again {#sec-missing-case}
+
+The Cochrane review *Psychological therapies for treatment-resistant depression in adults* [@ijaz2018], review CD010558, included six randomised trials of psychological therapy for adults whose depression had not responded to antidepressant medication. Its MEDLINE strategy combines a block for the condition with a block for trial design; it has no block for the therapies, leaving the intervention to be judged at screening. It then removes letters, editorials, news, comments, case reports, historical articles and animal studies with a `NOT` block, and ends with a date limit:
+
+```
+32  16 not 31
+33  limit 32 to ed = "19480101-20170516"
+```
+
+In 2019 the organisers of the CLEF Technology Assisted Review task re-ran this strategy in Ovid MEDLINE and released the 2,815 PubMed records it returned, with the review team's decisions mapped onto them [@kanoulas2019]. In those screening labels, 37 records pass title and abstract screening and 10 are included after full text. Measured against its own labels, the re-run strategy found every included record.
+
+The review's reference list tells a different story. @tbl-cd010558 sets the six included studies against what the re-run returned. The six studies have 17 distinct publications and two trial-registry records between them; 16 of the publications have a PubMed record; the re-run pool contains 10 of them, reporting four of the six studies.
+
+| Study | Publications listed in the review | With a PubMed record | In the re-run pool | Publications missing from the pool, and why |
+|---|---|---|---|---|
+| Harley 2008 | 2 | 2 | 2 | None |
+| Nakagawa 2017 | 2 | 2 | 1 (the protocol) | The results paper: indexing completed after the date limit |
+| Souza 2016 | 1, plus a registry record | 1 | 1 | None (the registry record is not a MEDLINE record) |
+| Town 2017 | 1, plus a registry record | 1 | 0 | The trial report: indexing completed after the date limit |
+| Wiles 2007 (CoBalT pilot) | 1 | 0 | 0 | The pilot report: no PubMed record |
+| Wiles 2016 (CoBalT) | 10 | 10 | 6 | Two 2016 papers: indexing completed after the date limit. A letter and a journal-club commentary: removed by the `NOT` block |
+| **Total** | **17, plus 2 registry records** | **16** | **10** | |
+
+: The six studies included in CD010558 and what the re-run MEDLINE strategy returned. Built from the review's reference list and checked against PubMed and OpenAlex on 21 October 2026; the case pack's reference set gives every identifier. {#tbl-cd010558}
+
+Three different mechanisms account for the gaps.
+
+**The pilot trial is not in PubMed.** Its only report has no PubMed record, so no MEDLINE strategy could find it, however well written. This is a *coverage* loss: the report exists, but not in the source searched.
+
+**Four reports were indexed too late for the date limit.** In Ovid MEDLINE the `ed` field holds the date NLM completed the record's indexing, not the date it was published or first appeared [@ovidmedline]. PubMed's completion dates for all four reports fall between 17 May and 31 December 2017, after the limit's end date, while three in-pool reports checked for comparison, and the letter and commentary discussed below, were completed before it. Re-running the strategy in 2019 with its original limit therefore excluded them, including two papers published in 2016. One of them, the Town trial report, is the study's only journal publication; another is the Nakagawa results paper, leaving that study represented in the pool only by its protocol. This is an *admission* loss: the records were in the database, but the query's limit did not let them through.
+
+**Two reports were removed by the `NOT` block.** A letter by the CoBalT authors and a journal-club commentary on the trial carry the Letter and Comment publication types, and the strategy's `NOT` block removes every record with those types whatever else it matches. This is also an admission loss, and a deliberate one. Here it cost two reports but no study, because other CoBalT reports were admitted.
+
+This is not a story of a review that failed. The review team included all six studies, so they found the missing reports by some route: the database's in-process records, another database, a registry, or contact with investigators. The record of the search does not say which. What the case shows is that the strategy as recorded, run again, does not reproduce the review's evidence base, and that a score computed on the re-run's own labels reports complete recall for a pool that lacks a third of the review's studies.
+
+The rest of this chapter takes the case apart: what counts as relevant, what is being counted, and where along the way a study can be lost.
+
+## Topical relevance and eligibility {#sec-missing-relevance}
+
+Search systems estimate whether a record is *about* something. Even a Boolean strategy is an estimate of aboutness: it admits a record when its words, headings and fields match the strategy's terms. A review asks a different question, whether a study is *eligible*: whether its population, intervention, comparison, outcomes and design meet criteria set before screening began.
+
+The two diverge in both directions. A record can be squarely on topic and ineligible: in the book's synthetic collection, a fictional review of peer tutoring for reading comprehension in primary schools, ten records share most of the topic's terms yet fail on population (secondary-school pupils), intervention (adult volunteers or teacher-led groups), outcome (fluency only, or mathematics), design (no comparison group, or qualitative interviews), setting (special schools) or publication type (a review or an editorial). And an eligible study can be described in words a searcher did not expect. One synthetic study is "a pupil-led reading programme" in which children "coached one another" and were tested on "reading for meaning"; it never uses *peer*, *tutor* or *comprehension* in its title or abstract.
+
+Because eligibility is judged by people against criteria that no index records, a search for eligible studies must admit a great deal that is merely on topic. Precision is low by design:
+
+- CD010558's re-run pool has 2,815 records. Of these, 37 (1.3%) pass title and abstract screening and 10 (0.4%) are included.
+- The non-health running case, a behavioural-ecology review of nutritional condition and risk-taking [@moran2021], has 4,882 records in the case pack's labelled pool. Of these, 586 (12%) pass title and abstract screening and 137 (2.8%) are included.
+
+Low precision is not a defect to be engineered away at any cost. It is the price of admitting eligible studies whose records do not look like the searcher's idea of the topic. Every proposal to make searching more efficient is, in effect, a proposal about which on-topic or off-topic records the review can afford not to see, and the question is always whether eligible ones go with them.
+
+## Record, report and study {#sec-missing-units}
+
+Three units are easily confused, and the confusion changes the numbers.
+
+- A **record** is an entry in a database or a result list: a PubMed citation, a Scopus record, a row in a screening tool. The same publication usually has several records, one per database.
+- A **report** is a document describing a study: a journal article, a conference abstract, a protocol, a thesis, a registry entry, a letter.
+- A **study** is the investigation itself, the unit the review includes and analyses. A study can have many reports.
+
+In CD010558, the 10 included records in the re-run pool are reports of four studies, and six of them are reports of one trial, CoBalT. The Nakagawa study appears only through its protocol. The synthetic collection plants the same structure: its first study has a journal article, a second database's record of that same article, and a conference abstract of interim results.
+
+The distinction matters for four reasons.
+
+1. **Recall depends on the unit.** Against the review's PubMed-indexed publications, the re-run strategy recovers 10 of 16 (63%); against all publications, 10 of 17 (59%); against studies, 4 of 6 (67%); against its own screening labels, 10 of 10. Each figure is correct, and each answers a different question.
+2. **A study needs only one report to be found.** The `NOT` block cost two CoBalT reports but not the study. A loss of a study's only report, as with the Town trial, costs the study.
+3. **Finding a study is not finding its results.** A protocol or registry record can lead a reviewer to a study whose results paper the search did not admit, but only if someone follows it up.
+4. **Deduplication works on records; eligibility is judged on studies.** Merging two records of the same article is correct; merging an abstract with the article it previews, or two different studies with similar titles, is not. The synthetic collection's interim abstract is a second report of its study, not a duplicate record.
+
+## Where a study can drop out {#sec-missing-boundaries}
+
+@fig-boundaries lays out the path from a reported study to an included one. Each arrow is a boundary where a study can be lost, and each is decided by something different.
+
+```{mermaid}
+%%| label: fig-boundaries
+%%| fig-cap: "The boundaries between a reported study and an included one. A study is lost if every one of its reports fails at some boundary. The dashed link marks the decision to stop searching, which fixes which sources are searched at all."
+flowchart TB
+  R["A report of the study exists"] -->|"1 coverage"| C["A record is in a source that was searched"]
+  C -->|"2 record content and indexing"| D["The record carries the words, headings and fields the strategy uses"]
+  D -->|"3 query logic and limits"| A["The strategy admits the record"]
+  A -->|"4 display and export limits"| X["The record reaches the screening set"]
+  X -->|"5 deduplication"| K["The record survives deduplication"]
+  K -->|"6 prioritisation and stopping"| V["Someone screens the record"]
+  V -->|"7 eligibility judgement"| I["The study is included"]
+  S["Decision to stop searching"] -.-> C
+```
+
+@tbl-boundaries gives an example of each from the case pack and the first test to run when a loss is suspected. The last boundary, eligibility judgement, is outside the search, but it produces the same symptom, an eligible study absent from the review, so a diagnosis has to rule it out.
+
+| Boundary | What decides it | Example | First test |
+|---|---|---|---|
+| 1. Coverage | Which sources are searched, and what each holds | The CoBalT pilot has no PubMed record. In a second Cochrane review in the case pack, CD011787, 4 of 38 included studies have none | A known-item search for the report in each source |
+| 2. Record content and indexing | What the record contains: title, abstract, headings, publication types, dates | A synthetic record with no abstract; another assigned the wrong subject heading | Read the full record as the database holds it |
+| 3. Query logic and limits | The strategy's terms, Boolean structure, `NOT` lines and limits | CD010558's `NOT` block and `ed` limit; a synthetic `NOT "secondary school*"` line that removes an eligible study mentioning secondary schools in passing | Run the strategy line by line, combined with the record's identifier |
+| 4. Display and export limits | How many results a system shows or exports, and in what order | A ranked system that shows only the top of a long result list (@sec-ranking) | Compare the result count with what was exported |
+| 5. Deduplication | The matching rule and its threshold | Moran's initial export of 7,208 records leaves between 5,390 and 5,552 after deduplication, depending on the rule. A synthetic title-similarity threshold of 0.90 merges two different studies and loses one | Inspect the pairs merged near the threshold |
+| 6. Prioritisation and stopping | The screening order and the rule for stopping | On CD010558, one BM25 ranking meets a "stop after 50 consecutive irrelevant records" rule at record 146, having shown 2 of the 10 included records | Compare the stopping point with labelled simulations (@sec-stopping) |
+| 7. Eligibility judgement | Reviewers' decisions | Outside the search, but the same symptom | Check the screening record for the report |
+
+: Boundaries where an eligible study can be lost, with examples from the case pack. Sources: the CD010558 and CD011787 reference sets, the Moran deduplication analysis, the CLEF screening logs and the synthetic collection, all in the case pack. {#tbl-boundaries}
+
+Three observations follow.
+
+**Losses compound.** A study is lost only if every one of its reports fails somewhere, but each report can fail at a different boundary. The Town trial's journal article failed at the date limit and its registry record at coverage; either alone would have been survivable had the other got through.
+
+**Different boundaries need different remedies.** Adding synonyms cannot recover a report that is not in the database. Adding a database cannot recover a report removed by a `NOT` line that would be applied there too. A better screening order cannot recover a record the search never admitted. Before choosing a remedy, locate the boundary.
+
+**Deciding when to stop searching is a boundary too.** Coverage depends on which sources and routes were searched, which depends on a decision to stop adding them. @booth2010 identified eight methods for making that decision, from capture–recapture estimates of how many studies remain [@kastner2009] to theoretical saturation, and found little formal evaluation of any of them. Stopping a search and stopping screening share the same difficulty, an unknown number of eligible studies not yet seen, and @sec-stopping treats them together.
+
+## Measuring loss without knowing the total {#sec-missing-measures}
+
+A synthetic example shows what can and cannot be measured. It runs through the book.
+
+::: {.callout-note}
+## The 100/90/81 example (synthetic)
+
+A fully labelled teaching collection holds 100 eligible reports. A search admits 90 of them. Screening, prioritised and stopped early, finds 81 of those 90.
+
+- **Retrieval recall** is 90 out of 100, or 90%.
+- **Screening recall within the pool** is 81 out of 90, or 90%.
+- **End-to-end recovery** is 81 out of 100, or 81%: the product of the two.
 :::
 
-**After this chapter you should be able to** locate a loss at coverage, indexing, query admission, ranking or export limits, deduplication, prioritisation or stopping.
+A live review knows only the 81 it found and the number of records it screened. It does not know the 100, because no one knows every eligible report that exists. If screening stopped early, it does not know the 90 either, because the unscreened records were never judged.
 
-## Planned contents
+Two errors follow from this, and the rest of the book returns to both.
 
-- Opening case: what the CD010558 MEDLINE strategy finds when re-run.
-- Topical relevance versus eligibility.
-- Record, report and study.
-- The boundaries where an eligible study can be lost.
-- The synthetic 100/90/81 example.
+- **Reporting a stage's recall as the review's recall.** A screening tool evaluated on a labelled pool can show 90% recall within the pool. That says nothing about the 10 reports the search never admitted, and the review's recovery is lower than either stage's figure.
+- **Treating a benchmark's labels as the total.** A benchmark built from a review's own search results knows the 90, not the 100. CD010558's screening labels know 10 records; the review's reference list has 16 PubMed records, 17 publications and six studies. A method scored on those labels can reach 100% recall while a third of the studies are missing.
+
+Neither error is a matter of arithmetic. Both come from losing track of the denominator: which records, reports or studies a recall figure is out of, and how that set was found. @sec-validation is about choosing that denominator deliberately.
+
+## How the rest of the book uses this
+
+Each later chapter takes one or more boundaries and explains the mechanism behind it.
+
+- Coverage: citation, similarity and other supplementary routes (@sec-supplementary).
+- Record content and indexing: Boolean admission and analysers (@sec-boolean); subject indexing, search filters and classifiers (@sec-indexing).
+- Query logic and limits: Boolean admission (@sec-boolean); developing and translating the strategy (@sec-developing).
+- Display and export limits: ranking (@sec-ranking), learnt representations (@sec-representations) and multi-stage pipelines (@sec-pipelines).
+- Deduplication, and recording what each boundary did: recording, reporting and updating (@sec-recording).
+- Prioritisation and stopping: stopping in searching and screening (@sec-stopping).
+- Measuring all of them: validation (@sec-validation).
+
+## Exercises {#sec-missing-exercises}
+
+All inputs are in this chapter or the case pack (`case-pack/reference-sets/`, `case-pack/synthetic/` and `case-pack/data/moran-2021/`).
+
+### Exercise 1.1: Locate the losses in CD010558
+
+Using @tbl-cd010558 and the strategy's last two lines, assign each of the seven publications missing from the re-run pool to a boundary in @tbl-boundaries. Then say which of the losses cost the review a study, had the strategy been the only search.
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+| Missing publication | Boundary |
+|---|---|
+| Wiles 2008, the CoBalT pilot report | 1. Coverage: no PubMed record |
+| Nakagawa 2017 results paper | 3. Query limits: indexing completed after the `ed` limit |
+| Town 2017 trial report | 3. Query limits: as above |
+| Wiles 2016 (*Lancet Psychiatry*) | 3. Query limits: as above |
+| Abel 2016 (*Journal of Consulting and Clinical Psychology*) | 3. Query limits: as above |
+| Wiles 2013 letter (authors' reply) | 3. Query logic: the `NOT` block's Letter and Comment lines |
+| ACP Journal Club commentary, 2013 | 3. Query logic: the `NOT` block's Comment line |
+
+The two registry records are coverage losses for a MEDLINE search, since registries are separate sources.
+
+Two studies would have been lost: Wiles 2007, through coverage, and Town 2017, through the date limit, since the limit removed its only journal publication. The Nakagawa study survives only through its protocol; a reviewer would need to follow the protocol up to find the results. CoBalT survives its four losses because six other reports were admitted.
+
+Two points are easy to miss. None of the losses needs a missing synonym to explain it: coverage, the date limit and the `NOT` block account for all seven, and the date limit accounts for four. And the `ed` losses are an artefact of re-running a dated strategy later, which matters for updates (@sec-recording) and for any benchmark built on a re-run.
+:::
+
+### Exercise 1.2: Count at four levels
+
+Compute the re-run strategy's recall for CD010558 against (a) the CLEF screening labels, (b) the review's PubMed-indexed publications, (c) all of its publications and (d) its studies. Which figure would you report, and to whom?
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+(a) 10 of 10, or 100%. (b) 10 of 16, or 63%. (c) 10 of 17, or 59%. (d) 4 of 6, or 67%.
+
+For a review team asking whether the strategy found their evidence, (d) is the relevant figure, with the reasons for each lost study. For someone comparing strategies within MEDLINE, (b) is fairer, because no MEDLINE strategy can retrieve a publication MEDLINE lacks. Figure (a) answers only whether a screening method found the records this run admitted. It should never be reported as the strategy's recall, because the labels were built from the strategy's own results.
+:::
+
+### Exercise 1.3: Diagnose a narrow strategy (synthetic)
+
+In the synthetic collection, strategy A searches Database A only for `peer AND tutor* AND "reading comprehension"` in titles and abstracts. It finds 4 of the 9 eligible studies and misses S02, S03, S04, S06 and S08. Using `case-pack/synthetic/records.json`, name the boundary at which each missed study is lost and the cheapest change that would recover it.
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+| Study | Boundary | Cheapest change |
+|---|---|---|
+| S02 | 3. Query vocabulary: older pupils tutoring younger ones ("reading buddies"), tested on "understanding what they had read", never using *peer* or *comprehension* | Add the Cross-Age Tutoring heading, or free-text synonyms such as *buddies* and *understanding* |
+| S03 | 3 and 1. The article in Database A says "peer assisted learning" and "passage comprehension", never *tutor\** or the phrase *reading comprehension*; the other report is only in the trial register | Add *assisted learning* to the tutoring block and search *comprehension* on its own; search the register |
+| S04 | 2. Record content: no abstract, and a title without *peer* or *reading* | Add the subject headings, which the record carries |
+| S06 | 3. Query vocabulary: "pupil-led", "coached one another", "reading for meaning" | Add the headings, or *coach\**, *one another* and *reading for meaning* |
+| S08 | 1. Coverage: one report is only in Database B (in Spanish, with a translated title), the other only in the theses index | Search Database B or the theses index |
+
+`answer-key.md` shows the result: a broad free-text strategy across both databases finds all nine, and so does free text combined with headings. Headings alone miss S05, whose record was assigned the wrong heading. No single remedy fixes every loss, because the losses happen at different boundaries.
+:::
+
+### Exercise 1.4: Deduplication changes the denominator
+
+Moran and colleagues' initial Web of Science and Scopus searches returned 7,208 records. The case pack deduplicates that export under several rules: DOI only leaves 5,552 records; DOI or exact title, 5,402; DOI or title similarity of at least 0.90, 5,390. The article reports 5,453 records screened. (a) How many more records would a team screen under the DOI-only rule than under the 0.90 rule? (b) Which kind of deduplication error can cost the review a study, and which only costs effort? (c) What should the search record state?
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+(a) 162 more records.
+
+(b) A false merge, joining two different records, can cost a study: in the synthetic collection, title similarity at 0.90 merges a replication study into the original trial it closely resembles (similarity 0.911), and the replication is lost. A missed merge, leaving two records of the same article, costs screening effort and can inflate counts, but loses nothing. Looser rules trade the second error for the first.
+
+(c) The rule, the tool and its settings, and the counts before and after, so that a reader can tell what "records after duplicates removed" means. The figure is a property of the rule as much as of the searches. @mckeown2021 found that common reference managers and screening tools differ in both kinds of error, so the tool's default is a choice that should be recorded.
+:::
+
+### Exercise 1.5: What a screening log can and cannot tell you
+
+In one ASReview simulation on the Moran pool (4,882 records, 137 included at full text), a rule to stop after 50 consecutive irrelevant records stops at record 1,367, with 16 included records not yet seen. (a) What is screening recall within the pool at the stopping point? (b) What is the review's end-to-end recovery? (c) What would you need to know to answer (b)?
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+(a) 121 of 137, or 88%.
+
+(b) It cannot be computed from these data. The pool is what the authors' Web of Science and Scopus searches returned and the corrected SYNERGY labels cover [@debruin2023]; eligible studies those searches missed are not in it.
+
+(c) The number of eligible reports outside the pool, which requires a reference set built independently of these searches (@sec-validation). Without one, report the stage you measured and say that it is a stage.
+
+The same rule's result also varies with the starting records. Across ten other starting pairs, it left between 0 and 6 included records unseen with the same model (`case-pack/data/moran-2021/README.md`). @sec-stopping returns to this.
+:::
