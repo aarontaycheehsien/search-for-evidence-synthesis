@@ -1,0 +1,45 @@
+<?xml version="1.0" ?>
+<!-- SYNTHETIC fixture for tests. These records do not exist. -->
+<PubmedArticleSet>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" IndexingMethod="Automated">
+      <PMID Version="1">900000001</PMID>
+      <DateCompleted><Year>2017</Year><Month>06</Month><Day>02</Day></DateCompleted>
+      <DateRevised><Year>2019</Year><Month>01</Month><Day>10</Day></DateRevised>
+      <Article>
+        <Journal><ISOAbbreviation>Synth J</ISOAbbreviation></Journal>
+        <ArticleTitle>A <i>synthetic</i> trial record</ArticleTitle>
+        <Abstract>
+          <AbstractText Label="BACKGROUND">First part.</AbstractText>
+          <AbstractText Label="METHODS">Second part.</AbstractText>
+        </Abstract>
+        <PublicationTypeList>
+          <PublicationType>Journal Article</PublicationType>
+          <PublicationType>Randomized Controlled Trial</PublicationType>
+        </PublicationTypeList>
+      </Article>
+      <MeshHeadingList>
+        <MeshHeading><DescriptorName>Depressive Disorder, Treatment-Resistant</DescriptorName></MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <History>
+        <PubMedPubDate PubStatus="entrez"><Year>2017</Year><Month>3</Month><Day>7</Day></PubMedPubDate>
+      </History>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">900000001</ArticleId>
+        <ArticleId IdType="doi">10.9999/synthetic.0001</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+  <PubmedArticle>
+    <MedlineCitation Status="In-Process">
+      <PMID Version="1">900000002</PMID>
+      <Article>
+        <Journal><ISOAbbreviation>Synth J</ISOAbbreviation></Journal>
+        <ArticleTitle>A record with no abstract</ArticleTitle>
+      </Article>
+    </MedlineCitation>
+    <PubmedData><History /><ArticleIdList /></PubmedData>
+  </PubmedArticle>
+</PubmedArticleSet>

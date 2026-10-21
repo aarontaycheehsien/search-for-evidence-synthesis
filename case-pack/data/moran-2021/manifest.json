@@ -1,0 +1,29 @@
+{
+  "built_on": "2026-10-21",
+  "script": "case-pack/scripts/build_moran_pool.py",
+  "sources": {
+    "pool": {
+      "url": "https://raw.githubusercontent.com/NPMoran/metah06_condition-dependence-of-boldness_OSF/b25a3c22e2da63cd2fa9e92d05d7991ae0e8564f/screening_ref_data_rayyan.csv",
+      "sha256": "d0a8832b7aa336e37764f31292514b9165e57aa6ababff4f92a1f0bb8a1fa92d",
+      "description": "Authors' deduplicated screening export (Rayyan), titles and abstracts"
+    },
+    "corrected": {
+      "url": "https://raw.githubusercontent.com/asreview/synergy-dataset/dc2dadfdbb98eb1b4259604789abd640aa3b693e/datasets/Moran_2021_corrected/Moran_2021_corrected_ids.csv",
+      "sha256": "6a653603917705a9f8f703e3a91708e21f0424274b780cf7346a162374de8fb9",
+      "description": "SYNERGY Moran_2021_corrected labels (CC0); not part of the version 1 release"
+    }
+  },
+  "join": "normalised DOI; records without a DOI in either source are dropped",
+  "counts": {
+    "label_rows": 5453,
+    "label_rows_with_doi": 4956,
+    "distinct_label_dois": 4951,
+    "text_rows": 5509,
+    "joined_records": 4882,
+    "ta_included_in_labels": 592,
+    "ta_included_joined": 586,
+    "ft_included_in_labels": 139,
+    "ft_included_joined": 137,
+    "ft_without_ta": 0
+  }
+}

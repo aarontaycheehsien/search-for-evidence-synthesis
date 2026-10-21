@@ -1,0 +1,13 @@
+Topic: SYN0001
+
+Title: A synthetic topic used only for tests
+
+Query:
+Depressive Disorder, Treatment-Resistant/
+(depress* adj3 resistan*).ti,ab,kf.
+or/1-2
+
+Pids:
+    900000001
+    900000002
+900000003

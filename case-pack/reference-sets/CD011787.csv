@@ -1,0 +1,39 @@
+review,study_id,report_no,reference_short,pmid,doi,mapping_method,mapping_confidence,in_clef_pool,clef_abstract_label,clef_fulltext_label,note
+CD011787,Austin 2008,1,"Austin 2008, Community Pract 81(10):32-5",18853886,,citation lookup; OpenAlex checked,high,1,1,1,
+CD011787,Austvoll-Dahlgren 2010,1,"Austvoll-Dahlgren 2010, J Adv Nurs 66(11):2421-30",20722796,10.1111/j.1365-2648.2010.05403.x,citation lookup; OpenAlex checked,high,1,1,1,
+CD011787,Babirye 2011,1,"Babirye 2011, BMC Public Health 11:723",21942999,10.1186/1471-2458-11-723,citation lookup; OpenAlex checked,high,1,1,1,
+CD011787,Barbieri 2015,1,"Barbieri 2015, Rev Saude Publica 49:18",25830870,10.1590/s0034-8910.2015049005149,citation lookup; OpenAlex checked,high,1,0,0,Review cites the volume as 49.(18). In pool but labelled not relevant at both levels
+CD011787,Benin 2006,1,"Benin 2006, Pediatrics 117(5):1532-41",16651306,10.1542/peds.2005-1728,citation lookup; OpenAlex checked,high,1,1,1,
+CD011787,Berhanel 2000,1,"Berhanel 2000, Ethiop Med J 38 Suppl 1:1-60",11132351,,OpenAlex title match; PMID from OpenAlex; checked,high,1,0,0,The first author appears as Berhanel in the review and in OpenAlex; a citation lookup using Berhane did not find it. In pool but labelled not relevant at both levels
+CD011787,Blaisdell 2016,1,"Blaisdell 2016, Med Decis Making 36(4):479-89",26506958,10.1177/0272989x15607855,citation lookup; OpenAlex checked,high,0,,,"Absent from pool; Date Completed after the strategy's ED limit of 2016-08-30 (PubMed [DCOM] search, 2026-10-21)"
+CD011787,Bond 1998,1,"Bond 1998, Aust N Z J Public Health 22(4):441-6",9659770,10.1111/j.1467-842x.1998.tb01411.x,citation lookup; OpenAlex checked,high,1,1,1,
+CD011787,Bond 2011,1,"Bond 2011, BMC Public Health 11:943",22182354,10.1186/1471-2458-11-943,citation lookup; OpenAlex checked,high,1,1,1,
+CD011787,Brown 2012,1,"Brown 2012, Vaccine 30(10):1855-64",22230590,10.1016/j.vaccine.2011.12.127,citation lookup; OpenAlex checked,high,1,1,1,
+CD011787,Brown 2014,1,"Brown 2014, MCN Am J Matern Child Nurs 39(6):357-62",25333802,10.1097/nmc.0000000000000081,citation lookup; OpenAlex checked,high,1,1,1,
+CD011787,Brunson 2013,1,"Brunson 2013, Vaccine 31(46):5466-70",24076175,10.1016/j.vaccine.2013.08.104,citation lookup; OpenAlex checked,high,1,1,1,
+CD011787,Brunson 2015,1,"Brunson 2015, Glob Pediatr Health 2",27335987,10.1177/2333794x15616332,citation lookup; OpenAlex checked,high,1,1,1,
+CD011787,Delkhosh 2014,1,"Delkhosh 2014, Issues Compr Pediatr Nurs 37(4):235-49",25188870,10.3109/01460862.2014.951131,citation lookup; OpenAlex checked,high,1,1,1,
+CD011787,Dube 2016,1,"Dubé 2016, Qual Health Res 26(3):411-25",25711847,10.1177/1049732315573207,citation lookup; OpenAlex checked,high,0,,,"Absent from pool; Date Completed after the strategy's ED limit of 2016-08-30 (PubMed [DCOM] search, 2026-10-21)"
+CD011787,Evans 2001,1,"Evans 2001, Br J Gen Pract 51(472):904-10",11761204,,citation lookup; OpenAlex checked,high,1,1,1,
+CD011787,Fadda 2015,1,"Fadda 2015, BMC Public Health 15:836",26328551,10.1186/s12889-015-2200-9,citation lookup; OpenAlex checked,high,1,1,1,
+CD011787,Figueiredo 2011,1,"Figueiredo 2011, Rev Lat Am Enfermagem 19(3):598-605",,10.1590/s0104-11692011000300020,"citation lookup, title, author and DOI searches found no PubMed record; DOI from OpenAlex",medium,0,,,Not found in PubMed
+CD011787,Fowler 2007,1,"Fowler 2007, Vaccine 25(18):3536-43",17293012,10.1016/j.vaccine.2007.01.082,citation lookup; OpenAlex checked,high,1,1,1,
+CD011787,Guillaume 2004,1,"Guillaume 2004, Health Informatics J 10(1):5-22",,10.1177/1460458204040664,"citation lookup, author and DOI searches found no PubMed record; DOI from OpenAlex",medium,0,,,Not found in PubMed; OpenAlex lists the first author as Preston
+CD011787,Gust 2008,1,"Gust 2008, Health Educ Res 23(3):499-511",17959583,10.1093/her/cym065,citation lookup; OpenAlex checked,high,1,1,1,
+CD011787,Harmsen 2012,1,"Harmsen 2012, Adv Prev Med 2012:175694",23209917,10.1155/2012/175694,citation lookup; OpenAlex checked,high,1,1,1,
+CD011787,Harmsen 2015,1,"Harmsen 2015, BMC Public Health 15:1229",26654538,10.1186/s12889-015-2572-x,"citation lookup returned a wrong record (PMID 25563658, an alcohol-mortality paper); corrected by OpenAlex title match and DOI conversion",high,1,0,0,Review cites the article as BMC Public Health 15(1):1; it is article 1229. In pool but labelled not relevant at both levels
+CD011787,Henderson 2008,1,"Henderson 2008, J R Soc Med 101(5):244-51",18463280,10.1258/jrsm.2008.070363,citation lookup; OpenAlex checked,high,1,1,1,
+CD011787,Hilton 2007,1,"Hilton 2007, BMC Public Health 7:42",17391507,10.1186/1471-2458-7-42,citation lookup; OpenAlex checked,high,1,1,1,
+CD011787,Hussain 2012,1,"Hussain 2012, PLoS One 7(9):e46274",23050003,10.1371/journal.pone.0046274,citation lookup; OpenAlex checked,high,1,1,1,
+CD011787,Kitayama 2014,1,"Kitayama 2014, Clin Pediatr 53(3):238-42",24137033,10.1177/0009922813506608,citation lookup; OpenAlex checked,high,1,1,1,
+CD011787,Kowal 2015,1,"Kowal 2015, Can J Public Health 106(4):e230",26285195,10.17269/cjph.106.4803,citation lookup; OpenAlex checked,high,1,1,1,
+CD011787,McMurray 2004,1,"McMurray 2004, Br J Gen Pract 54(504):520-5",15239914,,citation lookup; OpenAlex checked,high,1,1,1,
+CD011787,Miller 2008,1,"Miller 2008, Rural Remote Health 8(2):863",18384249,10.22605/rrh863,citation lookup; OpenAlex checked,high,1,1,1,
+CD011787,Saada 2015,1,"Saada 2015, Clin Pediatr 54(3):236-43",25200366,10.1177/0009922814548838,citation lookup; OpenAlex checked,high,1,1,1,
+CD011787,Shui 2005,1,"Shui 2005, J Natl Med Assoc 97(5):657",15926642,,citation lookup; OpenAlex checked,high,1,1,1,
+CD011787,Sobo 2016,1,"Sobo 2016, Med Anthropol 35(6):529-46",26814029,10.1080/01459740.2016.1145219,citation lookup; OpenAlex checked,high,0,,,"Absent from pool; Date Completed after the strategy's ED limit of 2016-08-30 (PubMed [DCOM] search, 2026-10-21)"
+CD011787,Tadesse 2009,1,"Tadesse 2009, Arch Med Sci 5(2):233-40",,,citation lookup found no PubMed record; OpenAlex title match without DOI,medium,0,,,Not found in PubMed
+CD011787,Tickner 2007,1,"Tickner 2007, Vaccine 25(42):7399-409",17850931,10.1016/j.vaccine.2007.08.008,citation lookup; OpenAlex checked,high,1,1,1,
+CD011787,Tickner 2010,1,"Tickner 2010, Child Care Health Dev 36(2):190-7",19961504,10.1111/j.1365-2214.2009.01020.x,citation lookup; OpenAlex checked,high,1,1,1,
+CD011787,Tomlinson 2013,1,"Tomlinson 2013, Diversity and Equality in Health and Care 10(2):101-13",,,citation lookup found no PubMed record; no OpenAlex match,medium,0,,,Not found in PubMed or OpenAlex
+CD011787,Topuzoglu 2007,1,"Topuzoğlu 2007, Eur J Public Health 17(4):348-52",17090559,10.1093/eurpub/ckl250,citation lookup; OpenAlex checked,high,1,1,1,

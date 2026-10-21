@@ -1,0 +1,865 @@
+{
+  "collection": "Synthetic teaching collection: peer tutoring and reading comprehension",
+  "version": "0.1",
+  "synthetic": true,
+  "notice": "Every record in this file is invented for teaching. No study, author, journal or DOI here refers to real work. DOIs use the unassigned prefix 10.0000.",
+  "licence": "CC-BY-4.0",
+  "records": [
+    {
+      "id": "R001",
+      "study_id": "S01",
+      "study_eligible": true,
+      "record_role": "primary report",
+      "duplicate_of": null,
+      "sources": [
+        "Database A"
+      ],
+      "title": "Peer tutoring and reading comprehension in Year 4: a cluster-randomised trial",
+      "abstract": "We randomised 24 Year 4 classes in mainstream primary schools to a structured same-age peer tutoring programme or usual teaching for 12 weeks. Pupils worked in tutor-tutee pairs three times a week. Reading comprehension was measured with a standardised test. Classes using peer tutoring improved more than control classes (effect size 0.21).",
+      "authors": [
+        "Okafor N",
+        "Brandt L"
+      ],
+      "year": 2019,
+      "journal": "Journal of Synthetic Literacy Research",
+      "doi": "10.0000/syn.0001",
+      "language": "English",
+      "record_type": "journal article",
+      "headings": [
+        "Peer Tutoring",
+        "Reading Comprehension",
+        "Primary Education",
+        "Randomized Trials"
+      ],
+      "planted": "Straightforward eligible report: found by any reasonable strategy."
+    },
+    {
+      "id": "R002",
+      "study_id": "S01",
+      "study_eligible": true,
+      "record_role": "duplicate record",
+      "duplicate_of": "R001",
+      "sources": [
+        "Database B"
+      ],
+      "title": "PEER TUTORING AND READING COMPREHENSION IN YEAR 4: A CLUSTER RANDOMIZED TRIAL",
+      "abstract": "We randomised 24 Year 4 classes in mainstream primary schools to a structured same-age peer tutoring programme or usual teaching for 12 weeks. Pupils worked in tutor-tutee pairs three times a week. Reading comprehension was measured with a standardised test. Classes using peer tutoring improved more than control classes (effect size 0.21).",
+      "authors": [
+        "Okafor, N.",
+        "Brandt, L."
+      ],
+      "year": 2019,
+      "journal": "J Synth Lit Res",
+      "doi": null,
+      "language": "English",
+      "record_type": "journal article",
+      "headings": [
+        "Tutoring",
+        "Reading Skills",
+        "Elementary Schools"
+      ],
+      "planted": "Duplicate of R001 from a second database: different capitalisation, spelling (randomized), journal abbreviation and author format, and no DOI. A DOI-only deduplication misses it."
+    },
+    {
+      "id": "R003",
+      "study_id": "S01",
+      "study_eligible": true,
+      "record_role": "conference abstract",
+      "duplicate_of": null,
+      "sources": [
+        "Synthetic Conference Proceedings"
+      ],
+      "title": "Peer tutoring improves comprehension: interim results from a Year 4 trial",
+      "abstract": "Interim analysis of the first 14 classes in an ongoing cluster-randomised trial of same-age peer tutoring in Year 4. Comprehension scores rose more in tutoring classes. Final results are expected in 2019.",
+      "authors": [
+        "Okafor N",
+        "Brandt L"
+      ],
+      "year": 2018,
+      "journal": "Proceedings of the Synthetic Literacy Conference",
+      "doi": null,
+      "language": "English",
+      "record_type": "conference abstract",
+      "headings": [],
+      "planted": "A second report of S01, not a duplicate record. Merging it with R001 as a duplicate would lose the link; it should be linked to the same study."
+    },
+    {
+      "id": "R004",
+      "study_id": "S02",
+      "study_eligible": true,
+      "record_role": "primary report",
+      "duplicate_of": null,
+      "sources": [
+        "Database A",
+        "Database B"
+      ],
+      "title": "Reading buddies: older pupils as tutors for seven-year-olds",
+      "abstract": "Year 6 pupils were trained to tutor Year 2 pupils in reading twice a week. Twelve schools took part; six started the scheme and six continued usual practice. Younger pupils in participating schools scored higher on a test of understanding what they had read.",
+      "authors": [
+        "Haldorsen T",
+        "Mbeki R"
+      ],
+      "year": 2016,
+      "journal": "Synthetic Review of Primary Education",
+      "doi": "10.0000/syn.0004",
+      "language": "English",
+      "record_type": "journal article",
+      "headings": [
+        "Cross-Age Tutoring",
+        "Reading Comprehension",
+        "Primary Education"
+      ],
+      "planted": "Eligible cross-age tutoring study that never uses the words peer or comprehension in title or abstract. A free-text block built on peer* and comprehension misses it; the Cross-Age Tutoring heading finds it."
+    },
+    {
+      "id": "R005",
+      "study_id": "S03",
+      "study_eligible": true,
+      "record_role": "trial registration",
+      "duplicate_of": null,
+      "sources": [
+        "Synthetic Trials Register"
+      ],
+      "title": "Peer-Assisted Learning Strategies (PALS) for reading in Grades 2 and 3: trial registration",
+      "abstract": "Planned randomised trial of Peer-Assisted Learning Strategies in 30 elementary classrooms. Primary outcome: reading comprehension at 20 weeks.",
+      "authors": [
+        "Ferreira-Lind C"
+      ],
+      "year": 2015,
+      "journal": "Synthetic Trials Register",
+      "doi": null,
+      "language": "English",
+      "record_type": "trial registration",
+      "headings": [],
+      "planted": "Register record for S03. Not in either bibliographic database, so a database-only search cannot find it."
+    },
+    {
+      "id": "R006",
+      "study_id": "S03",
+      "study_eligible": true,
+      "record_role": "primary report",
+      "duplicate_of": null,
+      "sources": [
+        "Database A"
+      ],
+      "title": "Effects of PALS on reading in the early elementary grades",
+      "abstract": "Thirty elementary classrooms were randomly assigned to peer assisted learning or business as usual. Students in PALS classrooms made larger gains in passage comprehension than controls.",
+      "authors": [
+        "Ferreira-Lind C",
+        "Osei K"
+      ],
+      "year": 2017,
+      "journal": "Synthetic Education Quarterly",
+      "doi": "10.0000/syn.0006",
+      "language": "English",
+      "record_type": "journal article",
+      "headings": [
+        "Peer Tutoring",
+        "Reading Comprehension",
+        "Elementary Schools"
+      ],
+      "planted": "Hyphenation and acronym variants: PALS, peer assisted, Peer-Assisted. A phrase search for \"peer-assisted learning\" in the title misses it; the title uses only the acronym."
+    },
+    {
+      "id": "R007",
+      "study_id": "S04",
+      "study_eligible": true,
+      "record_role": "primary report",
+      "duplicate_of": null,
+      "sources": [
+        "Database A"
+      ],
+      "title": "Classwide tutoring by classmates and Grade 3 comprehension",
+      "abstract": null,
+      "authors": [
+        "Ruiz-Albers M"
+      ],
+      "year": 2012,
+      "journal": "Synthetic Education Quarterly",
+      "doi": "10.0000/syn.0007",
+      "language": "English",
+      "record_type": "journal article",
+      "headings": [
+        "Peer Tutoring",
+        "Reading Comprehension",
+        "Elementary Schools",
+        "Comparative Studies"
+      ],
+      "planted": "No abstract, and the title has tutoring and comprehension but neither peer nor reading. A free-text strategy that requires peer* or reading* misses it; the headings find it."
+    },
+    {
+      "id": "R008",
+      "study_id": "S05",
+      "study_eligible": true,
+      "record_role": "primary report",
+      "duplicate_of": null,
+      "sources": [
+        "Database A",
+        "Database B"
+      ],
+      "title": "Same-age peer tutoring and reading comprehension in rural primary schools",
+      "abstract": "Forty classes in rural primary schools were allocated by coin toss to peer tutoring or a comparison condition. Pupils aged 8 to 10 tutored each other in reading comprehension strategies. Comprehension improved more in tutoring classes.",
+      "authors": [
+        "Dlamini P",
+        "Kowalczyk E"
+      ],
+      "year": 2020,
+      "journal": "Journal of Synthetic Literacy Research",
+      "doi": "10.0000/syn.0008",
+      "language": "English",
+      "record_type": "journal article",
+      "headings": [
+        "Reading Fluency",
+        "Rural Schools"
+      ],
+      "planted": "Indexing error: assigned Reading Fluency instead of Reading Comprehension, and no tutoring heading. A heading-only strategy misses it; free text finds it."
+    },
+    {
+      "id": "R009",
+      "study_id": "S06",
+      "study_eligible": true,
+      "record_role": "primary report",
+      "duplicate_of": null,
+      "sources": [
+        "Database A"
+      ],
+      "title": "A pupil-led reading programme in Key Stage 2: a controlled evaluation",
+      "abstract": "Pupils aged 7 to 11 in eight mainstream schools coached one another in reading for meaning, using a structured programme, while eight matched schools continued their usual programme. Pupils in programme schools showed greater gains in understanding of texts at the end of the year.",
+      "authors": [
+        "Abernethy J"
+      ],
+      "year": 2014,
+      "journal": "Synthetic Review of Primary Education",
+      "doi": "10.0000/syn.0009",
+      "language": "English",
+      "record_type": "journal article",
+      "headings": [
+        "Peer Tutoring",
+        "Reading Comprehension",
+        "Primary Education"
+      ],
+      "planted": "Eligible, but the text says pupil-led, coached one another, reading for meaning and understanding of texts, with no peer, tutor* or comprehension in title or abstract. A free-text strategy built on those three terms misses it; the headings find it, and so does free text that adds coach*, one another and reading for meaning."
+    },
+    {
+      "id": "R010",
+      "study_id": "S07",
+      "study_eligible": true,
+      "record_role": "primary report",
+      "duplicate_of": null,
+      "sources": [
+        "Database A",
+        "Database B"
+      ],
+      "title": "Peer tutoring for reading comprehension with Year 3 pupils: a randomised trial",
+      "abstract": "Unlike earlier programmes developed in secondary schools, this trial tested a peer tutoring programme with Year 3 pupils in 18 primary schools. Schools were randomised to the programme or a waiting list. Reading comprehension improved more in programme schools.",
+      "authors": [
+        "Nakashima Y",
+        "Oyelaran B"
+      ],
+      "year": 2021,
+      "journal": "Journal of Synthetic Literacy Research",
+      "doi": "10.0000/syn.0010",
+      "language": "English",
+      "record_type": "journal article",
+      "headings": [
+        "Peer Tutoring",
+        "Reading Comprehension",
+        "Primary Education",
+        "Randomized Trials"
+      ],
+      "planted": "Mentions secondary schools in passing. A NOT \"secondary school*\" line, added to remove secondary-school studies, removes this eligible study."
+    },
+    {
+      "id": "R011",
+      "study_id": "S08",
+      "study_eligible": true,
+      "record_role": "dissertation",
+      "duplicate_of": null,
+      "sources": [
+        "Synthetic Theses Index"
+      ],
+      "title": "Tutoring between equals and reading comprehension in Year 5 classrooms",
+      "abstract": "This thesis reports a quasi-experimental study in which Year 5 pupils in six classes tutored each other in reading, compared with six classes receiving usual instruction. Comprehension outcomes favoured tutoring classes.",
+      "authors": [
+        "Ibarra S"
+      ],
+      "year": 2013,
+      "journal": "Doctoral thesis, Synthetic University",
+      "doi": null,
+      "language": "English",
+      "record_type": "dissertation",
+      "headings": [],
+      "planted": "Only in the theses index. Tutoring between equals is a literal translation of the Spanish term."
+    },
+    {
+      "id": "R012",
+      "study_id": "S08",
+      "study_eligible": true,
+      "record_role": "primary report",
+      "duplicate_of": null,
+      "sources": [
+        "Database B"
+      ],
+      "title": "Tutoría entre iguales y comprensión lectora en quinto de primaria [Tutoring between equals and reading comprehension in the fifth year of primary school]",
+      "abstract": "A quasi-experimental study in twelve fifth-year primary classes compared tutoring between equals with usual instruction. Reading comprehension improved more in the tutoring classes.",
+      "authors": [
+        "Ibarra S",
+        "Vela-Montes R"
+      ],
+      "year": 2015,
+      "journal": "Revista Sintética de Educación",
+      "doi": "10.0000/syn.0012",
+      "language": "Spanish",
+      "record_type": "journal article",
+      "headings": [
+        "Peer Tutoring",
+        "Reading Comprehension",
+        "Primary Education"
+      ],
+      "planted": "Only in Database B. Non-English article with a translated title. Searching only Database A misses study S08 entirely."
+    },
+    {
+      "id": "R013",
+      "study_id": "S09",
+      "study_eligible": true,
+      "record_role": "primary report",
+      "duplicate_of": null,
+      "sources": [
+        "Database A"
+      ],
+      "title": "Peer tutoring and reading comprehension in Year 5: a cluster-randomised replication",
+      "abstract": "We replicated our Year 4 trial with a new sample of 22 Year 5 classes. Classes were randomised to structured peer tutoring or usual teaching. Reading comprehension improved more in tutoring classes (effect size 0.17).",
+      "authors": [
+        "Okafor N",
+        "Mensah A"
+      ],
+      "year": 2021,
+      "journal": "Journal of Synthetic Literacy Research",
+      "doi": "10.0000/syn.0013",
+      "language": "English",
+      "record_type": "journal article",
+      "headings": [
+        "Peer Tutoring",
+        "Reading Comprehension",
+        "Primary Education",
+        "Randomized Trials"
+      ],
+      "planted": "A different study with a title close to R001 and a shared first author. Fuzzy title matching at a loose threshold merges it with S01 and loses an eligible study."
+    },
+    {
+      "id": "R014",
+      "study_id": "S10",
+      "study_eligible": false,
+      "record_role": "primary report",
+      "duplicate_of": null,
+      "sources": [
+        "Database A"
+      ],
+      "title": "Peer tutoring and reading comprehension in lower secondary school: a randomised trial",
+      "abstract": "Students aged 12 to 14 in 20 secondary schools were randomised to peer tutoring or usual teaching. Reading comprehension improved slightly more in tutoring schools.",
+      "authors": [
+        "Lindqvist H"
+      ],
+      "year": 2018,
+      "journal": "Synthetic Education Quarterly",
+      "doi": "10.0000/syn.0014",
+      "language": "English",
+      "record_type": "journal article",
+      "headings": [
+        "Peer Tutoring",
+        "Reading Comprehension",
+        "Secondary Education",
+        "Randomized Trials"
+      ],
+      "planted": "Topically relevant; ineligible population (secondary school)."
+    },
+    {
+      "id": "R015",
+      "study_id": "S11",
+      "study_eligible": false,
+      "record_role": "primary report",
+      "duplicate_of": null,
+      "sources": [
+        "Database A",
+        "Database B"
+      ],
+      "title": "Volunteer reading tutors in primary schools: a randomised trial",
+      "abstract": "Retired adult volunteers tutored Year 3 pupils in reading once a week. Twenty schools were randomised. Reading comprehension did not differ between groups.",
+      "authors": [
+        "Castellano D"
+      ],
+      "year": 2017,
+      "journal": "Synthetic Review of Primary Education",
+      "doi": "10.0000/syn.0015",
+      "language": "English",
+      "record_type": "journal article",
+      "headings": [
+        "Tutoring",
+        "Volunteers",
+        "Reading Comprehension",
+        "Primary Education"
+      ],
+      "planted": "Ineligible intervention: tutors are adults, not pupils."
+    },
+    {
+      "id": "R016",
+      "study_id": "S12",
+      "study_eligible": false,
+      "record_role": "primary report",
+      "duplicate_of": null,
+      "sources": [
+        "Database A"
+      ],
+      "title": "Peer tutoring in one primary school: comprehension before and after",
+      "abstract": "Pupils in one primary school took part in peer tutoring for a term. Reading comprehension scores rose between the start and end of term. There was no comparison group.",
+      "authors": [
+        "Whitcombe E"
+      ],
+      "year": 2019,
+      "journal": "Synthetic Education Quarterly",
+      "doi": "10.0000/syn.0016",
+      "language": "English",
+      "record_type": "journal article",
+      "headings": [
+        "Peer Tutoring",
+        "Reading Comprehension",
+        "Primary Education"
+      ],
+      "planted": "Ineligible design: single group, before and after."
+    },
+    {
+      "id": "R017",
+      "study_id": "S13",
+      "study_eligible": false,
+      "record_role": "primary report",
+      "duplicate_of": null,
+      "sources": [
+        "Database A"
+      ],
+      "title": "Paired reading by classmates and oral reading fluency: a randomised trial",
+      "abstract": "Year 2 classes were randomised to classmate paired reading or usual teaching. Oral reading fluency, in words read correctly per minute, improved more in paired-reading classes. Comprehension was not measured.",
+      "authors": [
+        "Afolabi T"
+      ],
+      "year": 2016,
+      "journal": "Journal of Synthetic Literacy Research",
+      "doi": "10.0000/syn.0017",
+      "language": "English",
+      "record_type": "journal article",
+      "headings": [
+        "Peer Tutoring",
+        "Reading Fluency",
+        "Primary Education",
+        "Randomized Trials"
+      ],
+      "planted": "Ineligible outcome: fluency only. The abstract contains comprehension, so it is retrieved and must be excluded at screening."
+    },
+    {
+      "id": "R018",
+      "study_id": "S14",
+      "study_eligible": false,
+      "record_role": "primary report",
+      "duplicate_of": null,
+      "sources": [
+        "Database A",
+        "Database B"
+      ],
+      "title": "Peer tutoring and reading in primary schools: a systematic review",
+      "abstract": "We reviewed controlled studies of peer tutoring for reading in primary schools and found small positive effects on comprehension.",
+      "authors": [
+        "Oduya M",
+        "Fenwick P"
+      ],
+      "year": 2022,
+      "journal": "Synthetic Review of Primary Education",
+      "doi": "10.0000/syn.0018",
+      "language": "English",
+      "record_type": "review",
+      "headings": [
+        "Peer Tutoring",
+        "Reading Comprehension",
+        "Systematic Reviews"
+      ],
+      "planted": "Not a primary study, so ineligible, but a seed for citation searching. Its reference list (see studies.csv) includes S02, S04 and S06."
+    },
+    {
+      "id": "R019",
+      "study_id": "S15",
+      "study_eligible": false,
+      "record_role": "primary report",
+      "duplicate_of": null,
+      "sources": [
+        "Database A"
+      ],
+      "title": "Why peer tutoring deserves a second look",
+      "abstract": "An editorial arguing that schools should revisit peer tutoring for reading.",
+      "authors": [
+        "Grantham W"
+      ],
+      "year": 2020,
+      "journal": "Synthetic Education Quarterly",
+      "doi": "10.0000/syn.0019",
+      "language": "English",
+      "record_type": "editorial",
+      "headings": [
+        "Peer Tutoring",
+        "Editorial"
+      ],
+      "planted": "Ineligible publication type."
+    },
+    {
+      "id": "R020",
+      "study_id": "S16",
+      "study_eligible": false,
+      "record_role": "primary report",
+      "duplicate_of": null,
+      "sources": [
+        "Database A"
+      ],
+      "title": "Peer tutoring in primary mathematics: a randomised trial",
+      "abstract": "Year 4 pupils tutored each other in arithmetic. Twenty classes were randomised. Mathematics attainment improved more in tutoring classes; reading was not assessed.",
+      "authors": [
+        "Tanaka-Reid S"
+      ],
+      "year": 2018,
+      "journal": "Synthetic Education Quarterly",
+      "doi": "10.0000/syn.0020",
+      "language": "English",
+      "record_type": "journal article",
+      "headings": [
+        "Peer Tutoring",
+        "Mathematics",
+        "Primary Education",
+        "Randomized Trials"
+      ],
+      "planted": "Ineligible outcome (mathematics). Retrieved by a peer tutoring and primary block that omits the reading concept."
+    },
+    {
+      "id": "R021",
+      "study_id": "S17",
+      "study_eligible": false,
+      "record_role": "primary report",
+      "duplicate_of": null,
+      "sources": [
+        "Database A"
+      ],
+      "title": "Teacher-led small-group reading instruction and comprehension in Year 3",
+      "abstract": "Year 3 classes were randomised to teacher-led small-group guided reading or whole-class teaching. Comprehension improved more with small groups.",
+      "authors": [
+        "Morrow-Diaz A"
+      ],
+      "year": 2019,
+      "journal": "Journal of Synthetic Literacy Research",
+      "doi": "10.0000/syn.0021",
+      "language": "English",
+      "record_type": "journal article",
+      "headings": [
+        "Reading Instruction",
+        "Reading Comprehension",
+        "Primary Education",
+        "Randomized Trials"
+      ],
+      "planted": "Ineligible intervention: teacher-led, not peer tutoring."
+    },
+    {
+      "id": "R022",
+      "study_id": "S18",
+      "study_eligible": false,
+      "record_role": "primary report",
+      "duplicate_of": null,
+      "sources": [
+        "Database B"
+      ],
+      "title": "Peer tutoring for reading comprehension in special schools for autistic pupils",
+      "abstract": "Pupils aged 7 to 11 in four special schools took part in peer tutoring for reading comprehension, compared with four schools continuing usual teaching.",
+      "authors": [
+        "Bjornsdottir K"
+      ],
+      "year": 2020,
+      "journal": "Synthetic Education Quarterly",
+      "doi": "10.0000/syn.0022",
+      "language": "English",
+      "record_type": "journal article",
+      "headings": [
+        "Peer Tutoring",
+        "Reading Comprehension",
+        "Special Education",
+        "Autism"
+      ],
+      "planted": "Ineligible setting (special schools, not mainstream). A judgement call worth discussing at screening."
+    },
+    {
+      "id": "R023",
+      "study_id": "S19",
+      "study_eligible": false,
+      "record_role": "primary report",
+      "duplicate_of": null,
+      "sources": [
+        "Database A"
+      ],
+      "title": "What pupils say about peer tutoring in reading: an interview study",
+      "abstract": "Interviews with 30 primary pupils about their experiences of tutoring and being tutored in reading.",
+      "authors": [
+        "Achterberg L"
+      ],
+      "year": 2017,
+      "journal": "Synthetic Review of Primary Education",
+      "doi": "10.0000/syn.0023",
+      "language": "English",
+      "record_type": "journal article",
+      "headings": [
+        "Peer Tutoring",
+        "Qualitative Research",
+        "Primary Education"
+      ],
+      "planted": "Ineligible design (qualitative); eligible for a different, qualitative review question."
+    },
+    {
+      "id": "R024",
+      "study_id": "N01",
+      "study_eligible": false,
+      "record_role": "primary report",
+      "duplicate_of": null,
+      "sources": [
+        "Database A"
+      ],
+      "title": "Peer reviewers' comprehension of statistical reporting",
+      "abstract": "We tested whether journal peer reviewers understood confidence intervals. Comprehension was poor.",
+      "authors": [
+        "Halvorsen I"
+      ],
+      "year": 2019,
+      "journal": "Synthetic Research Integrity",
+      "doi": "10.0000/syn.0024",
+      "language": "English",
+      "record_type": "journal article",
+      "headings": [
+        "Peer Review",
+        "Statistics"
+      ],
+      "planted": "Off-topic noise matching peer* and comprehension*."
+    },
+    {
+      "id": "R025",
+      "study_id": "N02",
+      "study_eligible": false,
+      "record_role": "primary report",
+      "duplicate_of": null,
+      "sources": [
+        "Database B"
+      ],
+      "title": "Reading comprehension of medication labels among older adults",
+      "abstract": "Adults over 70 read medication labels and answered questions about dosage.",
+      "authors": [
+        "Pereira-Watts G"
+      ],
+      "year": 2018,
+      "journal": "Synthetic Health Literacy",
+      "doi": "10.0000/syn.0025",
+      "language": "English",
+      "record_type": "journal article",
+      "headings": [
+        "Health Literacy",
+        "Aged"
+      ],
+      "planted": "Off-topic noise matching \"reading comprehension\"."
+    },
+    {
+      "id": "R026",
+      "study_id": "N03",
+      "study_eligible": false,
+      "record_role": "primary report",
+      "duplicate_of": null,
+      "sources": [
+        "Database A"
+      ],
+      "title": "Tutorial videos and code comprehension among junior software developers",
+      "abstract": "Developers who watched tutorial videos understood unfamiliar code faster.",
+      "authors": [
+        "Szabo R"
+      ],
+      "year": 2021,
+      "journal": "Synthetic Software Practice",
+      "doi": "10.0000/syn.0026",
+      "language": "English",
+      "record_type": "journal article",
+      "headings": [
+        "Software Engineering"
+      ],
+      "planted": "Off-topic noise: tutor* matches tutorial."
+    },
+    {
+      "id": "R027",
+      "study_id": "N04",
+      "study_eligible": false,
+      "record_role": "primary report",
+      "duplicate_of": null,
+      "sources": [
+        "Database B"
+      ],
+      "title": "Peer pressure and smoking in early adolescence",
+      "abstract": "Survey of 2,000 pupils aged 11 to 13 on peer influence and smoking.",
+      "authors": [
+        "Nwosu C"
+      ],
+      "year": 2016,
+      "journal": "Synthetic Youth Studies",
+      "doi": "10.0000/syn.0027",
+      "language": "English",
+      "record_type": "journal article",
+      "headings": [
+        "Peer Influence",
+        "Smoking",
+        "Adolescent"
+      ],
+      "planted": "Off-topic noise matching peer*."
+    },
+    {
+      "id": "R028",
+      "study_id": "N05",
+      "study_eligible": false,
+      "record_role": "primary report",
+      "duplicate_of": null,
+      "sources": [
+        "Database A"
+      ],
+      "title": "A benchmark for machine reading comprehension in question answering",
+      "abstract": "We release a dataset for evaluating machine reading comprehension systems.",
+      "authors": [
+        "Kaur P"
+      ],
+      "year": 2022,
+      "journal": "Synthetic Computing Letters",
+      "doi": "10.0000/syn.0028",
+      "language": "English",
+      "record_type": "journal article",
+      "headings": [
+        "Natural Language Processing"
+      ],
+      "planted": "Off-topic noise matching \"reading comprehension\"; also a likely high-ranked result in an embedding search on reading comprehension."
+    },
+    {
+      "id": "R029",
+      "study_id": "N06",
+      "study_eligible": false,
+      "record_role": "primary report",
+      "duplicate_of": null,
+      "sources": [
+        "Database B"
+      ],
+      "title": "Ventilation in primary school classrooms",
+      "abstract": "Carbon dioxide levels were measured in 40 primary school classrooms.",
+      "authors": [
+        "Ostrowski M"
+      ],
+      "year": 2020,
+      "journal": "Synthetic Building Studies",
+      "doi": "10.0000/syn.0029",
+      "language": "English",
+      "record_type": "journal article",
+      "headings": [
+        "Primary Education",
+        "Air Quality"
+      ],
+      "planted": "Off-topic noise matching primary school."
+    },
+    {
+      "id": "R030",
+      "study_id": "N07",
+      "study_eligible": false,
+      "record_role": "primary report",
+      "duplicate_of": null,
+      "sources": [
+        "Database A"
+      ],
+      "title": "Wellbeing of tutors in university distance learning",
+      "abstract": "A survey of 300 university tutors on workload and wellbeing.",
+      "authors": [
+        "Llewellyn-Ade O"
+      ],
+      "year": 2019,
+      "journal": "Synthetic Higher Education",
+      "doi": "10.0000/syn.0030",
+      "language": "English",
+      "record_type": "journal article",
+      "headings": [
+        "Tutoring",
+        "Higher Education"
+      ],
+      "planted": "Off-topic noise matching tutor* and the Tutoring heading."
+    },
+    {
+      "id": "R031",
+      "study_id": "N08",
+      "study_eligible": false,
+      "record_role": "primary report",
+      "duplicate_of": null,
+      "sources": [
+        "Database B"
+      ],
+      "title": "Peer-to-peer lending and household credit",
+      "abstract": "Analysis of borrowing through online peer-to-peer lending platforms.",
+      "authors": [
+        "Rasmussen J"
+      ],
+      "year": 2018,
+      "journal": "Synthetic Finance Review",
+      "doi": "10.0000/syn.0031",
+      "language": "English",
+      "record_type": "journal article",
+      "headings": [
+        "Credit"
+      ],
+      "planted": "Off-topic noise matching peer*."
+    },
+    {
+      "id": "R032",
+      "study_id": "N09",
+      "study_eligible": false,
+      "record_role": "primary report",
+      "duplicate_of": null,
+      "sources": [
+        "Database A"
+      ],
+      "title": "Accuracy of automated meter reading in smart grids",
+      "abstract": "Meter reading errors were compared across three automated systems.",
+      "authors": [
+        "Ivanova D"
+      ],
+      "year": 2017,
+      "journal": "Synthetic Energy Systems",
+      "doi": "10.0000/syn.0032",
+      "language": "English",
+      "record_type": "journal article",
+      "headings": [
+        "Electricity"
+      ],
+      "planted": "Off-topic noise matching reading."
+    },
+    {
+      "id": "R033",
+      "study_id": "N10",
+      "study_eligible": false,
+      "record_role": "primary report",
+      "duplicate_of": null,
+      "sources": [
+        "Database B"
+      ],
+      "title": "Peer support in primary care for type 2 diabetes",
+      "abstract": "Patients in primary care were paired with trained peer supporters.",
+      "authors": [
+        "Mahlangu S"
+      ],
+      "year": 2021,
+      "journal": "Synthetic Primary Care",
+      "doi": "10.0000/syn.0033",
+      "language": "English",
+      "record_type": "journal article",
+      "headings": [
+        "Peer Support",
+        "Primary Health Care"
+      ],
+      "planted": "Off-topic noise matching peer* and primary."
+    }
+  ]
+}
