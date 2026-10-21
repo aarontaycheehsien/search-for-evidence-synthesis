@@ -1,16 +1,82 @@
 # Ranking, relevance sorts and result limits {#sec-ranking}
 
-::: {.callout-note}
-## Not yet drafted
+Boolean admission decides which records are in the result set. Ranking decides the order in which they are shown. For a review that screens every record its searches admit, order makes no difference to which studies are found: a relevance sort over a complete export changes nothing but the sequence of screening.
 
-This chapter is an outline. See the [plan](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/plan.md) and [chapter map](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/chapter-map.md) for its sources and status.
-:::
+Ranking starts to decide which studies are found in two situations. The first is when a system will only show or export the top of a ranked list. The second is when screening stops before the end of the list, which @sec-stopping treats. This chapter is about the first: what a relevance sort does, how a lexical ranking scores records, what a learnt reranker adds, and how to tell a change in order from a change in what can be screened.
 
-**After this chapter you should be able to** distinguish a change in the order of results from a change in what can be exported or screened.
+**After this chapter you should be able to** distinguish a change in the order of results from a change in what can be exported or screened, and judge what a result cap costs a review.
 
-## Planned contents
+## Order and membership {#sec-ranking-order}
 
-- BM25 and ranked lexical retrieval.
-- A relevance sort changes order, not the Boolean result set; a display or export limit changes what can be screened.
-- PubMed's Best Match as a lexical ranking followed by a learnt reranker trained on search logs [@fiorini2018].
-- The suitability of search systems for systematic searching [@gusenbauer2020].
+A relevance sort reorders a result set. It does not add or remove records. A strategy that returns 2,815 records returns 2,815 whether they are sorted by date, by author or by relevance, and a team that exports and screens all of them sees the same records in every case.
+
+Membership changes only when something stops the team seeing the whole set. @tbl-limits separates three kinds of limit that are often run together.
+
+| Limit | What it does | Does it change what can be screened? |
+|---|---|---|
+| A relevance sort | Reorders the result set | No, if every record is exported and screened |
+| A batch limit on export | Caps how many records one export can contain | No, if the team exports in batches until the set is complete, and records that it did |
+| A cap on displayed or retrievable results | Makes records beyond a rank unreachable, whatever the team does | Yes: the ranking now decides which records can be screened |
+
+: Three kinds of limit on a result set. {#tbl-limits}
+
+Under a cap, ranking becomes an admission rule. The records that fall below the cut-off are as unreachable as records a Boolean `NOT` removed, and nothing in the result list says how many eligible ones were among them. The rest of this chapter asks what decides the order, so that the cost of a cap can be estimated.
+
+## How a lexical ranking scores records {#sec-ranking-bm25}
+
+Boolean admission treats every matching term as equally informative and every admitted record as equally good. Neither is true. A word found in a few records discriminates between records far better than one found in most of them, and a record that uses a word several times is usually more about it than one that uses it once. Ranked retrieval turns these intuitions into scores.
+
+**BM25** is the standard lexical scoring function [@robertson2009]. It ranks records by adding up evidence from the analysed terms they share with the query, the same terms the inverted index of @sec-boolean-index holds. For each query term it asks four questions.
+
+1. **Did the term match?** A term the record does not contain adds nothing. BM25, like Boolean search, can only use terms the query and the record share.
+2. **How rare is the term in the collection?** A term found in few records contributes more than one found in many. This is the **inverse document frequency**, or IDF.
+3. **How often does it occur in the record, with diminishing returns?** Repetition adds evidence, but each further occurrence adds less. With the common setting *k*~1~ = 1.2 and a record of average length, the term-frequency factor is 1 for one occurrence, 1.375 for two and about 2.08 for twenty, approaching a limit of 2.2.
+4. **How long is the record?** Five occurrences in a short abstract are stronger evidence than five in a long one. The parameter *b*, commonly 0.75, sets how strongly length is taken into account.
+
+The score is the sum of these contributions over the query's terms. It orders records by lexical evidence. It is not a probability that a record is eligible, and it knows nothing about eligibility criteria.
+
+### Rarity is not relevance
+
+The second question is where BM25 most often surprises searchers in evidence synthesis. @tbl-moran-idf shows the weights BM25 gives some of the words in the Moran review's search strategy, computed over the 4,882 records that the review's searches returned.
+
+| Term | Pool records containing it (of 4,882) | IDF | Included records containing it (of 137) |
+|---|---|---|---|
+| *behavio\** | 3,497 | 0.33 | 124 |
+| *food* | 2,157 | 0.82 | 94 |
+| *risk\** | 1,981 | 0.90 | 62 |
+| *predat\** | 1,376 | 1.27 | 78 |
+| *hunger* | 257 | 2.94 | 36 |
+| *bold\** | 111 | 3.78 | 11 |
+| *calori\** | 236 | 3.03 | 0 |
+| *neophil\** | 15 | 5.75 | 0 |
+
+: BM25 weights for selected terms of the Moran strategy, computed over the review's pool. A truncated term counts records containing any matching word. From `case-pack/data/moran-2021/ranking/term-weights.csv`. {#tbl-moran-idf}
+
+*behavio\** occurs in 124 of the 137 included records and gets the lowest weight of any term, because almost three-quarters of the pool contains it. *neophil\**, the highest-weighted term, occurs in no included record. This is not a flaw in BM25; it is what IDF is for. But it has a consequence that is specific to evidence synthesis. When BM25 ranks records that a Boolean strategy has already admitted, every concept the strategy required is, by construction, common in the pool. The words that defined the search carry little weight, and the order is decided by rarer and often peripheral words.
+
+### The same scoring, different queries
+
+BM25 is a scoring function, not a search. What it ranks depends entirely on the query it is given. In the CLEF 2019 runs on CD010558 (@sec-validation-measures), two teams submitted a "BM25 baseline" with very different results. One built its query from the review's title and terms extracted from the Boolean strategy; the other is described only as a simple baseline.
+
+The Moran pool shows the same effect. The case pack ranks the pool by BM25 with two queries: the words of the review's title, as a searcher might type them, and the words of the authors' search strategy without its Boolean structure. @tbl-moran-cap shows how many of the 137 included records each ranking puts within the top *k*.
+
+| Records that can be seen (top *k*) | Random order (expected) | Title query | Strategy query |
+|---|---|---|---|
+| 100 | 2% | 7% | 9% |
+| 250 | 5% | 14% | 23% |
+| 500 | 10% | 23% | 41% |
+| 1,000 | 20% | 35% | 59% |
+| 2,000 | 41% | 55% | 79% |
+| Rank of the last included record | | 4,797 | 4,494 |
+
+: Recall of the Moran review's 137 included records within the top *k* of a BM25 ranking of its 4,882-record pool. From `case-pack/data/moran-2021/ranking/summary.md`. {#tbl-moran-cap}
+
+Three readings follow.
+
+- **A cap turns ranking quality into recall.** If only the top 1,000 records could be seen, the better query would keep 59% of the included studies and the title query 35%. Both beat random order, and both lose most of what a complete screen would find.
+- **The query matters as much as the formula.** The strategy's richer vocabulary nearly doubles recall at 1,000 over the title's seven words. Changing *behaviours* to *behavio\** in the title query makes almost no difference, because the term is too common to carry weight.
+- **No static ranking finds everything early.** Under both queries the last included record sits within a few hundred places of the bottom of the pool. A screening tool that learns from the reviewers' decisions does better: in the case pack's active-learning simulations on the same pool, a median of 82% of included records were found within the first 20% of records screened (@sec-validation-variability).
+
+These figures describe ranking within a pool the review's Boolean searches had already admitted. A web-scale system with a display cap ranks its whole index, so its top 1,000 is drawn from a far larger and noisier set. They are not an estimate of any product's recall; they show the mechanism by which a cap costs studies.
+
+<!-- BESTMATCH-AND-PRODUCTS -->
