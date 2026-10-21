@@ -32,6 +32,9 @@ Third-party figures and product screenshots in the earlier book are not carried 
 | `docs/chapter-map.md` | For each planned chapter: source sections, treatment, new material and product claims to verify |
 | `docs/case-pack.md` | Datasets for the exercises: what each can show, licences checked, and the chosen cases |
 | `case-pack/sources.csv` | Machine-readable provenance and licence record for every case-pack source |
+| `case-pack/reference-sets/`, `case-pack/data/`, `case-pack/synthetic/` | Exercise data: identifiers, labels, screening logs and the synthetic collection, each with a README |
+| `case-pack/scripts/`, `case-pack/tests/` | Scripts that rebuild the data, and their offline tests |
+| `docs/outreach/` | Drafts of messages to other projects, not sent |
 | `AGENTS.md` | Working rules for contributors and coding agents |
 | `LICENSE` | CC BY 4.0, with the exclusions listed there |
 

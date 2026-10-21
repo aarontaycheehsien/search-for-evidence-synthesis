@@ -99,14 +99,14 @@ The final assessment is a short recommendation to a review team about a proposed
 | Decision | Recommendation | Why it matters |
 |---|---|---|
 | Final title | Keep the working title until the pilot | Title should match what readers find most useful |
-| Health running case | Confirm one of the three CLEF TAR candidates in [`case-pack.md`](case-pack.md) after reading the strategies | Every Part II chapter uses it |
+| Health running case | CD010558, psychological therapies for treatment-resistant depression: its strategy shows every element the book discusses, and its reference set is complete. See [`case-pack.md`](case-pack.md) | Every Part II chapter uses it |
 
 Format, disciplinary balance and product-claim maintenance were decided on 2026-10-21; see the decision record.
 
 ## Implementation sequence
 
 1. Settle the open decisions above. (Format, disciplinary balance and claim maintenance settled on 2026-10-21.)
-2. Build the case pack and record provenance and licences. (Sources selected and licences checked on 2026-10-21; data work outstanding.)
+2. Build the case pack and record provenance and licences. (First version built on 2026-10-21: a reference set, screening logs for both cases and the synthetic collection. Remaining items are listed in [`case-pack.md`](case-pack.md).)
 3. Draft Chapter 1 and Chapter 10 first: they define the problem and the evidence needed to judge a solution.
 4. Draft Chapter 3, the largest gap, then Chapters 2 and 4 around the PubMed running case. Register every product claim with a check date.
 5. Pilot Chapters 1, 3 and 10 and their exercises with a small group of practising evidence-synthesis librarians. Record where they fail.

@@ -1,32 +1,26 @@
-# Draft: query to the SYNERGY maintainers
+# Draft: comment to the SYNERGY maintainers
 
 Status: draft for the author to post. Not sent.  
-Where to post: a new issue at https://github.com/asreview/synergy-dataset/issues
+Where to post: as a comment on the open "Data quality" issue, https://github.com/asreview/synergy-dataset/issues/184, which the maintainers use to collect data-quality problems for SYNERGY PLUS.
+
+Background: the maintainers added `Moran_2021_corrected` in January 2025 (pull request 128) and state in issue 184 that version 1 will stay unchanged so that published results remain comparable. A new issue is not needed; the useful contribution is the measured size of the version 1 problem and two questions about the corrected variant.
 
 ---
 
-**Title:** Status of the `Moran_2021_corrected` dataset
+Thank you for SYNERGY, and for adding the corrected Moran data.
 
-Hello, and thank you for SYNERGY.
+I am preparing an open (CC BY 4.0) textbook for evidence-synthesis librarians that uses Moran et al. (2021) as a teaching case, so I compared the two versions at commit `dc2dadf`. In case it helps the SYNERGY PLUS work:
 
-I am preparing an open (CC BY 4.0) textbook for evidence-synthesis librarians and would like to use Moran et al. (2021) as a teaching case. I noticed `datasets/Moran_2021_corrected/` in the repository (checked at commit `dc2dadf`). It is not listed in `datasets.toml`, so I would like to check its status before relying on it.
+- Of the 107 records that `Moran_2021` (version 1) labels as included and that have a DOI, 2 are full-text inclusions in `Moran_2021_corrected` and 7 passed title-and-abstract screening. Version 1's labels come from `screening_ref_data_rayyan_final.csv` in the authors' repository, which appears not to contain the review's inclusions.
+- `Moran_2021_corrected` reproduces the article's counts (5,453 records screened at title and abstract; 626 sent to full text). Its `openalex_id` column is empty, 497 records have no DOI, and labels are joined on exact title in `compose.py`.
 
-What I see:
+Two questions:
 
-- `Moran_2021_corrected_ids.csv` has 5,453 records, 626 with `label_abstract_included = 1` and 142 with `label_included = 1`. The first two numbers match the article's report of 5,453 records screened at title and abstract and 626 selected for full text.
-- The `openalex_id` column is empty for all records, and 497 records have no DOI.
-- `compose.py` joins the OSF screening files (`osf.io/gmvxy` and `osf.io/5zw46`) on exact title.
+1. Do you expect the corrected labels to change before SYNERGY PLUS, for example after matching records to OpenAlex?
+2. Until then, would you prefer users to cite SYNERGY version 1 together with the OSF project (osf.io/3tphj, CC BY 4.0) for these labels?
 
-Questions:
-
-1. Is `Moran_2021_corrected` intended for a future release, and should it replace `Moran_2021` (5,214 records and 111 inclusions in version 1)?
-2. Is it safe to use the title-and-abstract labels as they stand, given the exact-title join?
-3. Would you prefer users to cite version 1 of SYNERGY and the OSF project for these labels in the meantime?
-
-I would credit SYNERGY, the original authors and the OSF project (CC BY 4.0) wherever the labels are used.
-
-Thank you.
+I would credit SYNERGY, the original authors and the OSF project wherever the labels are used.
 
 ---
 
-Note for the author: the article says 147 studies met the inclusion criteria after full-text screening, which included 15 records from outside the database searches. The variant's 142 full-text inclusions are consistent with five of the 147 coming from those other sources, but that is an inference; do not state it as fact unless the maintainers or the OSF screening database confirm it.
+Note for the author: the article reports 147 studies eligible after full-text screening, which included 15 records from outside the database searches. The corrected variant's 142 full-text inclusions are consistent with five of the 147 coming from those other sources, but that is an inference; do not state it as fact unless the maintainers or the OSF screening database confirm it.
