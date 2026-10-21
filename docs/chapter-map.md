@@ -32,6 +32,8 @@ PubMed is the running case through this part. Every PubMed and NLM claim goes in
 
 ### 2. Boolean admission, indexes and analysers
 
+**Drafted 2026-10-22.** Adapted from Ch 2 "Boolean admission and the inverted index" (`#boolean-admission`, commit `99bfb9c`): the yes-or-no admission argument, the analysis steps, the inverted index and Boolean operators as set operations, rewritten around CD010558 and the synthetic collection; the `delulu` examples and the speed discussion were dropped. Ch 4 (`#beyond-boolean`) was not used; its ranked-retrieval material belongs in Chapter 4. New: the platform comparison (all claims in `claims/register.csv`, checked 2026-10-22), the CD010558 proximity and hyphen analysis (`case-pack/data/indexing/CD010558-analyser.csv`), `NOT` lines and limits, and the Moran translation table.
+
 | Source section | Anchor | Treatment |
 |---|---|---|
 | Ch 2 Boolean admission and the inverted index | `#boolean-admission` | Adapt; replace the slang examples with review vocabulary |
