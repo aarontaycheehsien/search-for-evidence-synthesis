@@ -4,7 +4,7 @@ An independent textbook on how search systems find and miss studies, written for
 
 Working title: *How Search Finds and Misses Studies: Information Retrieval for Evidence Synthesis*.
 
-**Status:** planning. No chapters have been drafted. Start with the [plan](docs/plan.md), the [chapter map](docs/chapter-map.md) and the [case pack](docs/case-pack.md).
+**Status:** early draft. The Quarto book skeleton is in place; chapters marked "Not yet drafted" are outlines. Start with the [plan](docs/plan.md), the [chapter map](docs/chapter-map.md) and the [case pack](docs/case-pack.md).
 
 ## Who it is for
 
@@ -28,6 +28,9 @@ Third-party figures and product screenshots in the earlier book are not carried 
 
 | Location | Purpose |
 |---|---|
+| `_quarto.yml`, `index.qmd`, `chapters/`, `appendices/`, `references.qmd` | The Quarto book: configuration, preface, chapters and appendices |
+| `references.bib`, `assets/apa.csl` | Verified bibliography and the APA citation style (CC BY-SA 3.0, from the Citation Style Language project) |
+| `.github/workflows/publish.yml` | Renders the book and publishes it to GitHub Pages on each push to `main` |
 | `docs/plan.md` | Scope, structure, principles, open decisions and implementation sequence |
 | `docs/chapter-map.md` | For each planned chapter: source sections, treatment, new material and product claims to verify |
 | `docs/case-pack.md` | Datasets for the exercises: what each can show, licences checked, and the chosen cases |
@@ -40,6 +43,10 @@ Third-party figures and product screenshots in the earlier book are not carried 
 | `AGENTS.md` | Working rules for contributors and coding agents |
 | `LICENSE` | CC BY 4.0, with the exclusions listed there |
 
+## Building the book
+
+Install [Quarto](https://quarto.org/) 1.10 or later, then run `quarto render` in the repository root. The site is written to `_site/`, which Git ignores. Chapters contain no executable code; figures and counts come from the committed case-pack data.
+
 ## Licence
 
-Text, tables, diagrams and code are licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). See [`LICENSE`](LICENSE) for what the licence does not cover.
+Text, tables, diagrams and code are licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). See [`LICENSE`](LICENSE) for what the licence does not cover, including the citation style file.

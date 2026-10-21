@@ -1,0 +1,10 @@
+# Case-pack documentation {#sec-case-pack}
+
+::: {.callout-note}
+## Not yet drafted
+:::
+
+## Planned contents
+
+- Provenance, licences and known limits of each dataset: the CLEF 2019 topics, the SYNERGY Moran labels, the reference sets and the synthetic collection.
+- How to rebuild each dataset with the scripts in the repository.

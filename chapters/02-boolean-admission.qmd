@@ -1,0 +1,16 @@
+# Boolean admission, indexes and analysers {#sec-boolean}
+
+::: {.callout-note}
+## Not yet drafted
+
+This chapter is an outline. See the [plan](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/plan.md) and [chapter map](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/chapter-map.md) for its sources and status.
+:::
+
+**After this chapter you should be able to** predict how truncation, phrases, proximity and fields change which records a strategy admits, on each platform.
+
+## Planned contents
+
+- The inverted index and Boolean admission, with review vocabulary as the examples.
+- Truncation, phrase, proximity and field behaviour as decisions made by each platform's analyser and index, compared across PubMed, Ovid, EBSCOhost, Embase, Scopus and Web of Science.
+- Why a syntax translation can change which records are admitted.
+- `NOT` lines and limits as admission decisions: the CD010558 letter and comment exclusions, and the synthetic collection's `NOT "secondary school*"` line.

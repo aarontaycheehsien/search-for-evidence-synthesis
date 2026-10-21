@@ -1,0 +1,17 @@
+# Where eligible studies go missing {#sec-missing}
+
+::: {.callout-note}
+## Not yet drafted
+
+This chapter is an outline. See the [plan](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/plan.md) and [chapter map](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/chapter-map.md) for its sources and status.
+:::
+
+**After this chapter you should be able to** locate a loss at coverage, indexing, query admission, ranking or export limits, deduplication, prioritisation or stopping.
+
+## Planned contents
+
+- Opening case: what the CD010558 MEDLINE strategy finds when re-run.
+- Topical relevance versus eligibility.
+- Record, report and study.
+- The boundaries where an eligible study can be lost.
+- The synthetic 100/90/81 example.

@@ -1,0 +1,16 @@
+# Recording, reporting and updating {#sec-recording}
+
+::: {.callout-note}
+## Not yet drafted
+
+This chapter is an outline. See the [plan](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/plan.md) and [chapter map](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/chapter-map.md) for its sources and status.
+:::
+
+**After this chapter you should be able to** produce a search record that another librarian can rerun, audit and update.
+
+## Planned contents
+
+- A completed reporting package: PRISMA-S [@rethlefsen2021] plus AI use reported under the joint position statement [@flemyng2025].
+- A deduplication record [@mckeown2021], using the Moran case's spread of 5,390 to 5,552 records after duplicates removed.
+- Updating: the entry-date limits in CD010558 and CD011787, and why rerunning a saved query does not establish stable coverage.
+- An update case in which subject indexing, ranking and an AI tool have all changed.

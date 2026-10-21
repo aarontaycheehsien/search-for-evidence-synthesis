@@ -1,0 +1,61 @@
+project:
+  type: book
+  output-dir: _site
+  # Render only the book. The planning documents in docs/ and the case-pack
+  # READMEs are repository documentation, not chapters.
+  render:
+    - index.qmd
+    - chapters/*.qmd
+    - appendices/*.qmd
+    - references.qmd
+
+book:
+  title: "How Search Finds and Misses Studies"
+  subtitle: "Information Retrieval for Evidence Synthesis"
+  author: "Aaron Tay Chee Hsien"
+  date: last-modified
+  date-format: "D MMMM YYYY"
+  site-url: https://aarontaycheehsien.github.io/search-for-evidence-synthesis/
+  repo-url: https://github.com/aarontaycheehsien/search-for-evidence-synthesis
+  repo-actions: [issue, source]
+  page-footer:
+    center: "Working draft. Text licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/); see the repository LICENSE for exclusions."
+  chapters:
+    - index.qmd
+    - part: "The problem"
+      chapters:
+        - chapters/01-where-studies-go-missing.qmd
+    - part: "How the systems work"
+      chapters:
+        - chapters/02-boolean-admission.qmd
+        - chapters/03-indexing-filters-classifiers.qmd
+        - chapters/04-ranking-and-limits.qmd
+        - chapters/05-learnt-representations.qmd
+        - chapters/06-pipelines-and-agents.qmd
+    - part: "Practice"
+      chapters:
+        - chapters/07-developing-and-translating.qmd
+        - chapters/08-supplementary-routes.qmd
+        - chapters/09-stopping.qmd
+        - chapters/10-validation.qmd
+        - chapters/11-recording-reporting-updating.qmd
+    - references.qmd
+  appendices:
+    - appendices/a-review-types.qmd
+    - appendices/b-measures.qmd
+    - appendices/c-case-pack.qmd
+    - appendices/d-terminology.qmd
+
+bibliography: references.bib
+csl: assets/apa.csl
+lang: en-GB
+link-citations: true
+
+format:
+  html:
+    theme:
+      light: cosmo
+      dark: darkly
+    toc: true
+    number-sections: true
+    callout-appearance: simple

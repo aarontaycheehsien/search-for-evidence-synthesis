@@ -1,0 +1,10 @@
+# Review types and what they ask of the search {#sec-review-types}
+
+::: {.callout-note}
+## Not yet drafted
+:::
+
+## Planned contents
+
+- Systematic, scoping, rapid, qualitative evidence and mapping reviews, and what each asks of the search.
+- The Cochrane, Campbell, JBI and CEE traditions.

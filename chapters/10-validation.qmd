@@ -1,0 +1,16 @@
+# Validating a search, route or tool {#sec-validation}
+
+::: {.callout-note}
+## Not yet drafted
+
+This chapter is an outline. See the [plan](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/plan.md) and [chapter map](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/chapter-map.md) for its sources and status.
+:::
+
+**After this chapter you should be able to** choose the comparison a claim needs and state what it cannot show.
+
+## Planned contents
+
+- Claims and the comparisons each one needs.
+- Reference sets, relative recall and pooling bias.
+- Benchmark labels and their limits.
+- Variability across runs and stopping.

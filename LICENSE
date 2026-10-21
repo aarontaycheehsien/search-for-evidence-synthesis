@@ -59,6 +59,11 @@ WHAT THIS LICENCE DOES NOT COVER
 5. Third-party datasets. Data used in exercises keeps its own licence, which is
    stated where the data is described.
 
+6. The citation style. assets/apa.csl is the "APA Style 7th edition" style from
+   the Citation Style Language styles repository
+   (https://github.com/citation-style-language/styles), licensed under the
+   Creative Commons Attribution-ShareAlike 3.0 licence, as stated in the file.
+
 ------------------------------------------------------------------------------
 MATERIAL ADAPTED FROM AN EARLIER WORK
 ------------------------------------------------------------------------------

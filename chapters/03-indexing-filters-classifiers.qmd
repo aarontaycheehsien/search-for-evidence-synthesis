@@ -1,0 +1,16 @@
+# Subject indexing, search filters and inherited classifiers {#sec-indexing}
+
+::: {.callout-note}
+## Not yet drafted
+
+This chapter is an outline. See the [plan](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/plan.md) and [chapter map](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/chapter-map.md) for its sources and status.
+:::
+
+**After this chapter you should be able to** judge when a subject heading, search filter or study-design classifier can be relied on, and how to test it.
+
+## Planned contents
+
+- Human and automated subject indexing; MEDLINE's move to automated indexing and to MTIX [@nlm2021; @nlm2024].
+- What a heading-only block inherits from the indexer, and indexing lag for new concepts.
+- Study-design search filters as hand-built classifiers judged by sensitivity and precision, and machine-learning RCT classifiers as learnt ones [@marshall2018; @thomas2021].
+- The CD011787 strategy's qualitative filter and language limit as a worked case.
