@@ -11,6 +11,8 @@ Status: Planning. Nothing has been drafted.
 | 2026-10-21 | Source format: Quarto, with citations managed in BibTeX. |
 | 2026-10-21 | Disciplinary balance: health-led, with one sustained non-health contrast case. The case selected is Moran et al. (2021), a behavioural-ecology review; see [`case-pack.md`](case-pack.md). |
 | 2026-10-21 | Product claims: the author re-checks them annually, with an agent drafting each re-check against current documentation for the author to approve. |
+| 2026-10-21 | Health running case: CD010558, *Psychological therapies for treatment-resistant depression in adults*. |
+| 2026-10-21 | The drafted comment to the SYNERGY maintainers is not to be posted. |
 
 This plan descends from three planning records in the earlier book's repository: the [initial proposal](https://github.com/aarontaycheehsien/Information-retrieval-crashcourse/blob/ce9db34/reviews/evidence-synthesis-plan-2026-10-21.md), the [reconsidered recommendation](https://github.com/aarontaycheehsien/Information-retrieval-crashcourse/blob/342cd92/reviews/evidence-synthesis-plan-reconsidered-2026-10-21.md) and the [third iteration](https://github.com/aarontaycheehsien/Information-retrieval-crashcourse/blob/bec8eb3/reviews/evidence-synthesis-plan-rethought-2026-10-21.md). The third iteration recommended a linked companion volume. The decision above supersedes that recommendation; the rest of its analysis still applies.
 
@@ -99,9 +101,8 @@ The final assessment is a short recommendation to a review team about a proposed
 | Decision | Recommendation | Why it matters |
 |---|---|---|
 | Final title | Keep the working title until the pilot | Title should match what readers find most useful |
-| Health running case | CD010558, psychological therapies for treatment-resistant depression: its strategy shows every element the book discusses, and its reference set is complete. See [`case-pack.md`](case-pack.md) | Every Part II chapter uses it |
 
-Format, disciplinary balance and product-claim maintenance were decided on 2026-10-21; see the decision record.
+Format, disciplinary balance, product-claim maintenance and the health running case were decided on 2026-10-21; see the decision record.
 
 ## Implementation sequence
 

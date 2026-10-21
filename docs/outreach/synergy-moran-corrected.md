@@ -1,7 +1,7 @@
 # Draft: comment to the SYNERGY maintainers
 
-Status: draft for the author to post. Not sent.  
-Where to post: as a comment on the open "Data quality" issue, https://github.com/asreview/synergy-dataset/issues/184, which the maintainers use to collect data-quality problems for SYNERGY PLUS.
+Status: not to be posted (author's decision, 2026-10-21). Kept as a record of the findings.  
+Intended destination, now not used: a comment on the open "Data quality" issue, https://github.com/asreview/synergy-dataset/issues/184, which the maintainers use to collect data-quality problems for SYNERGY PLUS.
 
 Background: the maintainers added `Moran_2021_corrected` in January 2025 (pull request 128) and state in issue 184 that version 1 will stay unchanged so that published results remain comparable. A new issue is not needed; the useful contribution is the measured size of the version 1 problem and two questions about the corrected variant.
 

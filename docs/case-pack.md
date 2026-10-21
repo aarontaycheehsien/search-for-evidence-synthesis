@@ -69,7 +69,7 @@ The metadata file lists 46 reviews, of which 20 are inactive with stated reasons
 
 **Limits.** The strategies were taken from Cochrane reviews. The repository's MIT licence may not cover rights that Cochrane or Wiley hold in them, so quote individual strategies with attribution to the Cochrane review and do not redistribute them in bulk without confirmation. Later users have reported format errors and deleted PubMed identifiers in the release. Running a strategy today will not return the 2017–2019 set, because of indexing changes and the move to automated MeSH indexing in 2022.
 
-**Recommended running case: CD010558**, *Psychological therapies for treatment-resistant depression in adults* (Ijaz et al., 2018). Its 33-line strategy has a subject heading, free text with proximity and field codes, a randomised-trial filter, a `NOT` block for animals and publication types, and an entry-date limit. Its pool is moderate (2,815 records; 37 eligible at title and abstract, 10 at full text), and its six included studies are few enough to map completely. Awaiting the author's confirmation.
+**Running case: CD010558** (confirmed 2026-10-21), *Psychological therapies for treatment-resistant depression in adults* (Ijaz et al., 2018). Its 33-line strategy has a subject heading, free text with proximity and field codes, a randomised-trial filter, a `NOT` block for animals and publication types, and an entry-date limit. Its pool is moderate (2,815 records; 37 eligible at title and abstract, 10 at full text), and its six included studies are few enough to map completely.
 
 **Other candidates kept:**
 
@@ -118,9 +118,8 @@ Version 0.1 is built: a fictional education review with 33 records and 9 eligibl
 
 1. Optionally confirm the Moran strings against Appendix S2 of the supporting information (check 1 above).
 2. Optionally record the exact Date Completed values for the four late-indexed CD010558 records with `case-pack/scripts/fetch_pubmed.py`, which needs network access to NCBI. The explanation itself is confirmed.
-3. Decide whether to post the SYNERGY query ([`docs/outreach/synergy-moran-corrected.md`](outreach/synergy-moran-corrected.md)).
-4. Build a reference set for CD012069 if it is used (CD011787 is done).
-5. Pilot the synthetic collection's exercises and extend it after feedback.
+3. Build a reference set for CD012069 if it is used (CD011787 is done).
+4. Pilot the synthetic collection's exercises and extend it after feedback.
 
 ## References
 
