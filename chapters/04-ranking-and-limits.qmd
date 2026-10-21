@@ -79,4 +79,128 @@ Three readings follow.
 
 These figures describe ranking within a pool the review's Boolean searches had already admitted. A web-scale system with a display cap ranks its whole index, so its top 1,000 is drawn from a far larger and noisier set. They are not an estimate of any product's recall; they show the mechanism by which a cap costs studies.
 
-<!-- BESTMATCH-AND-PRODUCTS -->
+## What "relevance" means in the databases {#sec-ranking-products}
+
+Every major database offers a relevance sort, and each means something different by it. @tbl-products sets out what six databases and Google Scholar document about their relevance sorts and their limits, as checked on 22 October 2026.
+
+| Product | What the relevance sort uses | Cap on displayed or retrievable results | Export per batch |
+|---|---|---|---|
+| PubMed | Search terms weighted by where they occur, with a boost for recent articles; the top results re-ranked by a machine-learning model using over 150 signals, built on PubMed search logs (Best Match, the default sort) | 10,000 displayed and saved | 10,000 to a file or citation manager; 1,000 by email or to a collection |
+| Google Scholar | The full text, where a document was published, who wrote it, and how often and how recently it has been cited (the default sort) | 1,000 per query | One record at a time; no bulk access |
+| Scopus | Term frequency and TF/IDF, the field and position of the hit, proximity and completeness; terms with a wildcard do not count; citations and date are excluded | 2,000 displayed, though sorting covers the whole set | 20,000 to a file |
+| Web of Science | How many search terms occur in title, abstract, keywords and Keywords Plus, with title and keywords weighted slightly more | None stated | Up to 1,000 at a time, or 5,000 with limited fields |
+| Embase.com | The logarithm of term frequency times IDF, summed over terms; for `OR` searches, how many of the terms a record contains | None stated | 10,000 at a time when signed in |
+| Ovid | Relevancy ranking is applied only to Basic Search results | None stated | 200 by default; institutions may change it |
+| EBSCOhost | Term frequency and field weighting, with subject headings weighted most; newly published and peer-reviewed records prioritised | Not checked | Not checked |
+
+: Relevance sorts and result limits, as documented on 22 October 2026. Sources: PubMed [@pubmedhelp]; Google Scholar [@scholarhelp; @scholarabout]; Scopus [@scopusrelevance; @scopusresults; @scopusexport]; Web of Science [@wosresults; @wosexport]; Embase.com [@embaserelevance; @embaseexport]; Ovid [@ovidbasic; @ovidselecting]; EBSCOhost [@ebscorelevance]. {#tbl-products}
+
+Three readings matter for evidence synthesis.
+
+**Only two caps are hard, and one is easy to hit.** Google Scholar shows at most 1,000 results for any query and provides no bulk export [@scholarhelp], so a search that returns more than 1,000 records cannot be screened in full however much effort the team spends. PubMed displays and saves at most 10,000 results. For larger sets, its guide suggests reversing the sort order to see the last results first, dividing the set by date, narrowing the search, or using the bulk FTP files [@pubmedhelp]. The advice to reverse the sort implies what a team that clicks "save all results" on a larger set should expect: what it receives depends on the sort. A broad strategy for a review in a common condition can exceed 10,000 PubMed records. The other limits are on batches: they cost time, not studies, provided the team exports every batch and records that it did.
+
+**"Relevance" names an ordering, not a formula.** Scopus deliberately excludes citation counts and dates from its relevance score and ignores truncated terms [@scopusrelevance]. Google Scholar weights citations and venue [@scholarabout]. EBSCOhost boosts newly published and peer-reviewed records [@ebscorelevance]. PubMed's reranker is built on its search logs [@pubmedhelp]. A strategy built almost entirely from truncated terms has, in Scopus, almost nothing for the relevance sort to work with. None of these sorts estimates eligibility.
+
+**Below the caps, the sort is irrelevant to recall.** A team that exports and screens every record its strategy admits will find the same studies whatever the sort. The sort matters only if screening stops early, which is a stopping decision (@sec-stopping), not a property of the database.
+
+## PubMed's Best Match {#sec-ranking-bestmatch}
+
+PubMed's default sort is the best-documented example of a learnt reranker in a database librarians use daily. The user guide describes two stages [@pubmedhelp]. First, each citation that matches the search terms is weighted by how many terms it contains and in which fields, with recently published articles given "a somewhat higher weight". Then "the top articles returned by the weighted term frequency algorithm" are re-ranked by a machine-learning model that "combines over 150 signals", most computed from the query and the document, some from the document alone (publication type, publication year) or the query alone (its length). The model "was built on relevance data extracted from the anonymous and aggregated PubMed search logs".
+
+<!-- FIORINI -->
+
+The training signal is what matters for a review. A model built on search logs learns which records PubMed users tend to select for the queries they type. That is a reasonable target for a clinician who wants a few good articles quickly. It is not the target of a systematic search, which wants every eligible study, including the obscure, the old and the rarely clicked. Best Match changes the order of the records a strategy admits and nothing else; below PubMed's 10,000-record cap, a review that screens everything is unaffected by it.
+
+## AI research tools: ranking with a short cut-off {#sec-ranking-ai}
+
+Many AI research assistants are ranked systems with a cap built in. Two vendors' own documentation, as checked on 22 October 2026, shows the pattern.
+
+- **Elicit's systematic review workflow** "initially searches for up to 1,000 papers" on the topic; further searches and uploads can add more, up to plan limits [@elicitsr].
+- **Consensus** searches its whole database with a hybrid of semantic and BM25 retrieval, refines by signals including recency, citation count and journal, and then re-ranks "only the top 20 papers" with a larger model [@consensushow].
+
+Both make sensible engineering choices for their purpose, and both mean that what a user sees is the top of a ranking whose signals include popularity and recency. An eligible study that is new, rarely cited or published outside a mainstream journal starts at a disadvantage that no later step can undo. @sec-representations and @sec-pipelines look at how these systems retrieve and rerank.
+
+The documentation itself moves. A library guide dated April 2026 quotes an earlier version of Consensus's page, under which the second stage re-ranked "the top 1,500 most relevant papers" [@corbitt2026]; the current page gives no figure. A cap is a product setting, and it should be checked, dated and recorded each time a tool is used.
+
+<!-- SUITABILITY -->
+
+## Exercises {#sec-ranking-exercises}
+
+Inputs are in this chapter and the case pack (`case-pack/data/moran-2021/ranking/`).
+
+### Exercise 4.1: Sort, batch or cap?
+
+For each situation, say whether the ranking changes which records can be screened, and what the team should do.
+
+a. A Scopus search returns 3,400 records. The team sorts by relevance and exports everything.
+b. A PubMed search returns 14,300 records. The team clicks Save, chooses "All results" and screens the file.
+c. A Google Scholar search returns "about 17,800 results". The team screens the first 1,000.
+d. A Web of Science search returns 2,600 records. The team exports the first 1,000 and stops.
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+a. **Sort only.** Every record is exported, so the order is irrelevant to which studies are found.
+
+b. **Cap.** PubMed saves at most 10,000 results [@pubmedhelp], so 4,300 records are never screened, and which ones depends on the sort. Split the search by publication date into sets below 10,000, save each, and record the splits; or narrow the strategy and report the change.
+
+c. **Cap.** Google Scholar shows at most 1,000 results per query [@scholarhelp]. The remaining records cannot be reached by this query. Treat the search as a supplementary route (@sec-validation-claims), report the query, the date and the number of records screened, and do not describe it as comprehensive.
+
+d. **Batch limit, misused.** Web of Science exports up to 1,000 records at a time [@wosexport], but the other 1,600 can be exported in further batches. Stopping after one batch turns a batch limit into a self-imposed cap. Export all three batches.
+:::
+
+### Exercise 4.2: Why the defining words count least
+
+Using `term-weights.csv`, explain why *behavio\** has the lowest BM25 weight of any query term although 124 of the 137 included records contain it, and what this implies for ranking records that a Boolean strategy has already admitted.
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+IDF rewards rarity in the collection being ranked. *behavio\** occurs in 3,497 of the 4,882 pool records, so it discriminates poorly between them: its IDF is 0.33, against 5.75 for *neophil\**, which occurs in 15 records and in no included record.
+
+The pool was built by a strategy that required behaviour terms in its third block, so most records contain one. Any concept a Boolean strategy requires is, by construction, common in the records it admits. When those records are then ranked by BM25, the concepts that defined the search carry little weight, and the order depends on rarer words, which may be peripheral to eligibility. A relevance sort applied after a Boolean search is ranking on what the strategy did not insist on.
+:::
+
+### Exercise 4.3: What would a cap cost?
+
+Using `ranks.csv`, suppose a system let the team see only the top 500 records of the Moran pool. How many of the 137 included records would they see under each query, and under random order? What would you need to know to estimate the cost of a real product's cap?
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+Within the top 500: 56 included records under the strategy query (41%), 32 under the title query (23%), and about 14 under random order (10%). The median included record sits at rank 706 under the strategy query and 1,816 under the title query.
+
+For a real product, these figures are not an estimate. The case pack ranks a pool that the review's Boolean searches had already filtered; a product ranks its whole index with its own signals. To estimate a real cap's cost, the team would need a set of known eligible studies, and would check where each falls in the product's ranking for the query actually used (@sec-validation-reference). If many known studies fall near or below the cap, the route cannot be relied on for recall.
+:::
+
+### Exercise 4.4: The arithmetic of BM25
+
+Using the formula's components in @sec-ranking-bm25, with *k*~1~ = 1.2 and a record of average length:
+
+a. Compute the term-frequency factor for 1, 2, 5 and 20 occurrences, using tf × 2.2 / (tf + 1.2).
+b. In a pool of 4,882 records, compute IDF = ln(1 + (N − df + 0.5) / (df + 0.5)) for a term in 15 records and one in 3,497.
+c. Which contributes more to a record's score: one occurrence of the rare term, or twenty of the common one?
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+a. 1.00, 1.375, 1.77 and 2.08: each further occurrence adds less, approaching 2.2.
+
+b. 5.75 for the term in 15 records; 0.33 for the term in 3,497.
+
+c. One occurrence of the rare term contributes 5.75 × 1.00 = 5.75. Twenty occurrences of the common term contribute 0.33 × 2.08 = 0.69. A single rare word outweighs heavy repetition of a common one by a factor of eight, which is why a single unusual term in a record can lift it far up a BM25 ranking.
+:::
+
+### Exercise 4.5: Reporting a capped route
+
+A review team plans to add a Google Scholar search to its MEDLINE, Embase and PsycInfo searches, screening the first 1,000 results. Using @sec-validation and @sec-recording, say what claim this route can support, what must be reported, and what must not be claimed.
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+**Claim:** a supplementary route (@sec-validation-claims). It can add eligible studies the database searches missed; it cannot establish recall or replace any database search.
+
+**Report:** the exact query, the date, the number of results Google Scholar reported, the number screened (1,000, the documented cap), how records were exported (one at a time, or by a third-party tool whose use should itself be reported), and the eligible studies the route added that the databases had not found.
+
+**Do not claim:** that the Google Scholar search was comprehensive, that it searched "all" of Google Scholar, or that a second run would return the same records. The ranking weights citations and recency [@scholarabout], so the 1,000 records screened favour well-cited and recent work, and nothing in Google Scholar's documentation promises that a second run will return the same records.
+:::
