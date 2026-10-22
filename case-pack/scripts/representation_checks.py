@@ -59,6 +59,13 @@ CUTOFFS = (100, 250, 500, 1000, 2000)
 HALF_CUTOFFS = (50, 125, 250, 500, 1000)
 NEIGHBOURS = 10
 SEED = 7
+TOP = 100
+# Word lists for a rough check of what the top-ranked records are about.
+HUMAN_WORDS = {"human", "humans", "patient", "patients", "participant", "participants", "people",
+               "adolescent", "adolescents", "women", "men", "student", "students", "clinical",
+               "psychiatric", "disorder", "disorders", "obesity", "obese", "eating"}
+ANIMAL_WORDS = {"animal", "animals", "fish", "bird", "birds", "rat", "rats", "mice", "mouse", "insect",
+                "insects", "species", "larvae", "juvenile", "juveniles", "predator", "predators", "prey"}
 
 
 def synthetic_category(record):
@@ -86,6 +93,16 @@ def neighbour_labels(vectors, ta, ft, k):
             if position == 0:
                 first[label] += 1
     return first, counts
+
+
+def distinct_neighbours(vectors, ft, k):
+    """The distinct records among the k nearest other records of each included record."""
+    sims = vectors @ vectors.T
+    np.fill_diagonal(sims, -np.inf)
+    found = set()
+    for i in np.flatnonzero(ft):
+        found.update(int(j) for j in np.argsort(-sims[i])[:k])
+    return found
 
 
 def main():
@@ -187,6 +204,37 @@ def main():
         lines.append(f"| {label} | {first[label]} of {n_ft} ({first[label] / n_ft:.0%}) | "
                      f"{tenth[label]} of {n_ft * NEIGHBOURS:,} ({tenth[label] / (n_ft * NEIGHBOURS):.0%}) | "
                      f"{base[label]:.0%} |")
+    distinct = distinct_neighbours(vectors, ft, NEIGHBOURS)
+    d_ft = sum(1 for j in distinct if ft[j])
+    d_ta = sum(1 for j in distinct if ta[j] and not ft[j])
+    d_ex = len(distinct) - d_ft - d_ta
+    lines += [
+        "",
+        f"Counted once each, the 10 nearest neighbours of the included records are {len(distinct):,} distinct "
+        f"records: {d_ft} included ({d_ft / len(distinct):.0%}), {d_ta} title and abstract only "
+        f"({d_ta / len(distinct):.0%}) and {d_ex} excluded ({d_ex / len(distinct):.0%}). Every included "
+        "neighbour is itself one of the included records.",
+    ]
+    token_sets = [set(words(t)) for t in texts]
+    human = np.array([bool(ts & HUMAN_WORDS) for ts in token_sets])
+    animal = np.array([bool(ts & ANIMAL_WORDS) for ts in token_sets])
+    lines += [
+        "",
+        f"## What the top {TOP} records mention",
+        "",
+        "Records whose title or abstract contains at least one word from each list in the script "
+        "(HUMAN_WORDS, such as patients, participants, obesity, eating, disorder; ANIMAL_WORDS, such as "
+        "animals, fish, birds, species, predator). A rough check of topic, not a classification.",
+        "",
+        f"| Ranking | Human-health words | Animal words | Included records |",
+        "|---|---|---|---|",
+    ]
+    for name, r in (("Dense, title", rank_title), ("Dense, question", rank_question),
+                    ("BM25, title", rank_bm25_title), ("BM25, strategy words", rank_bm25_strategy)):
+        top = np.array(r) <= TOP
+        lines.append(f"| {name} | {int(human[top].sum())} of {TOP} | {int(animal[top].sum())} of {TOP} | "
+                     f"{int(ft[top].sum())} |")
+    lines.append(f"| Whole pool | {human.mean():.0%} | {animal.mean():.0%} | {n_ft} of {n:,} |")
     held_ft = list(ft[test])
     lines += [
         "",

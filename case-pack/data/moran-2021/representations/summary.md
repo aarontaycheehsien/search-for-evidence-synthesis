@@ -40,6 +40,20 @@ Question query (written for the case pack): `Does poor nutritional condition, su
 | title and abstract only | 33 of 137 (24%) | 306 of 1,370 (22%) | 9% |
 | excluded | 49 of 137 (36%) | 690 of 1,370 (50%) | 88% |
 
+Counted once each, the 10 nearest neighbours of the included records are 614 distinct records: 102 included (17%), 115 title and abstract only (19%) and 397 excluded (65%). Every included neighbour is itself one of the included records.
+
+## What the top 100 records mention
+
+Records whose title or abstract contains at least one word from each list in the script (HUMAN_WORDS, such as patients, participants, obesity, eating, disorder; ANIMAL_WORDS, such as animals, fish, birds, species, predator). A rough check of topic, not a classification.
+
+| Ranking | Human-health words | Animal words | Included records |
+|---|---|---|---|
+| Dense, title | 78 of 100 | 22 of 100 | 2 |
+| Dense, question | 14 of 100 | 94 of 100 | 12 |
+| BM25, title | 36 of 100 | 71 of 100 | 9 |
+| BM25, strategy words | 24 of 100 | 75 of 100 | 12 |
+| Whole pool | 37% | 68% | 137 of 4,882 |
+
 ## The same embeddings with a head trained on eligibility (held-out half, 2,441 records, 77 included)
 
 A logistic regression (balanced class weights) trained on the title-and-abstract decisions for the other 2,441 records (seed 7). Recall of full-text inclusions in the held-out half:

@@ -21,8 +21,9 @@ A learnt representation ranks records by the kind of similarity it was trained o
 See `summary.md`. In brief:
 
 - With the written question, the dense ranking performs about as well as BM25 with the strategy's words (recall of included records 0.55 against 0.59 in the top 1,000) and better than either BM25 or the dense ranking with the title alone.
-- The nearest neighbour of an included record is itself included in 55 of 137 cases (40%), against 3% of the pool, and excluded at title and abstract in 49 (36%).
+- The nearest neighbour of an included record is itself included in 55 of 137 cases (40%), against 3% of the pool, and excluded at title and abstract in 49 (36%). Counted once each, the 10 nearest neighbours of the included records are 614 distinct records, 17% of them included; every included neighbour is one of the 137.
 - The same embeddings with a head trained on half the review's decisions find 94% of the held-out half's included records in its top 1,000 of 2,441, against 79% for the dense question ranking.
+- Under the title query, 78 of the top 100 records mention human-health words and 22 animal words, against 37% and 68% of the pool; under the question, 14 and 94. The title never says "animals" (a rough word-list check, defined in the script).
 - 79% of the records, and 108 of the 137 included records, are longer than 256 word pieces, so the encoder never reads the end of their abstracts.
 - In the synthetic collection, the three records ranked most similar to the question are all ineligible (a systematic review, a secondary-school trial and a single-group study), while the off-topic records that share the question's words fall to the bottom; BM25 ranks one of those, about ventilation in primary-school classrooms, fourth.
 

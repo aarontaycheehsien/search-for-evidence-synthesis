@@ -14,26 +14,26 @@ This chapter answers that question in four steps: what a learnt representation i
 
 ## From words to vectors {#sec-rep-vectors}
 
-A *vector* is an ordered list of numbers. BM25 already represents a record as one: a number for each word in the vocabulary, almost all of them zero (@sec-ranking-bm25). That vector is *sparse*, because most entries are zero, and *specified*, because a formula written by people sets its values. An *embedding* is a vector whose values are produced by a model that has learnt them from data. Most embeddings used for search are *dense*: a few hundred numbers, nearly all non-zero, with no single number standing for a word. The two properties are independent. A vector can be dense without being learnt, and learnt without being dense.
+A *vector* is an ordered list of numbers. BM25's scoring can be written as one: a number for each word in the vocabulary, almost all of them zero, since a record contains few of the vocabulary's words (@sec-ranking-bm25 explains the scoring). That vector is *sparse*, because most entries are zero, and *specified*, because a formula written by people sets its values. An *embedding* is a vector whose values are produced by a model that has learnt them from data. Most embeddings used for search are *dense*: from a few hundred to about a thousand numbers, nearly all non-zero, with no single number standing for a word. The two properties are independent. A vector can be dense without being learnt, and learnt without being dense.
 
-A *sentence encoder* turns a passage of text into one dense vector. Sentence-BERT made this practical for comparison: it adapted a pretrained language model so that it would "derive semantically meaningful sentence embeddings that can be compared using cosine-similarity", where "semantically meaningful" means "that semantically similar sentences are close in vector space" [@reimers2019]. It produces the vector by averaging the model's representations of the passage's tokens.
+A *sentence encoder* turns a passage of text into one dense vector. Sentence-BERT made this practical for comparison: it adapted a pretrained language model so that it would "derive semantically meaningful sentence embeddings that can be compared using cosine-similarity", where "semantically meaningful" means "that semantically similar sentences are close in vector space" [@reimers2019]. By default it produces the vector by averaging the model's representations of the passage's tokens.
 
-*Dense retrieval* uses two such encoders, one for queries and one for records, and returns the records whose vectors are closest to the query's. Dense Passage Retrieval showed that "retrieval can be practically implemented using dense representations alone, where embeddings are learned from a small number of questions and passages by a simple dual-encoder framework" [@karpukhin2020]. Its index held Wikipedia articles cut into "disjoint text blocks of 100 words as passages, serving as our basic retrieval units".
+*Dense retrieval* uses one encoder, or a pair (one for queries and one for records), and returns the records whose vectors are closest to the query's. Dense Passage Retrieval showed that "retrieval can be practically implemented using dense representations alone, where embeddings are learned from a small number of questions and passages by a simple dual-encoder framework" [@karpukhin2020]. Its index held Wikipedia articles cut into "disjoint text blocks of 100 words as passages, serving as our basic retrieval units".
 
 Three consequences follow for a searcher.
 
 - **There is no admission rule.** A Boolean search admits a record only if it matches; BM25 scores only records that share a word with the query. Dense retrieval gives every record a score. The nearest record is the best available, not necessarily a relevant one, and the system decides where to cut the list (@sec-ranking-order).
 - **Model tokens are not indexed terms.** An encoder splits text into word pieces from its own vocabulary and reads only a fixed number of them. Text beyond that limit is not represented at all (@sec-rep-units).
-- **Exact strings can blur.** MedCPT's authors note that dense retrievers "are not as controllable or explainable as sparse retrievers, such as BM25": a search for the gene "MAP3K3" also returns "articles that only contain 'MAP3K7'" [@jin2023]. A drug name, a gene, a trial acronym or a misspelling that matters to a review can be treated as close to something else.
+- **Exact strings can blur.** MedCPT's authors note that transformer-based retrievers and re-rankers such as theirs "are not as controllable or explainable as sparse retrievers, such as BM25": for a search for the gene "MAP3K3", MedCPT also returns "articles that only contain 'MAP3K7'" [@jin2023]. A drug name, a gene, a trial acronym or a misspelling that matters to a review can be treated as close to something else.
 
 ## The training signal decides what "related" means {#sec-rep-signal}
 
-A pretrained language model is not yet a retrieval model. It becomes one through training on pairs of texts that are meant to be close, contrasted with texts that are not. The pairs define what "close" means, and different models are trained on very different pairs (@tbl-rep-signals).
+A pretrained language model is not yet a retrieval model. It becomes one through further training on pairs of texts labelled for how they relate: usually texts meant to be close, contrasted with texts that are not. The pairs define what "close" means, and different models are trained on very different pairs (@tbl-rep-signals).
 
 | Model | Trained on | So "related" means |
 |---|---|---|
-| Sentence-BERT [@reimers2019] | 570,000 SNLI and 430,000 MultiNLI sentence pairs, labelled for entailment, contradiction or neither | Sentences that say similar things |
-| Dense Passage Retrieval [@karpukhin2020] | Questions paired with Wikipedia passages that answer them, from five question-answering datasets | A passage that answers the question |
+| Sentence-BERT [@reimers2019] | 570,000 SNLI and 430,000 MultiNLI sentence pairs, labelled as entailment, contradiction or neutral | Sentences that say similar things |
+| Dense Passage Retrieval [@karpukhin2020] | Questions paired with Wikipedia passages containing their answers, from four or five question-answering datasets | A passage that answers the question |
 | SPECTER [@cohan2020] | About 684,000 triplets of papers: a paper, a paper it cites, and one it does not cite | Papers that cite one another |
 | SPECTER2 base [@singh2023] | 6.2 million citation triplets across 23 fields of study | As SPECTER, across more fields |
 | MedCPT [@jin2023] | 255 million query-article pairs from PubMed users' clicks, 2020 to 2022 | Articles that PubMed users clicked for a query |
@@ -41,11 +41,11 @@ A pretrained language model is not yet a retrieval model. It becomes one through
 
 : What some widely used encoders were trained on. Training sets as described by each model's authors. {#tbl-rep-signals}
 
-None of these signals is a review's eligibility decision. A citation links papers on related questions whatever their design. A click shows what a PubMed user found worth opening, which favours what was ranked high and what has an informative title. A question-answer pair rewards a passage that contains an answer. Each is a reasonable proxy for "relevant to someone". None encodes "a randomised trial in adults with treatment-resistant depression comparing a psychological therapy with usual care", and most of the criteria that make a study eligible, such as design, population and comparator, are exactly what these signals do not reward.
+None of these signals is a review's eligibility decision. A citation links papers on related questions whatever their design. A click shows what a PubMed user found worth opening, and clicks are biased towards the top of the ranking the user was shown [@cohan2020]. A question-answer pair rewards a passage that contains an answer. Each is a reasonable proxy for "relevant to someone". None encodes "a randomised trial in adults with treatment-resistant depression comparing a psychological therapy with usual care", and most of the criteria that make a study eligible, such as design, population and comparator, are not what these signals were built to reward.
 
-Models also transfer unevenly. The BEIR benchmark tested retrieval models on collections from domains and tasks they had not been trained on. Its authors found that "BM25 is a robust baseline", that dense models "often underperform other approaches", and that dense retrievers "underperform on datasets with a large domain shift compared from what they have been trained on, like in BioASQ" [@thakur2021]. MedCPT's authors cite the same problem as the reason for training on PubMed logs: "dense retrieval models trained on general datasets cannot generalize well to domain-specific IR tasks" [@jin2023].
+Models also transfer unevenly. The BEIR benchmark tested retrieval models on collections from domains and tasks they had not been trained on. Its authors found that "BM25 is a robust baseline", that "dense and sparse-retrieval models" "often underperform other approaches", and that dense retrievers "underperform on datasets with a large domain shift compared from what they have been trained on, like in BioASQ" [@thakur2021]. MedCPT's authors cite the same problem as the reason for training on PubMed logs: "dense retrieval models trained on general datasets cannot generalize well to domain-specific IR tasks" [@jin2023].
 
-What helps most is information about the review itself. Neural rankers have outperformed earlier methods at ordering a search's results for screening [@wang2022neural], and dense retrieval that takes the reviewer's decisions as feedback has shown promising effectiveness "without the need for costly model fine-tuning" [@mao2024]. Across education reviews, how well any of these methods worked depended on the review: work saved at 95% recall ranged "from 1.2 to 75.6%", and how cleanly eligible and ineligible records separated in the embedding space predicted it [@ali2025]. That is the active-learning setting of @sec-stopping: the representation helps once the review's own judgements tell the model what to look for.
+What helps is information about the review itself. Neural rankers have outperformed earlier methods at ordering a search's results for screening [@wang2022neural], and dense retrieval that takes the reviewer's decisions as feedback has shown promising effectiveness "without the need for costly model fine-tuning" [@mao2024]. Across education reviews, how well screening models worked depended on the review: work saved at 95% recall ranged "from 1.2 to 75.6%", and how cleanly eligible and ineligible records separated in the embedding space predicted it [@ali2025]. That is the active-learning setting of @sec-stop-order: the representation helps once the review's own judgements tell the model what to look for.
 
 ## The case pack: a general-purpose encoder on the Moran pool {#sec-rep-case}
 
@@ -64,12 +64,12 @@ The case pack ranks the Moran pool with all-MiniLM-L6-v2, a small general-purpos
 
 Four results stand out.
 
-- **The query matters more than the method.** With the review's title, the dense ranking does no better than random order in the top 500. With a fuller question it is close to BM25 with all the strategy's words. Neither finds every included record early: the last is near the bottom of the pool under every ranking.
-- **Near neighbours of eligible records are often eligible, and often not.** For each included record, the case pack found its nearest record by cosine similarity. In 55 of 137 cases (40%) that neighbour was itself included, against 3% of the pool; in 49 (36%) it had been excluded at title and abstract. "Find records like this one" concentrates eligible records without separating them from ineligible ones, which is what seed-based tools offer (@sec-supp-similarity).
-- **Training on eligibility changes everything.** The same embeddings, with a final layer trained on the title-and-abstract decisions for half the pool, ranked the other half so that 94% of its included records were in the top 1,000 of 2,441, against 79% for the dense question ranking and 78% for BM25. The representation did not change; the training signal of the last layer did.
-- **The encoder reads only the start of most records.** The model card states that "input text longer than 256 word pieces is truncated" [@minilmcard]. 79% of the Moran records, and 108 of the 137 included records, are longer than that, so the end of their abstracts never reaches the encoder. The model was trained on still shorter text: "the sequence length was limited to 128 tokens".
+- **Here, the query mattered more than the method.** With the review's title, the dense ranking does no better than random order in the top 500: its top 100 records are mostly about people, not animals (@sec-rep-exercises, Exercise 5.2). With a fuller question it is close to BM25 with all the strategy's words. Neither finds every included record early: the last is near the bottom of the pool under every ranking.
+- **Near neighbours of eligible records are often eligible, and often not.** For each included record, the case pack found its nearest record by cosine similarity. In 55 of 137 cases (40%) that neighbour was itself included, against 3% of the pool; in 49 (36%) it had been excluded at title and abstract. A text-similarity "find similar" feature concentrates eligible records without separating them from ineligible ones; citation-based seed tools (@sec-supp-similarity) would need their own test.
+- **Labels from the review made the largest difference.** The same embeddings, with a final layer trained on the title-and-abstract decisions for 2,441 records (half the pool, in one random split), ranked the other half so that 94% of its included records were in the top 1,000 of 2,441, against 79% for the dense question ranking and 78% for BM25. In the top 50 it was no better than the question ranking. The representation did not change; the training signal of the last layer did, and it needed half the pool already screened.
+- **The encoder reads only the start of most records.** The model card states that "by default, input text longer than 256 word pieces is truncated" [@minilmcard], and the case pack uses that default. 79% of the Moran records, and 108 of the 137 included records, are longer than that, so the end of their abstracts never reaches the encoder. The model was trained on still shorter text: "the sequence length was limited to 128 tokens".
 
-These figures describe one small encoder on a pool that the authors' Boolean searches had already built. A model trained on citations or on PubMed clicks would rank it differently, and none of these rankings is any product's.
+These figures describe one small encoder, one wording of each query and one random split, on a pool that the authors' Boolean searches had already built. The encoder's training data include scientific titles, abstracts and citation pairs, which may include some of these records. A model trained on citations or on PubMed clicks would rank the pool differently, and none of these rankings is any product's.
 
 ## Topically related is not eligible: a worked contrast {#sec-rep-contrast}
 
@@ -77,7 +77,7 @@ The synthetic collection makes the difference visible, because every record's el
 
 | Record | What it is | Dense rank (of 33) | BM25 rank (of 33) |
 |---|---|---|---|
-| R018 | A systematic review of peer tutoring for reading: ineligible design | 1 | 11 |
+| R018 | A systematic review of peer tutoring for reading: excluded as a review | 1 | 11 |
 | R014 | A peer-tutoring trial in secondary schools: ineligible population | 2 | 5 |
 | R016 | Peer tutoring in one school, before and after, with no comparison group: ineligible design | 3 | 1 |
 | R001 | An eligible cluster-randomised trial | 5 | 2 |
@@ -98,7 +98,7 @@ A model can only represent the text it is given. Four choices decide what that i
 - **The representation**: how each unit is encoded, and how much of it the encoder reads before truncating.
 - **Aggregation**: how matching passages are turned back into one result per article.
 
-Searching full text can find more. Treating a whole article as one unit "does not consistently yield higher effectiveness compared to abstract-only search", but retrieval of paragraph-sized spans "consistently outperforms abstract-only search" [@lin2009]. For methodological topics, which authors rarely put in their abstracts, the gap is large: in one study, "at most 50% of articles with a mention of a topic in the text body also mentioned the topic in the title, abstract, or keywords" [@penningdevries2020]. Full text also admits more irrelevant records, because a topic mentioned once in a discussion section is enough to match.
+Searching full text can find more. Treating a whole article as one unit "does not consistently yield higher effectiveness compared to abstract-only search", but retrieval of paragraph-sized spans "consistently outperforms abstract-only search" [@lin2009]. For methodological topics, which authors often leave out of their abstracts, the gap is large: in one study, "at most 50% of articles with a mention of a topic in the text body also mentioned the topic in the title, abstract, or keywords" [@penningdevries2020]. Full text also admits more irrelevant records, because a topic mentioned once in a discussion section is enough to match.
 
 Product claims about full text need reading closely (@tbl-rep-units).
 
@@ -119,7 +119,7 @@ A claim that a tool "searches full text" therefore leaves at least four question
 | Question | Why it matters | Where to look |
 |---|---|---|
 | What was the model trained on? | The training pairs define "related" | The model card or paper; vendor documentation |
-| Was it trained on anything like the review's field? | Dense models transfer poorly across domains | The training data; independent benchmarks |
+| Was it trained on anything like the review's field? | Dense models often transfer poorly across domains | The training data; independent benchmarks |
 | What text is embedded, and how much of it? | Text outside the unit, or beyond the truncation limit, cannot match | Documentation; the model's maximum input length |
 | How is the list cut, and where? | Every record gets a score; the cut decides recall | Documentation of *k* at each stage (@sec-pipe-stages) |
 | How does it handle exact strings? | Drug names, genes and acronyms can blur | A test with the review's own key terms |
@@ -152,7 +152,7 @@ In @tbl-rep-moran, the dense ranking with the review's title finds 24% of includ
 ::: {.callout-tip collapse="true"}
 ## Worked answer
 
-The title, "Poor nutritional condition promotes high-risk behaviours", is a short, general claim in the review's own vocabulary, and the encoder places it near records that make similarly general statements about condition and risk; looking at the top-ranked records would show which. The question names the manipulations (food restriction, starvation) and the outcomes (bolder, more exploratory, willing to take risks) that the included experiments report, so it is closer to how their abstracts describe them. A learnt representation is as sensitive to the query's wording as BM25 is, just in a different way.
+The title never says "animals", and "high-risk behaviours" and "poor nutritional condition" read as phrases about human health. The case pack's check of the top 100 records shows the effect: under the title query, 78 mention human-health words such as patients, obesity or eating disorders and 22 mention animal words, against 37% and 68% of the whole pool; under the question, which says "animals" and names the manipulations and outcomes the included experiments report, the figures are 14 and 94 (`representations/summary.md`). The title's top 100 holds 2 included records, the question's 12. The encoder placed the title near records that use phrases like it, and in this pool those are mostly studies of people. A learnt representation is sensitive to the query's wording too, in a different way from BM25.
 :::
 
 ### Exercise 5.3: Find similar records
@@ -162,7 +162,7 @@ A colleague proposes using an included study as a seed in a "find similar" tool,
 ::: {.callout-tip collapse="true"}
 ## Worked answer
 
-Among the 10 nearest neighbours of the 137 included records, 27% are themselves included, 22% passed title and abstract only and 50% were excluded at title and abstract. That is far richer than the pool's 3%, so screening neighbours concentrates eligible records. But most of what it returns is ineligible, and here every neighbour was already in the search results, so the exercise shows concentration, not new studies. As a supplementary route its value depends on whether it reaches eligible records the search missed, which only a test against known studies would show (@sec-supp-similarity).
+Counted once each, the 10 nearest neighbours of the 137 included records are 614 distinct records: 102 included (17%), 115 that passed title and abstract only (19%) and 397 excluded at title and abstract (65%). That is far richer than the pool's 3%, so screening neighbours concentrates eligible records. But most of what it returns is ineligible, and every included neighbour is one of the 137 seeds themselves, so here the exercise shows concentration, not new studies. As a supplementary route its value depends on whether it reaches eligible records the search missed, which only a test against known studies would show (@sec-supp-similarity).
 :::
 
 ### Exercise 5.4: Why is the systematic review first?

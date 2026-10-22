@@ -18,8 +18,8 @@ The design is old and well documented. @nogueira2019 describe "a simple question
 
 | Stage | What it does | Can it bring a record into view? | What to ask |
 |---|---|---|---|
-| Candidate generation | Retrieves records from an index by words, vectors or both (@sec-boolean, @sec-ranking, @sec-representations) | Yes: this is the only stage that can | Which index, which text, how many candidates |
-| Fusion of several routes | Merges ranked lists from different candidate generators | Yes, by drawing on more than one route | Which routes, and how they are combined |
+| Candidate generation | Retrieves records from an index by words, vectors or both (@sec-boolean, @sec-ranking, @sec-representations) | Yes: with fusion of several generators, the only stages that can | Which index, which text, how many candidates |
+| Fusion of several routes | Merges ranked lists from different candidate generators | Yes, through the candidate generators it draws on | Which routes, and how they are combined |
 | Reranking | Reorders a shortlist with a more expensive model | No: it can only reorder what it is given | How deep the shortlist is |
 | Cut-off | Keeps the top *k* | No: it removes everything below *k* | What *k* is, at each stage |
 | Generation | A language model writes an answer from the top records | No: it reads a few records and cites some | How many records it reads |
@@ -30,7 +30,7 @@ A reranker that is excellent at judging relevance cannot recover a record that c
 
 ## The case pack: reranking, fusion and union {#sec-pipe-case}
 
-The case pack combines two complete rankings of the Moran pool: Chapter 4's BM25 ranking with the words of the strategy, and Chapter 5's dense ranking with a question written in the way a searcher might type it into an AI tool (`case-pack/data/moran-2021/pipelines/`). @tbl-pipe-case shows three ways of combining them.
+The case pack combines two complete rankings of the Moran pool: Chapter 4's BM25 ranking with the words of the strategy, and Chapter 5's dense ranking with a question written in the way a searcher might type it into an AI tool (`case-pack/data/moran-2021/pipelines/`). @tbl-pipe-case shows two ways of combining them; a third, pooling their top records, follows.
 
 | Records screened (top *k*) | BM25, strategy words | Dense, question | BM25 top 1,000 reranked by dense | Reciprocal rank fusion |
 |---|---|---|---|---|
@@ -46,21 +46,21 @@ Three results follow.
 
 - **Reranking reorders; it does not retrieve.** Reranking BM25's top 1,000 by dense similarity almost doubles the included records in the top 100, from 9% to 16% of them, but recall at 1,000 is 0.59 before and after. The 41% of included records outside BM25's top 1,000 stay outside.
 - **Fusion can add, because it draws on two complete rankings.** Merged by reciprocal rank fusion, the two rankings put 64% of the included records in the top 1,000, more than either alone.
-- **Two routes finding different records is not the same as two routes finding more.** Each route's top 500 holds included records the other's lacks: 29 only by BM25, 23 only by the dense ranking. But their union is 876 records, and screening 876 records from BM25 alone finds 55% of the included records against the union's 58%. Complementary routes help most when their candidate sets are small relative to what they find, which is the argument for supplementary routes in @sec-supp-mechanism.
+- **Two routes finding different records is not the same as two routes finding more.** Each route's top 500 holds included records the other's lacks: 29 only by BM25, 23 only by the dense ranking. But their union is 876 records, and screening 876 records from BM25 alone finds 55% of the included records against the union's 58%. Two rankings of the same records add little to each other; a route that works by a different mechanism, the argument of @sec-supp-mechanism, can reach records neither ranking can.
 
 Both routes rank the same pool, which the authors' Boolean searches had already built, so these figures describe what the operations can do within a fixed set of records, not what any product would find in its own index.
 
 ## Hybrid retrieval and rank fusion {#sec-pipe-hybrid}
 
-*Hybrid* retrieval combines evidence from more than one route, most often a lexical ranking and a dense one. Their scores are on different scales, so a common way to combine them uses ranks instead. Reciprocal rank fusion gives each record a score of 1 / (*k* + *r*) for its rank *r* in each list and adds them up, with *k* = 60, a value its authors "fixed during a pilot investigation and not altered during subsequent validation"; "the choice was not critical", and "the constant k mitigates the impact of high rankings by outlier systems" [@cormack2009]. A record that both routes place moderately high beats one that only one route places at the top.
+*Hybrid* retrieval combines evidence from more than one route, most often a lexical ranking and a dense one. Their scores are on different scales, so a common way to combine them uses ranks instead. Reciprocal rank fusion gives each record a score of 1 / (*k* + *r*) for its rank *r* in each list and adds them up, with *k* = 60, a value its authors "fixed during a pilot investigation and not altered during subsequent validation"; "the choice was not critical", and "the constant k mitigates the impact of high rankings by outlier systems" [@cormack2009]. A record that both routes place high can beat one that only one route places at the top: with *k* = 60, a record in roughly the top 60 of both lists outranks one ranked first in a single list and near the bottom of the other.
 
-Products describe their hybrid stages only loosely. Consensus's documentation says it searches an index that "combines Semantic Scholar, OpenAlex, Consensus's own crawl of the scholarly web, and publisher partnerships", that "the top 1,500 papers are re-ranked", and that relevance is then recalculated "on the top 20 papers using a larger, more compute-intensive model optimized for precision rather than broad recall" [@consensusdocs]. Its help centre, dated September 2026, describes the same pipeline without the figure of 1,500 [@consensushow]. Scopus AI's Copilot "looks at the content of your query and decides whether to run a vector search and/or a keyword search" [@scopuscopilot]. Neither says how the routes' results are combined, which is the step that decides what a user sees.
+Products describe their hybrid stages only loosely. Consensus's documentation says it searches an index that "combines Semantic Scholar, OpenAlex, Consensus's own crawl of the scholarly web, and publisher partnerships", that "the top 1,500 papers are re-ranked", and that relevance is then recalculated "on the top 20 papers using a larger, more compute-intensive model optimized for precision rather than broad recall" [@consensusdocs]. Its help centre, dated September 2026, describes the same pipeline without the figure of 1,500 [@consensushow]. Consensus says only that "together they assign a relevance score to every paper" [@consensusdocs]. Elsevier announced in August 2024 that Scopus AI's Copilot "looks at the content of your query and decides whether to run a vector search and/or a keyword search" [@scopuscopilot], but the current support page describes only a vector search index [@scopusai]. Neither says how results from different routes are combined, which is the step that decides what a user sees.
 
 ## Retrieval-augmented generation {#sec-pipe-rag}
 
 Retrieval-augmented generation (RAG) puts retrieved text into a language model's input so that the answer it writes draws on it. @lewis2020 introduced the term for "models which combine pre-trained parametric and non-parametric memory for language generation", in which a dense retriever supplies documents and a sequence-to-sequence model "conditions on these latent documents together with the input to generate the output".
 
-For a searcher, the important number is how few records the answer reads. Scopus AI's summary "may cite up to 20 papers, while the Expanded summary & Deep Research may considers up to 40" [@scopusai]. Primo Research Assistant "provides an overview of how the top five sources answer the question" [@primora]. scite Assistant passes up to 25 reference passages to the model by default [@sciteassistantstart]. These are sensible limits for writing an answer, and they make a generated answer a sample of the top of a ranking. Generation adds no record to that ranking, and a well-written, well-cited answer is evidence of generation, not of a thorough search.
+For a searcher, the important number is how few records the answer reads. Scopus AI's initial summary may cite up to 20 papers, and its expanded summary and Deep Research up to 40 [@scopusai]. Primo Research Assistant "provides an overview of how the top five sources answer the question" [@primora]. scite's Assistant API passes up to 25 reference passages to the model by default [@sciteassistantstart]. These are sensible limits for writing an answer, and they make a generated answer a sample of the top of a ranking. Generation adds no record to that ranking, and a well-written, well-cited answer is evidence of generation, not of a thorough search.
 
 ## Fixed, adaptive and agentic {#sec-pipe-agentic}
 
@@ -74,19 +74,19 @@ Some products also decide, while running, which searches to run next. Three arra
 
 : Three control arrangements, distinguished by who chooses the next action. {#tbl-pipe-control}
 
-Agency changes the sequence, not the retrieval. An agent can run Boolean or BM25 searches, dense retrieval, citation searches or filters; what it adds is the decision about which to run, in what order, and when to stop. Scopus AI's Copilot, choosing between a vector search, a keyword search or both for each question, is a small adaptive step [@scopuscopilot]. Undermind describes its deep search as reading "hundreds of papers" and following "citation trails"; "a production search stops on its own after 2.9 minutes on average" [@undermindhome].
+Agency changes the sequence, not the retrieval. An agent can run Boolean or BM25 searches, dense retrieval, citation searches or filters; what it adds is the decision about which to run, in what order, and when to stop. Scopus AI's Copilot, as announced in 2024, choosing between a vector search, a keyword search or both for each question, is a small adaptive step [@scopuscopilot]. Undermind describes its deep search as reading "hundreds of papers" and following "citation trails"; "a production search stops on its own after 2.9 minutes on average" [@undermindhome].
 
 Three properties of agentic search matter for a review.
 
 - **Misses can compound.** Each round's searches are chosen from what earlier rounds returned. A concept missed in the first round may never be searched, because nothing that came back pointed to it.
-- **The menu is invisible.** A trace shows what a system did, not what it could have done. A user cannot tell from the output that a tool's academic search cannot follow references while its web search can.
+- **The menu is invisible.** A trace shows what a system did, not what it could have done. A user cannot tell from the output which operations the tool was able to perform, such as following references or searching a particular source, and so cannot tell a missing capability from an empty result.
 - **The stopping rule is an unwritten relevance judgement.** A fixed workflow stops when its steps run out. An agent that stops because what it has found seems sufficient has applied a relevance judgement to results the user has not seen, by a criterion nobody wrote down (@sec-stopping).
 
 Products differ in how much of this they show. Web of Science Research Assistant presents its interpretation of the question and a proposed strategy, and "users can then review, adjust or approve the strategy before the search runs" [@wosra2026]. Consensus's Research Agent opens each answer with "the agent's trace: papers retrieved, eligible, and included, plus each sub-search and its filters" [@consensusagent]. Neither is a complete record of the run (@sec-pipe-trace), but both are more than most products show.
 
 ## AI research assistants as supplementary searches {#sec-pipe-assistants}
 
-When these tools are measured against the included studies of published reviews, the results are consistent (@tbl-pipe-evaluations).
+When these tools are measured against the included studies of reviews, or against a parallel manual search, the results are consistent (@tbl-pipe-evaluations).
 
 | Study | Tool and comparison | Main findings |
 |---|---|---|
@@ -95,19 +95,19 @@ When these tools are measured against the included studies of published reviews,
 | @bencze2025 | ChatGPT deep research searching PubMed, one topic with 23 included articles | Sensitivity 47.8% and specificity 98%; "two cited articles by the AI software were nonexistent" |
 | @carrier2026 | ChatGPT-5 Deep Research and Agent Mode, five reviews with 61 included articles | Deep Research found 29 (47.5%) and Agent Mode 25 (40.9%), against 52 (85.2%) for research fellows; three runs of each returned the same articles |
 | @bernard2025 | Elicit, one umbrella review, three repeated runs in April 2023 | The runs returned 246, 169 and 172 results; Elicit found 3 of the 17 studies the review included |
-| @wang2025trialmind | TrialMind, a pipeline in which a language model writes Boolean queries that are run in PubMed, 100 reviews | Recall averaged 0.782, against 0.073 for a GPT-4 baseline and 0.187 for a human baseline |
+| @wang2025trialmind | TrialMind, a pipeline in which a language model writes Boolean queries that are run in PubMed, 100 reviews | Recall averaged 0.782, against 0.073 for a GPT-4 baseline and 0.187 for a human baseline, with much larger result sets (22,084 records against 958 for the human baseline in one group of topics) |
 
-: Evaluations of AI research assistants and language-model search pipelines against reviews' included studies. {#tbl-pipe-evaluations}
+: Evaluations of AI research assistants and language-model search pipelines against reviews' included studies or a parallel manual search. {#tbl-pipe-evaluations}
 
 Three cautions apply in reading these figures.
 
-- **The measured quantity varies.** In @lau2025, a study counts only if Elicit both retrieved it and screened it in, so the sensitivity covers Elicit's search and screening together. In @bencze2025 and @carrier2026 the tool also selected studies. A low figure may come from either stage.
-- **The tools change.** @bernard2025 tested Elicit in April 2023; the product has since been rebuilt. A result describes a product on a date.
+- **The measured quantity varies.** In @lau2025, a study counts only if Elicit both retrieved it and screened it in, so the sensitivity covers Elicit's search and screening together; Elicit's 500 retrieved records held about 56% of the included studies on average, and its screening removed some of them. In @bencze2025 and @carrier2026 the tool also selected studies. A low figure may come from either stage.
+- **The tools change.** @bernard2025 tested Elicit in April 2023; the product has since changed, and now searches Semantic Scholar, PubMed and OpenAlex [@elicitsources]. A result describes a product on a date.
 - **TrialMind is a different kind of system.** It uses a language model to write Boolean queries for PubMed and then searches PubMed, so its recall depends on a database search, not on an assistant's own index. Its human baseline is not a librarian-designed review strategy.
 
 Repeatability varies as much as recall. @bernard2025 found that 137 articles were common to all three runs, with the rest found by one or two. @carrier2026 found no variation across three runs. In five identical runs on one day, @tay2026katina found that the top 10 results of Web of Science's Smart Search overlapped by a mean Jaccard similarity of 0.30, while Consensus's Deep Search overlapped by 0.65 in the top 10 and 0.94 in the top 50.
 
-Taken together, the evidence supports using these tools as supplementary routes, the role @sec-supp-mechanism sets out for any route that works by a different mechanism: they find under half of a review's included studies on their own, and occasionally a study the database searches missed. Used that way, a run needs the record in @tbl-ai-record, deduplication against the database results, and a known-study check of what it found (@sec-validation). Because the benchmarks are published reviews, a tool may also have seen the review itself (@sec-validation-dev).
+Taken together, the evidence supports using these tools as supplementary routes, the role @sec-supp-mechanism sets out for any route that works by a different mechanism: on average they find under half of a review's included studies on their own, and occasionally a study the database searches missed. Used that way, a run needs the record in @tbl-ai-record, deduplication against the database results, and a known-study check of what it found (@sec-validation). Where the benchmark is a published review, a tool may also have seen the review itself (@sec-validation-dev).
 
 ## What an execution trace must show {#sec-pipe-trace}
 
@@ -115,14 +115,14 @@ A strategy in a bibliographic database is its own record: the strings, the datab
 
 | Element | Why it matters | Documented on the pages checked |
 |---|---|---|
-| The input as entered, and every query the system generated from it | The generated queries are the strategy | scite returns "search queries that were used" [@sciteassistant]; Elicit's report lists "the exact query strings and Boolean logic used" for keyword searches [@elicitadvanced]; Primo Research Assistant converts the question to a Boolean query, but the page does not say whether it is shown [@primora] |
+| The input as entered, and every query the system generated from it | The generated queries are the strategy | scite returns "search queries that were used" [@sciteassistant]; Elicit's report lists "the exact query strings and Boolean logic used for every active tab" [@elicitadvanced]; Primo Research Assistant converts the question to a Boolean query, but the page does not say whether it is shown [@primora] |
 | The index searched, and its date | Coverage bounds recall | Elicit: "over 138 million academic papers from Semantic Scholar, PubMed, and OpenAlex" [@elicitsources]; Consensus gives two different index sizes on two pages [@consensusdocs; @consensushow]; Undermind: not stated on the pages checked |
 | The text each record is searched by | Decides what can match (@sec-rep-units) | OpenAlex's semantic search embeds "the title and abstract of every work" [@openalexsemantic] |
-| Candidate counts at each stage | Shows where records were cut | Elicit takes "the top 1,000 papers" for prioritisation by language models [@elicitsearch]; Consensus re-ranks 1,500, then 20 [@consensusdocs] |
+| Candidate counts at each stage | Shows where records were cut | Elicit takes "the top 1,000 papers" for prioritisation by language models [@elicitsearch]; Consensus reranks 1,500, then 20 [@consensusdocs] |
 | Filters and limits applied | Each is an admission rule (@sec-boolean-not) | Consensus's agent trace lists each sub-search's filters [@consensusagent] |
 | Why the run stopped | An unrecorded stop is an unrecorded relevance judgement | Undermind stops "on its own" [@undermindhome] |
-| The identifiers of every record returned | The only durable record of a run that may not repeat | Rarely offered as a complete export |
-| The product, mode, model and date | The date is often the only version (@sec-recording-ai) | Most products publish a dated changelog at best |
+| The identifiers of every record returned | The only durable record of a run that may not repeat | Not documented as a complete export on the pages checked |
+| The product, mode, model and date | The date is often the only version (@sec-recording-ai) | Elicit and Consensus publish dated changelogs without version numbers (@sec-recording-ai) |
 
 : What an execution trace must show, and what selected products document. Claims as checked on 22 October 2026 (claims register: `elicit-pipeline`, `consensus-docs-pipeline`, `undermind-pipeline`, `scite-assistant-pipeline`, `primo-ra-pipeline`, `scopus-ai-pipeline`, `openalex-semantic`). {#tbl-pipe-trace}
 
@@ -130,7 +130,7 @@ A strategy in a bibliographic database is its own record: the strings, the datab
 
 Claims about a product's pipeline come in three kinds, and a review report should keep them apart.
 
-- **Documented**: what the vendor's own pages say, with the page and the date checked. Documentation is a claim about the product, and it can be out of date: Consensus's two pages give 400 million and 220 million records, and only one of them gives the figure of 1,500 [@consensusdocs; @consensushow].
+- **Documented**: what the vendor's own pages say, with the page and the date checked. Documentation is a claim about the product, and it can be out of date: Consensus's two pages give "400M+" and "over 220 million" records, and only one of them gives the figure of 1,500 [@consensusdocs; @consensushow].
 - **Observed**: what a test showed, such as the evaluations in @tbl-pipe-evaluations or a team's own known-study check. An observation describes one product, on one date, for one kind of question.
 - **Unknown**: everything else. For most products this includes how routes are fused, how many candidates each stage keeps, which text is embedded, and why an agentic run stopped.
 
@@ -147,7 +147,7 @@ Consensus documents its search as follows: an index of 400 million or more recor
 ::: {.callout-tip collapse="true"}
 ## Worked answer
 
-Only the first retrieval over the index can bring a record into view. Re-ranking the top 1,500 reorders them and, by keeping 1,500, removes the rest. Recalculating relevance on the top 20 reorders those 20 and is where a summary's evidence comes from. An eligible record ranked 1,501st by the first stage cannot reach the user, however relevant the later models would judge it.
+Only the first retrieval over the index can bring a record into view. Reranking the top 1,500 reorders them and, by keeping 1,500, removes the rest. Recalculating relevance on the top 20 reorders those 20 and is where a summary's evidence comes from. An eligible record ranked 1,501st by that search cannot reach the user from that search, however relevant the later models would judge it; in its agent modes, another sub-search might still find it [@consensusagent].
 :::
 
 ### Exercise 6.2: Why does reranking not change recall at 1,000?
@@ -177,7 +177,7 @@ They are right that each finds studies the other misses: in the Moran pool, 29 i
 ::: {.callout-tip collapse="true"}
 ## Worked answer
 
-Yes, in principle. The study counts an included study as found only if Elicit both retrieved it and screened it in, so 39.5% measures search and screening together, and Elicit's search alone may have reached more. The reply does not change the practical result: a review that relied on Elicit's output in that workflow would have had about two in five of its studies. To separate the two, the test would need Elicit's full retrieved set before screening, which is one of the elements in @tbl-pipe-trace.
+Partly. The study counts an included study as found only if Elicit both retrieved it and screened it in, so 39.5% measures search and screening together. The authors kept all 500 records Elicit retrieved for each case, and report that Elicit retrieved but screened out 11, 11, 4 and 8 of the reviews' included studies: its search alone reached 27 of 58, 24 of 51, 40 of 52 and 24 of 45, about 56% on average. So the vendor is right that screening cost some studies, but most of the loss was at retrieval, and a review relying on Elicit's output in that workflow would have had about two in five of its studies. The study could separate the stages only because it kept the full retrieved set, one of the elements in @tbl-pipe-trace.
 :::
 
 ### Exercise 6.5: Recording an agentic run
@@ -187,5 +187,5 @@ A team uses an agentic research assistant during scoping and takes 12 papers fro
 ::: {.callout-tip collapse="true"}
 ## Worked answer
 
-Report the assistant as a supplementary search method (PRISMA-S item 7, "any additional information sources or search methods") with the elements in @tbl-ai-record and @tbl-pipe-trace: the question entered, the product, mode and date, any queries or trace the tool showed, the number of records returned, and the identifiers of the 12 papers taken forward. In the flow diagram, count the 12 as records from other methods. Say that the run cannot be repeated exactly, and that one eligible study was found only by this route, which is a reason to check why the database strategy missed it (@sec-developing) rather than a reason to rely on the tool.
+Report the assistant as a supplementary search method (PRISMA-S item 7, "any additional information sources or search methods" [@rethlefsen2021]) with the elements in @tbl-ai-record and @tbl-pipe-trace: the question entered, the product, mode and date, any filters, the number of records returned and any cap, any queries or trace the tool showed, and the identifiers of the 12 papers taken forward. In the flow diagram, count the 12 as records from other methods. Say that the run cannot be repeated exactly, and that one eligible study was found only by this route, which is a reason to check why the database strategy missed it (@sec-developing) rather than a reason to rely on the tool.
 :::
