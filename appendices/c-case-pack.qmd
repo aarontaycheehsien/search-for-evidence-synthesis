@@ -34,7 +34,7 @@ The case pack supplies the inputs and worked answers for the book's exercises. I
 
 ## What was built, and how to rebuild it {#sec-case-pack-rebuild}
 
-Most analyses have a script in `case-pack/scripts/` that writes the committed files. Rebuilding needs Python 3. The stopping analysis also needs buscarpy 0.0.2, and regenerating the screening simulations needs ASReview 3.0.8 with scikit-learn. Some scripts read a local checkout of `CLEF-TAR/tar` or a local clone of the Moran authors' repository rather than the cache, and the scripts that fetch from GitHub need network access.
+Most analyses have a script in `case-pack/scripts/` that writes the committed files. Rebuilding needs Python 3. The stopping analysis also needs buscarpy 0.0.2; regenerating the screening simulations needs ASReview 3.0.8 with scikit-learn; and the representation analysis needs onnxruntime, tokenizers and scikit-learn, and downloads the all-MiniLM-L6-v2 encoder from Chroma's public bucket, checked against its SHA-256. Some scripts read a local checkout of `CLEF-TAR/tar` or a local clone of the Moran authors' repository rather than the cache, and the scripts that fetch from GitHub need network access.
 
 | Analysis | Script | Output | Used in |
 |---|---|---|---|
@@ -47,6 +47,8 @@ Most analyses have a script in `case-pack/scripts/` that writes the committed fi
 | ASReview simulation logs for Moran | `screening_logs.py`, from the ASReview projects | `data/moran-2021/screening/`, `screening-seeds/` | Chapters 9, 10 |
 | BM25 ranking of the Moran pool | `ranking_checks.py` | `data/moran-2021/ranking/` | Chapter 4 |
 | Ranked-list measures for the CLEF runs | `ranking_measures.py` | `data/clef-2019/CD010558/measures.md` | Appendix B |
+| Dense ranking, nearest neighbours and a head trained on eligibility, with a general-purpose encoder | `representation_checks.py`, using `encoder.py` | `data/moran-2021/representations/` | Chapter 5 |
+| Reranking, rank fusion and union of the BM25 and dense rankings | `pipeline_checks.py` | `data/moran-2021/pipelines/` | Chapter 6 |
 | Statistical stopping on every screening log | `stopping_checks.py` | `data/stopping/` | Chapter 9 |
 | Capture–recapture on the Moran searches, from the deduplication counts | `capture_recapture.py` | `data/stopping/capture-recapture.csv` | Chapter 9 |
 | The Moran strategy on title and abstract only | `field_checks.py` | `data/moran-2021/fields/` | Chapter 7 |

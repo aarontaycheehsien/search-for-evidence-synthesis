@@ -1,16 +1,193 @@
 # Learnt representations and what they were trained to find {#sec-representations}
 
 ::: {.callout-note}
-## Not yet drafted
+## Provisional depth
 
-This chapter is an outline. See the [plan](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/plan.md) and [chapter map](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/chapter-map.md) for its sources and status.
+This chapter was drafted before the pilot that will decide how much technical depth Part II needs. Its depth may change; its claims have been checked like the rest of the book.
 :::
+
+@sec-ranking ranked records by the words they share with a query. Many newer tools rank them by *learnt representations* instead: each record and each query becomes a list of numbers produced by a model, and records are ranked by how close their numbers are to the query's. Such tools are often described as understanding meaning. For a review, the useful question is narrower: what kind of similarity was the model trained to recognise, and what text did it read?
+
+This chapter answers that question in four steps: what a learnt representation is; how the training signal decides what "related" means; what a general-purpose model does with the case pack's records; and what "searches full text" can and cannot mean.
 
 **After this chapter you should be able to** assess whether a model's training signal and the text it indexes suit the review's task.
 
-## Planned contents
+## From words to vectors {#sec-rep-vectors}
 
-- Embeddings and retrieval encoders, compressed to what a searcher needs.
-- The training signal decides what "related" means: citation links, searchers' clicks [@jin2023] or eligibility decisions.
-- A worked contrast between a topically related report and an eligible one.
-- Abstract versus full-text indexing, and what a "searches full text" claim does not settle.
+A *vector* is an ordered list of numbers. BM25 already represents a record as one: a number for each word in the vocabulary, almost all of them zero (@sec-ranking-bm25). That vector is *sparse*, because most entries are zero, and *specified*, because a formula written by people sets its values. An *embedding* is a vector whose values are produced by a model that has learnt them from data. Most embeddings used for search are *dense*: a few hundred numbers, nearly all non-zero, with no single number standing for a word. The two properties are independent. A vector can be dense without being learnt, and learnt without being dense.
+
+A *sentence encoder* turns a passage of text into one dense vector. Sentence-BERT made this practical for comparison: it adapted a pretrained language model so that it would "derive semantically meaningful sentence embeddings that can be compared using cosine-similarity", where "semantically meaningful" means "that semantically similar sentences are close in vector space" [@reimers2019]. It produces the vector by averaging the model's representations of the passage's tokens.
+
+*Dense retrieval* uses two such encoders, one for queries and one for records, and returns the records whose vectors are closest to the query's. Dense Passage Retrieval showed that "retrieval can be practically implemented using dense representations alone, where embeddings are learned from a small number of questions and passages by a simple dual-encoder framework" [@karpukhin2020]. Its index held Wikipedia articles cut into "disjoint text blocks of 100 words as passages, serving as our basic retrieval units".
+
+Three consequences follow for a searcher.
+
+- **There is no admission rule.** A Boolean search admits a record only if it matches; BM25 scores only records that share a word with the query. Dense retrieval gives every record a score. The nearest record is the best available, not necessarily a relevant one, and the system decides where to cut the list (@sec-ranking-order).
+- **Model tokens are not indexed terms.** An encoder splits text into word pieces from its own vocabulary and reads only a fixed number of them. Text beyond that limit is not represented at all (@sec-rep-units).
+- **Exact strings can blur.** MedCPT's authors note that dense retrievers "are not as controllable or explainable as sparse retrievers, such as BM25": a search for the gene "MAP3K3" also returns "articles that only contain 'MAP3K7'" [@jin2023]. A drug name, a gene, a trial acronym or a misspelling that matters to a review can be treated as close to something else.
+
+## The training signal decides what "related" means {#sec-rep-signal}
+
+A pretrained language model is not yet a retrieval model. It becomes one through training on pairs of texts that are meant to be close, contrasted with texts that are not. The pairs define what "close" means, and different models are trained on very different pairs (@tbl-rep-signals).
+
+| Model | Trained on | So "related" means |
+|---|---|---|
+| Sentence-BERT [@reimers2019] | 570,000 SNLI and 430,000 MultiNLI sentence pairs, labelled for entailment, contradiction or neither | Sentences that say similar things |
+| Dense Passage Retrieval [@karpukhin2020] | Questions paired with Wikipedia passages that answer them, from five question-answering datasets | A passage that answers the question |
+| SPECTER [@cohan2020] | About 684,000 triplets of papers: a paper, a paper it cites, and one it does not cite | Papers that cite one another |
+| SPECTER2 base [@singh2023] | 6.2 million citation triplets across 23 fields of study | As SPECTER, across more fields |
+| MedCPT [@jin2023] | 255 million query-article pairs from PubMed users' clicks, 2020 to 2022 | Articles that PubMed users clicked for a query |
+| all-MiniLM-L6-v2 [@minilmcard] | More than 1 billion pairs, including Reddit comments, citation and title-abstract pairs from scientific papers, question-answer pairs and SPECTER's citation triplets | A mixture of all of these |
+
+: What some widely used encoders were trained on. Training sets as described by each model's authors. {#tbl-rep-signals}
+
+None of these signals is a review's eligibility decision. A citation links papers on related questions whatever their design. A click shows what a PubMed user found worth opening, which favours what was ranked high and what has an informative title. A question-answer pair rewards a passage that contains an answer. Each is a reasonable proxy for "relevant to someone". None encodes "a randomised trial in adults with treatment-resistant depression comparing a psychological therapy with usual care", and most of the criteria that make a study eligible, such as design, population and comparator, are exactly what these signals do not reward.
+
+Models also transfer unevenly. The BEIR benchmark tested retrieval models on collections from domains and tasks they had not been trained on. Its authors found that "BM25 is a robust baseline", that dense models "often underperform other approaches", and that dense retrievers "underperform on datasets with a large domain shift compared from what they have been trained on, like in BioASQ" [@thakur2021]. MedCPT's authors cite the same problem as the reason for training on PubMed logs: "dense retrieval models trained on general datasets cannot generalize well to domain-specific IR tasks" [@jin2023].
+
+What helps most is information about the review itself. Neural rankers have outperformed earlier methods at ordering a search's results for screening [@wang2022neural], and dense retrieval that takes the reviewer's decisions as feedback has shown promising effectiveness "without the need for costly model fine-tuning" [@mao2024]. Across education reviews, how well any of these methods worked depended on the review: work saved at 95% recall ranged "from 1.2 to 75.6%", and how cleanly eligible and ineligible records separated in the embedding space predicted it [@ali2025]. That is the active-learning setting of @sec-stopping: the representation helps once the review's own judgements tell the model what to look for.
+
+## The case pack: a general-purpose encoder on the Moran pool {#sec-rep-case}
+
+The case pack ranks the Moran pool with all-MiniLM-L6-v2, a small general-purpose sentence encoder, run locally from a checksummed copy (`case-pack/data/moran-2021/representations/`). Each record is embedded from its title and abstract. Two queries are used: the review's title, as in @sec-ranking, and a question written for the case pack in the way a searcher might type it into an AI research tool: "Does poor nutritional condition, such as food restriction or starvation, make animals bolder, more exploratory or more willing to take risks?"
+
+| Records screened (top *k*) | Random order | BM25, title | BM25, strategy words | Dense, title | Dense, question |
+|---|---|---|---|---|---|
+| 100 | 0.02 | 0.07 | 0.09 | 0.01 | 0.09 |
+| 250 | 0.05 | 0.14 | 0.23 | 0.04 | 0.20 |
+| 500 | 0.10 | 0.23 | 0.41 | 0.09 | 0.36 |
+| 1,000 | 0.20 | 0.35 | 0.59 | 0.24 | 0.55 |
+| 2,000 | 0.41 | 0.55 | 0.79 | 0.46 | 0.82 |
+| Rank of the last included record | about 4,882 | 4,797 | 4,494 | 4,846 | 4,499 |
+
+: Recall of the 137 included records within the top *k* of the Moran pool's 4,882 records. From `case-pack/data/moran-2021/representations/summary.md`; the BM25 columns are from @sec-ranking. {#tbl-rep-moran}
+
+Four results stand out.
+
+- **The query matters more than the method.** With the review's title, the dense ranking does no better than random order in the top 500. With a fuller question it is close to BM25 with all the strategy's words. Neither finds every included record early: the last is near the bottom of the pool under every ranking.
+- **Near neighbours of eligible records are often eligible, and often not.** For each included record, the case pack found its nearest record by cosine similarity. In 55 of 137 cases (40%) that neighbour was itself included, against 3% of the pool; in 49 (36%) it had been excluded at title and abstract. "Find records like this one" concentrates eligible records without separating them from ineligible ones, which is what seed-based tools offer (@sec-supp-similarity).
+- **Training on eligibility changes everything.** The same embeddings, with a final layer trained on the title-and-abstract decisions for half the pool, ranked the other half so that 94% of its included records were in the top 1,000 of 2,441, against 79% for the dense question ranking and 78% for BM25. The representation did not change; the training signal of the last layer did.
+- **The encoder reads only the start of most records.** The model card states that "input text longer than 256 word pieces is truncated" [@minilmcard]. 79% of the Moran records, and 108 of the 137 included records, are longer than that, so the end of their abstracts never reaches the encoder. The model was trained on still shorter text: "the sequence length was limited to 128 tokens".
+
+These figures describe one small encoder on a pool that the authors' Boolean searches had already built. A model trained on citations or on PubMed clicks would rank it differently, and none of these rankings is any product's.
+
+## Topically related is not eligible: a worked contrast {#sec-rep-contrast}
+
+The synthetic collection makes the difference visible, because every record's eligibility and the reason for it are known (`case-pack/synthetic/`). @tbl-rep-synthetic ranks selected records by dense similarity and by BM25 against the fictional review's question, "Does structured peer tutoring improve reading comprehension in primary-school pupils?"
+
+| Record | What it is | Dense rank (of 33) | BM25 rank (of 33) |
+|---|---|---|---|
+| R018 | A systematic review of peer tutoring for reading: ineligible design | 1 | 11 |
+| R014 | A peer-tutoring trial in secondary schools: ineligible population | 2 | 5 |
+| R016 | Peer tutoring in one school, before and after, with no comparison group: ineligible design | 3 | 1 |
+| R001 | An eligible cluster-randomised trial | 5 | 2 |
+| R004 | An eligible study that calls the tutors "older pupils" and the outcome "understanding what they had read" | 16 | 22 |
+| R009 | An eligible study in which pupils "coached one another in reading for meaning" | 22 | 14 |
+| R029 | Ventilation in primary-school classrooms: off topic | 31 | 4 |
+
+: Selected synthetic records (all invented), ranked against the fictional review's question. From `case-pack/data/moran-2021/representations/synthetic-ranks.csv`. {#tbl-rep-synthetic}
+
+The dense ranking does what it was trained to do. It pushes the off-topic record that shares the question's words, about classroom ventilation, from fourth to thirty-first, and it places the records that are most about peer tutoring and reading comprehension at the top. Those are a systematic review, a secondary-school trial and a single-group study, all ineligible. Across the collection, the median dense rank of records of eligible studies is 11, and of on-topic but ineligible records 13; BM25's medians are 14 and 12.5. Neither ranking separates eligible from merely on-topic. Nor does the dense ranking reliably rescue eligible studies described in other words: it moves R004 up and R009 down.
+
+## What text was indexed {#sec-rep-units}
+
+A model can only represent the text it is given. Four choices decide what that is, and only the last is visible in a result list.
+
+- **The source document**: the article, report or record a person thinks of as the item.
+- **The indexed unit**: the text the system searches, which may be a title and abstract, the full text, sections, or overlapping passages of a few hundred words.
+- **The representation**: how each unit is encoded, and how much of it the encoder reads before truncating.
+- **Aggregation**: how matching passages are turned back into one result per article.
+
+Searching full text can find more. Treating a whole article as one unit "does not consistently yield higher effectiveness compared to abstract-only search", but retrieval of paragraph-sized spans "consistently outperforms abstract-only search" [@lin2009]. For methodological topics, which authors rarely put in their abstracts, the gap is large: in one study, "at most 50% of articles with a mention of a topic in the text body also mentioned the topic in the title, abstract, or keywords" [@penningdevries2020]. Full text also admits more irrelevant records, because a topic mentioned once in a discussion section is enough to match.
+
+Product claims about full text need reading closely (@tbl-rep-units).
+
+| Product | What its documentation says about the text it uses |
+|---|---|
+| Elicit | For "full-text analysis", Elicit "can access the complete paper if the paper is open access, or if you have the Elicit Browser Extension and a journal subscription. Without full-text access, Elicit uses the paper's title and abstract" [@elicitsources] |
+| Consensus | "When full text is available, Consensus can search beyond the title and abstract" [@consensushow]; "your query is matched against titles, abstracts, and full text" [@consensusfulltext] |
+| Undermind | Its server describes paper search as "direct semantic search against titles and abstracts" and deep search as "agentic search over scientific abstracts" [@undermindmcp] |
+| scite | "We index over 323 million articles", of which it holds "50 million" in full text [@scitecoverage] |
+| OpenAlex semantic search | "OpenAlex embeds the title and abstract of every work" [@openalexsemantic] |
+
+: What selected products document about the text they search or read, as checked on 22 October 2026 (claims register: `ai-tools-indexed-text`, `openalex-semantic`). {#tbl-rep-units}
+
+A claim that a tool "searches full text" therefore leaves at least four questions open. Full text of which records: all of them, or only those that are open access or licensed? Is the full text used to find records, or only to answer questions about records already found? What is the indexed unit, and how many words of it does the encoder read? And how are several matching passages from one article combined? A tool that retrieves by title and abstract and reads full text only when writing its answer has the reach of an abstract search.
+
+## Questions to ask of a learnt representation {#sec-rep-questions}
+
+| Question | Why it matters | Where to look |
+|---|---|---|
+| What was the model trained on? | The training pairs define "related" | The model card or paper; vendor documentation |
+| Was it trained on anything like the review's field? | Dense models transfer poorly across domains | The training data; independent benchmarks |
+| What text is embedded, and how much of it? | Text outside the unit, or beyond the truncation limit, cannot match | Documentation; the model's maximum input length |
+| How is the list cut, and where? | Every record gets a score; the cut decides recall | Documentation of *k* at each stage (@sec-pipe-stages) |
+| How does it handle exact strings? | Drug names, genes and acronyms can blur | A test with the review's own key terms |
+| What did it find of the known eligible studies? | The only direct evidence for this review | A known-study check (@sec-validation) |
+
+: Questions to ask of a learnt representation before relying on it. {#tbl-rep-questions}
+
+## Exercises {#sec-rep-exercises}
+
+Inputs are in this chapter and the case pack (`case-pack/data/moran-2021/representations/`).
+
+### Exercise 5.1: What will rank high?
+
+Using @tbl-rep-signals, predict which kind of record each model would place close to an included trial in CD010558: SPECTER, MedCPT and Dense Passage Retrieval.
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+- **SPECTER** places papers close when one cites the other. Near a CoBalT report it would put the trial's protocol and secondary analyses, the papers it cites (other trials, reviews of treatment-resistant depression) and commentaries that cite it, whatever their design.
+- **MedCPT** learnt from what PubMed users clicked after their queries, so it would favour the articles such users tend to open for a similar query: informatively titled, clearly on the topic, and not necessarily of the review's design.
+- **Dense Passage Retrieval** was trained to find Wikipedia passages that answer questions, a different domain and task, and BEIR found it transfers worst of the models tested [@thakur2021].
+
+None was trained to prefer randomised trials in the review's population, so each would also rank ineligible records high.
+:::
+
+### Exercise 5.2: Title or question?
+
+In @tbl-rep-moran, the dense ranking with the review's title finds 24% of included records in its top 1,000, and with the written question 55%. Why might the title do so badly?
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+The title, "Poor nutritional condition promotes high-risk behaviours", is a short, general claim in the review's own vocabulary, and the encoder places it near records that make similarly general statements about condition and risk; looking at the top-ranked records would show which. The question names the manipulations (food restriction, starvation) and the outcomes (bolder, more exploratory, willing to take risks) that the included experiments report, so it is closer to how their abstracts describe them. A learnt representation is as sensitive to the query's wording as BM25 is, just in a different way.
+:::
+
+### Exercise 5.3: Find similar records
+
+A colleague proposes using an included study as a seed in a "find similar" tool, and screening its 10 nearest neighbours for every included study. Using the nearest-neighbour results in `representations/summary.md`, what would you expect?
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+Among the 10 nearest neighbours of the 137 included records, 27% are themselves included, 22% passed title and abstract only and 50% were excluded at title and abstract. That is far richer than the pool's 3%, so screening neighbours concentrates eligible records. But most of what it returns is ineligible, and here every neighbour was already in the search results, so the exercise shows concentration, not new studies. As a supplementary route its value depends on whether it reaches eligible records the search missed, which only a test against known studies would show (@sec-supp-similarity).
+:::
+
+### Exercise 5.4: Why is the systematic review first?
+
+In @tbl-rep-synthetic, why does the dense ranking place R018, a systematic review, first, and R009, an eligible study, 22nd?
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+R018's title and abstract are about peer tutoring and reading comprehension in primary schools, which is what the question is about; that it is a review, and so ineligible, is a fact about its design that the encoder was never trained to weigh. R009 describes the same intervention in other words ("pupil-led", "coached one another in reading for meaning", "understanding of texts"), and the general-purpose encoder does not place those close enough to "peer tutoring" and "reading comprehension" to rank it high. The first error is about eligibility, the second about vocabulary; a learnt representation can reduce the second and does nothing about the first.
+:::
+
+### Exercise 5.5: "Searches full text"
+
+A vendor says its AI research assistant "searches full text". Write the questions you would ask before using it as a supplementary route.
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+- Which records' full text: all records, or only open-access and licensed ones? How many is that?
+- Is full text used to retrieve records, or only to answer questions about records already retrieved by title and abstract?
+- What is the indexed unit (whole article, sections, passages), and how many words does the encoder read from each?
+- How are several matching passages from one article combined into one result?
+- What model produces the embeddings, and what was it trained on?
+- How many results can be seen and exported, and are the queries the system ran shown?
+
+Record the answers, with the date, alongside the run (@tbl-ai-record).
+:::

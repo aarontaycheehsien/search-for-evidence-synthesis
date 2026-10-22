@@ -86,6 +86,8 @@ PubMed is the running case through this part. Every PubMed and NLM claim goes in
 
 **New:** the training signal decides what "related" means: citation links (SPECTER, already discussed in Ch 6) versus searchers' clicks (Jin et al., 2023) versus eligibility criteria; one worked contrast between a topically related report and an eligible one; abstract versus full-text indexing and what a "searches full text" claim does not settle.
 
+**Drafted 2026-10-22 at a provisional depth**, before the pilot. Adapted from Ch 6 "How a contextual encoder becomes a retrieval encoder" and "Where the training signal comes from" (`#retrieval-encoder`, commit `99bfb9c`), Ch 7 "Candidate boundaries in lexical and dense retrieval" (`#dense-at-scale`) and Ch 8 "A vector does not have to be dense or semantic" and "One document, one chunk and one vector are not the same thing" (`#representations-and-units`), all compressed; Ch 5 (`#embeddings`) and Apps A and B were not used, and the `delulu` examples were dropped. New: the training-signal table (Reimers & Gurevych, 2019; Karpukhin et al., 2020; Cohan et al., 2020; Singh et al., 2023; Jin et al., 2023; the all-MiniLM-L6-v2 model card); transfer (Thakur et al., 2021); screening evidence (Wang et al., 2022; Mao et al., 2024; Ali et al., 2025); the case-pack experiments with all-MiniLM-L6-v2 (`case-pack/data/moran-2021/representations/`); the synthetic contrast; full text versus abstracts (Lin, 2009; Penning de Vries et al., 2020) and product claims on indexed text (checked 2026-10-22); five exercises.
+
 **Excluded:** the Mikolov et al. PCA figure and any other third-party figure.
 
 ### 6. Multi-stage pipelines, AI research assistants and agentic search
@@ -98,6 +100,8 @@ PubMed is the running case through this part. Every PubMed and NLM claim goes in
 | App G Retrieval-augmented generation | `#appendix-rag` | Compress |
 
 **New:** each route evaluated as a possible supplementary search; what an inspectable execution trace must show; documented, observed and unknown behaviour kept apart.
+
+**Drafted 2026-10-22 at a provisional depth**, before the pilot. Adapted from Ch 9 "Why search systems use multiple stages" (`#reranking-and-hybrid`), Ch 10 "How reciprocal rank fusion combines ranked lists" (`#hybrid-and-fusion`), Ch 12 "Fixed, adaptive and agentic are not the same thing", "Agency changes the sequence, not the retrieval" and "What agency costs, and what it buys" (`#agentic-search`) and App G "The basic pattern" (`#appendix-rag`), all commit `99bfb9c`, compressed. Every product claim was re-checked on 2026-10-22; the old book's claims about Asta, Primo's 30-candidate budget, Web of Science's "fully agentic" post and the author's Primo experiment were not carried over. New: the stage table; the case-pack reranking, fusion and union results (`case-pack/data/moran-2021/pipelines/`); evaluations of AI research assistants (Lau & Golder, 2025; Seth et al., 2025; Bencze et al., 2025; Carrier et al., 2026; Bernard et al., 2025; Wang et al., 2025) and repeatability (Tay, 2026); the execution-trace table; documented, observed and unknown; five exercises.
 
 **Claims to verify:** every product claim, afresh. Do not carry dated claims over without re-checking.
 

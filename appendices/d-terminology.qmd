@@ -2,7 +2,7 @@
 
 Three communities write about searching for evidence, and each has its own words. Information retrieval research says *recall*, *relevance* and *test collection*; evidence-synthesis methods say *sensitivity*, *eligibility* and *reference set*; database documentation says *field tags*, *explode* and *filters*. Often the words name the same thing. Sometimes the same word names different things, which is worse.
 
-This appendix is a crosswalk, not a controlled vocabulary. Usage varies between papers and products, so read each row as a prompt to check what a particular source means. Where a definition comes from a named source, it is cited; otherwise the rows are a practitioner's reading of common usage. The last column points to where the book explains the mechanism; "(planned)" marks a chapter not yet drafted.
+This appendix is a crosswalk, not a controlled vocabulary. Usage varies between papers and products, so read each row as a prompt to check what a particular source means. Where a definition comes from a named source, it is cited; otherwise the rows are a practitioner's reading of common usage. The last column points to where the book explains the mechanism.
 
 ## Evaluation and units {#sec-terminology-evaluation}
 
@@ -62,14 +62,14 @@ Product descriptions name representations, mechanisms, pipeline stages, interfac
 | Keyword, lexical, full-text search | Matching on analysed words, normally through an inverted index | Whether all words are required, or how results are ordered | @sec-boolean |
 | Boolean search | Admission by a logical expression: a record is in or out | Anything about order | @sec-boolean-yes-no |
 | Ranked retrieval, relevance sort, Best Match | Records ordered by a score | What evidence the score uses, and how many records can be seen | @sec-ranking |
-| Semantic search | A goal: matching meaning beyond literal words | The mechanism, which may be query expansion, learnt representations, reranking or several of these | @sec-representations (planned) |
-| Vector, embedding or dense retrieval | Records and queries represented as vectors and compared by similarity | What the vectors were trained to capture; vectors need not be learnt or semantic | @sec-representations (planned) |
-| Hybrid search | Results or signals from two or more routes combined | Which routes, and how they are combined | @sec-pipelines (planned) |
-| Reranking | A second stage that reorders a shortlist | Anything about records outside the shortlist, which it cannot add | @sec-pipelines (planned) |
+| Semantic search | A goal: matching meaning beyond literal words | The mechanism, which may be query expansion, learnt representations, reranking or several of these | @sec-representations |
+| Vector, embedding or dense retrieval | Records and queries represented as vectors and compared by similarity | What the vectors were trained to capture; vectors need not be learnt or semantic | @sec-representations |
+| Hybrid search | Results or signals from two or more routes combined | Which routes, and how they are combined | @sec-pipelines |
+| Reranking | A second stage that reorders a shortlist | Anything about records outside the shortlist, which it cannot add | @sec-pipelines |
 | Natural-language search | How the query is entered | The backend: the sentence may become a Boolean query, a vector or several searches | @sec-dev-system |
 | AI-assisted, AI-powered search | Some machine-learning or generative component | Which stage it affects: the query, retrieval, ranking or the answer | @sec-ranking-ai |
-| Retrieval-augmented generation, answer engine | Retrieval supplies records to a model that writes an answer | The retriever, which may be lexical, dense or hybrid | @sec-pipelines (planned) |
-| Agentic search, deep research | A process that plans, searches repeatedly and follows evidence | Whether each search is lexical or dense, and what was searched | @sec-pipelines (planned) |
+| Retrieval-augmented generation, answer engine | Retrieval supplies records to a model that writes an answer | The retriever, which may be lexical, dense or hybrid | @sec-pipelines |
+| Agentic search, deep research | A process that plans, searches repeatedly and follows evidence | Whether each search is lexical or dense, and what was searched | @sec-pipelines |
 
 : Labels for retrieval methods. {#tbl-terminology-labels}
 
