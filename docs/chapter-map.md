@@ -149,6 +149,8 @@ PubMed is the running case through this part. Every PubMed and NLM claim goes in
 
 ### 11. Recording, reporting and updating
 
+**Drafted 2026-10-22.** Adapted from Ch 15 "Reproducibility depends on what is fixed, and what is recorded" (`#library-practice`, commit `99bfb9c`): the distinction between rerunning a search and comparing a rerun with saved results, and Table 15.2 (what to record for each retrieval method), compressed into `tbl-ai-record`; the companion `vendor-questionnaire.html` (commit `99bfb9c`), reduced to six of its nineteen questions (Q01, Q05, Q08, Q13, Q14, Q16) and rewritten for evidence synthesis; App F "Applying Chapter 15 to active learning", already used in Chapter 9, is cross-referenced rather than repeated. New: the reproducibility evidence (Koffel & Rethlefsen, 2016; Rethlefsen et al., 2024; Hamilton et al., 2026; Burns et al., 2021); PRISMA-S and PRISMA 2020 items with case-pack failures; the boundary-by-boundary record; deduplication (McKeown & Mir, 2021; the Moran range); AI reporting under the joint position statement and RAISE 1 version 4; the update-window analysis of the seven late-indexed reports (`case-pack/data/updating/`), with Bramer and Bain's rerun-and-deduplicate method; the date-field table and changed-system checks (claims checked 2026-10-22); five exercises.
+
 | Source section | Anchor | Treatment |
 |---|---|---|
 | Ch 15 Implications for library practice: reproducibility and inspectability | `#library-practice` | Adapt |

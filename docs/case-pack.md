@@ -16,6 +16,7 @@ The case pack supplies the inputs and worked answers for every exercise in the b
 | Moran et al. (2021) labels (4,882 records), three detailed ASReview simulation logs and 30 more across ten starting pairs | [`case-pack/data/moran-2021/`](../case-pack/data/moran-2021/README.md) | Chapters 9, 10 |
 | BM25 ranking of the Moran pool: ranks under two queries, recall within the top k, and per-term weights | [`case-pack/data/moran-2021/ranking/`](../case-pack/data/moran-2021/ranking/README.md) | Chapter 4 |
 | Where a statistical stopping criterion (buscarpy 0.0.2) first allows stopping on every Moran and CD010558 screening log, and two-source capture–recapture on the Moran searches | [`case-pack/data/stopping/`](../case-pack/data/stopping/README.md) | Chapter 9 |
+| PubMed create, entry and completion dates for the seven late-indexed reports of CD010558 and CD011787, and which update windows would catch them | [`case-pack/data/updating/`](../case-pack/data/updating/README.md) | Chapter 11 |
 | Moran deduplication and database-contribution analysis | [`case-pack/data/moran-2021/`](../case-pack/data/moran-2021/README.md) | Chapters 8, 9, 10, 11 |
 | Moran translation case: the Web of Science and Scopus strings compared against dated documentation, with exercises | [`case-pack/cases/moran-translation.md`](../case-pack/cases/moran-translation.md) | Chapters 2, 7, 11 |
 | Synthetic collection v0.1 (33 records, 9 eligible studies) with generated worked answers | [`case-pack/synthetic/`](../case-pack/synthetic/README.md) | Chapters 1, 2, 3, 7, 8, 11 |
@@ -121,7 +122,7 @@ Version 0.1 is built: a fictional education review with 33 records and 9 eligibl
 ## Remaining work
 
 1. Optionally confirm the Moran strings against Appendix S2 of the supporting information (check 1 above).
-2. Optionally record the exact Date Completed values for the four late-indexed CD010558 records with `case-pack/scripts/fetch_pubmed.py`, which needs network access to NCBI. The explanation itself is confirmed.
+2. Done 2026-10-21: the completion, entry and create dates of the late-indexed CD010558 and CD011787 records, to within a fortnight to a year, are in `case-pack/data/updating/`.
 3. Build a reference set for CD012069 if it is used (CD011787 is done).
 4. Pilot the synthetic collection's exercises and extend it after feedback.
 

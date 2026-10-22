@@ -1,16 +1,291 @@
 # Recording, reporting and updating {#sec-recording}
 
-::: {.callout-note}
-## Not yet drafted
+In 2019 the CLEF organisers re-ran CD010558's MEDLINE strategy exactly as the review had published it, and the pool they got back held reports of four of the review's six studies (@sec-missing-case). The strategy they had told them what to type. It did not include what the search had returned in 2017, so nothing in it could show which of the review's reports this search had found, or why the second run lacked some of them.
 
-This chapter is an outline. See the [plan](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/plan.md) and [chapter map](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/chapter-map.md) for its sources and status.
-:::
+A search record has three readers. A peer reviewer reads it before the search runs, to catch errors in the strategy [@mcgowan2016]. A reader of the review reads it afterwards, to judge what the search could and could not have found. The next searcher reads it to update the review, often years later and often without the original searcher to ask. This chapter is about a record that serves all three, and about updating, where the gaps in a record become losses.
 
 **After this chapter you should be able to** produce a search record that another librarian can rerun, audit and update.
 
-## Planned contents
+## Rerunning is not reproducing {#sec-recording-rerun}
 
-- A completed reporting package: PRISMA-S [@rethlefsen2021] plus AI use reported under the joint position statement [@flemyng2025].
-- A deduplication record [@mckeown2021], using the Moran case's spread of 5,390 to 5,552 records after duplicates removed.
-- Updating: the entry-date limits in CD010558 and CD011787, and why rerunning a saved query does not establish stable coverage.
-- An update case in which subject indexing, ranking and an AI tool have all changed.
+A search that is run again does not return what it returned before, even when nothing in it was changed. Databases add records, complete the indexing of records already present, correct them, change their vocabularies and reload their files. PRISMA-S puts it plainly: "Most literature databases are regularly updated with new citations as articles are published. Citations already in the database may also be updated once new information (such as indexing terms or citing articles) is available" [@rethlefsen2021].
+
+The drift can be large. @burns2021 ran the same MEDLINE queries on five platforms every month for a year and found "large fluctuations in monthly search results based on the same query". In one case the Web of Science MEDLINE platform returned between 12,652 and 13,021 records from October to April and between 619 and 629 from May to September.
+
+Most of the variation that readers meet, however, comes from the record, not the database. @koffel2016 found that only 22% of systematic reviews in high-impact paediatrics, cardiology and surgery journals gave at least one reproducible search strategy, and 22% gave the date a search was run. A decade later, @rethlefsen2024 tried to reproduce 453 database searches from 100 systematic reviews: only 22 (4.9%) reported all six key PRISMA-S items, and only 47 (10.4%) could be reproduced to within 10% of the original number of results. When information specialists repeated the searches of ten published reviews, the number of records differed by more than 10% in 58% and 49% of searches for the two replicators, mainly because of syntax errors, undisclosed fields and limits, and differences in platform [@hamilton2026].
+
+Two consequences follow for the record.
+
+- **Record what was run, exactly.** The strategy as executed, copied from the database's search history, with the platform, the file or segment, the date and every limit. That lets someone run the same search again.
+- **Record what came back.** The number of records each line and each source returned, and an export of every record's identifiers. A rerun cannot reproduce the original result, but with the original identifiers a later searcher can compare the two and explain the difference.
+
+This is what the strategy CLEF re-ran lacked. With the 2017 results, a later searcher could see which of the review's included reports this MEDLINE search had actually found, and which had come from elsewhere.
+
+## What PRISMA-S asks {#sec-recording-prisma-s}
+
+PRISMA-S, the reporting standard for literature searches, has 16 items [@rethlefsen2021]. @tbl-prisma-s summarises them, with the failure each one guards against.
+
+| Item | What it asks | What goes wrong without it |
+|---|---|---|
+| 1. Database name | Each database, "stating the platform for each" | MEDLINE alone is offered on at least ten platforms, whose differences can change the results |
+| 2. Multi-database searching | The platform and every database searched together | A reader cannot tell which records came from which source |
+| 3. Study registries | Every registry searched | Registry records, often the only report of an unpublished trial, are invisible |
+| 4. Online resources and browsing | Sources browsed or searched by hand, and how | Websites and tables of contents leave no trace otherwise |
+| 5. Citation searching | Whether cited or citing references were examined, and how | A route that adds studies cannot be repeated or judged (@sec-supplementary) |
+| 6. Contacts | Whether authors or others were asked for studies or data | As above |
+| 7. Other methods | Any other source or method | As above |
+| 8. Full search strategies | Each strategy "copied and pasted exactly as run" | A retyped or summarised strategy differs from what ran |
+| 9. Limits and restrictions | Every limit, with its justification | A date, language or design limit silently removes records |
+| 10. Search filters | Any published filter, cited, and whether it was modified | A reader cannot judge what the filter's validation covers (@sec-indexing) |
+| 11. Prior work | Strategies reused from other reviews | Errors in the source strategy are inherited unseen |
+| 12. Updates | How the search was updated | Records between the original and the update fall through |
+| 13. Dates of searches | The date each strategy was last run | A reader cannot tell what the search could have found |
+| 14. Peer review | Any peer review of the strategy | A reader cannot tell whether the strategy was checked for errors |
+| 15. Total records | The number of records from each source | The flow diagram cannot be checked against the searches |
+| 16. Deduplication | The process and software used to remove duplicates | The number "after duplicates removed" cannot be interpreted |
+
+: The 16 PRISMA-S items, paraphrased from @rethlefsen2021, with what each guards against. {#tbl-prisma-s}
+
+Three items repay attention because they fail most quietly.
+
+**Item 8, exactly as run.** The Moran case shows why. The authors' script records the first Web of Science search in a typed comment that reads `"asset protection" residual reproductive value")`, with quotation marks that do not balance, while the update search's string, which the database itself echoed back, is correct (`case-pack/cases/moran-translation.md`). A strategy typed into a report is a description of a search. A strategy copied from the database's search history is the search.
+
+**Item 9, limits with their justification.** PRISMA-S notes that "database limits are not recommended for use in systematic reviews, due to their fallibility", and that a limit used should be justified. CD010558's last line, `limit 32 to ed = "19480101-20170516"`, looks like a date-of-publication limit and is not: in Ovid MEDLINE, `ed` holds the date NLM completed the record's indexing [@ovidmedline]. The record should say which date the limit is on, and why that field was chosen.
+
+**Item 16, deduplication.** It asks for the process and the software. The next section shows why the number alone means little.
+
+PRISMA 2020 adds three things a search record should support [@page2021]. Item 6 asks for "the date when each source was last searched or consulted", and its explanation adds the platform and "the dates of coverage" [@page2021ee]. Item 8 asks for "details of automation tools used in the process". The flow diagram has a box for "Records marked as ineligible by automation tools", separate from duplicates removed and records removed for other reasons.
+
+## Recording what the strategy does not show {#sec-recording-boundaries}
+
+A strategy shows the query. It does not show the other boundaries at which a study can be lost (@tbl-boundaries). @tbl-record-boundaries lists what to record for each, so that a later reader can locate a loss.
+
+| Boundary | What to record | Why, from the case pack |
+|---|---|---|
+| 1. Coverage | Database, platform and segment or file; its coverage dates; the date and time of the search | The CoBalT pilot report has no PubMed record, so no MEDLINE strategy could find it |
+| 2. Record content and indexing | The vocabulary year; for MEDLINE, which indexing regimes the date range spans (@sec-indexing-automated) | A heading introduced in 2012 cannot retrieve records indexed before it |
+| 3. Query logic and limits | The strategy as run; the count at every line; which field each date limit uses | CD010558's `ed` limit excluded four reports that were already in PubMed when it ended |
+| 4. Display and export limits | The total reported; the number exported; batches and any cap (@sec-ranking) | Records beyond a cap are never screened, and nothing in the screening record shows it |
+| 5. Deduplication | The tool and version, its settings, the order of steps, manual checks, the count after each step; a file of removed pairs | Moran's initial export leaves 5,390 to 5,552 records, depending on the rule |
+| 6. Prioritisation and stopping | The record listed in @sec-stop-decision | Records left unscreened were excluded without being judged |
+
+: What to record at each boundary, beyond the strategy. {#tbl-record-boundaries}
+
+### Deduplication
+
+The Moran searches returned 7,208 records from Web of Science and Scopus on 10 November 2018. Applying six different rules to the same export leaves anywhere from 5,390 to 5,552, a range of 162 records (`case-pack/data/moran-2021/README.md`). The authors' script reports 5,509 records after deduplication with its fuzzy title matching, and the article reports 5,453 screened at title and abstract. Each of these numbers is defensible. None means anything without the rule that produced it.
+
+Tools differ as much as rules. @mckeown2021 deduplicated 3,130 records from four Ovid databases against a manually checked benchmark of 1,892 unique references. Sensitivity, the share of true duplicates each method found, ranged from 0.52 (Zotero) to 0.96 (Rayyan). False positives, records removed as duplicates that were not, ranged from none in Ovid's multifile search to 208 in EndNote X9, 85 of which were reports of primary research.
+
+A false positive is a silent loss at boundary 5: a unique record deleted before anyone screens it. A false negative only costs screening time. So the record should let someone find the false positives: name the tool, version and settings, state the order of automatic and manual steps, and keep a file of every pair that was merged, so that a disputed removal can be checked.
+
+## Reporting AI and automation {#sec-recording-ai}
+
+The joint position statement of Cochrane, the Campbell Collaboration, JBI and the Collaboration for Environmental Evidence asks that "any use of AI or automation that makes or suggests judgements should be fully and transparently reported" [@flemyng2025]. It lists what to report: "the name(s) of the AI system(s), tool(s) or platform(s), version(s) and date(s) used"; the purpose and the parts of the synthesis affected; the justification, including how the tool was validated and how its outputs were verified; any interests in the tool; and its limitations, including potential biases. The RAISE recommendations ask synthesists to "document AI use transparently (e.g., detailed notes of how it was used should be maintained to support reproducibility, including audit trails and prompt development)" [@raise2026].
+
+For a search, the version and date matter more than they appear to. A database states its coverage and its update schedule. Many AI tools do neither in a way that would let a run be repeated. Elicit's help centre says the product is "constantly" updated and that "you can't count on Elicit giving the same answer if you ask a question more than once"; its changelog is dated but has no version numbers [@elicitvariability]. Consensus also keeps a dated changelog without version numbers, and in May 2026 added a search mode it describes as deterministic [@consensuschangelog]. For tools like these, the date is the version, and the only durable record of what a run found is the set of identifiers it returned.
+
+@tbl-ai-record sets out what to keep for the AI-assisted steps that most often touch a search.
+
+| Step | What to keep |
+|---|---|
+| A language model drafts or translates a strategy | The prompt; the model and product, version and date; the generated strategy as produced; the strategy as finally run, with every human change; whether a rerun reused the saved strategy or generated a new one |
+| An AI research assistant used as a search route | The query or question as entered; the product, mode and date; any filters; the number of results returned and any cap (@sec-ranking-ai); the identifiers of every record taken forward |
+| A classifier removes records before screening | The classifier and its version; the threshold; the number removed, reported in the flow diagram as marked ineligible by automation tools [@page2021ee] |
+| Prioritised screening, with or without early stopping | The record in @sec-stop-decision |
+
+: What to keep when AI or automation touches the search. {#tbl-ai-record}
+
+A library can ask a vendor in advance whether its product allows this. Six questions matter most for evidence synthesis:
+
+1. **What does the system change?** Does it rewrite, expand or translate the query, and can the user see and export exactly what was run?
+2. **What is searched?** Which sources, what unit (title and abstract, or full text), and how current?
+3. **Is exact matching retained?** Can a phrase, identifier or controlled-vocabulary term be searched without semantic expansion changing it?
+4. **Can a search be documented and rerun?** Can the user export the input, the executed query, the date, the version and the result identifiers? Does a rerun reuse the saved query or generate a new one?
+5. **Are changes disclosed?** Does the vendor announce changes to the model, index or ranking that could change results, and can a saved search be traced to the version that produced it?
+6. **What happens when a mode is withdrawn?** Can saved searches and results be exported first?
+
+A product that cannot answer the fourth question can still be used as a supplementary route, with its results saved. It cannot carry a claim that the search can be reproduced.
+
+## Updating a search {#sec-recording-updating}
+
+An update has to find every eligible record that has become findable since the last search, and only those, without asking reviewers to screen the earlier results again. It can fail in two directions: by re-presenting thousands of records already screened, or by missing records that fall between the two searches. The second is invisible, so it matters more.
+
+### Records that fall between two searches
+
+The four CD010558 reports that the 2019 re-run missed show how a gap opens. @tbl-late-indexed gives their PubMed dates.
+
+| Report | Published | Entered PubMed | Indexing completed |
+|---|---|---|---|
+| Wiles 2016 (CoBalT long-term follow-up) | 2016 | January to March 2016 | 1 to 15 November 2017 |
+| Abel 2016 (CoBalT sudden gains) | 2016 | April to June 2016 | September 2017 |
+| Nakagawa 2017 (results paper) | 2017 | March 2017 | 16 to 30 November 2017 |
+| Town 2017 | 2017 | March 2017 | 16 to 30 November 2017 |
+
+: PubMed dates for the four CD010558 reports excluded by the strategy's `ed` limit, which ends on 16 May 2017. Found by date-range searches in PubMed on 21 October 2026; dates can change when records are revised. From `case-pack/data/updating/late-indexed.csv`. {#tbl-late-indexed}
+
+All four were in PubMed before the limit's end date, and none had completed indexing by then. A strategy limited on `ed`, the completion date, excludes them. Suppose an update starts the day after the original limit ended. Which of the four it catches depends on the field that defines "since":
+
+| Update window from 17 May 2017, defined on | Reports caught (of 4) |
+|---|---|
+| Ovid `ed`, or PubMed `[dcom]` (completion date) | 4 |
+| PubMed `[edat]` (entry date) | 0 |
+| Ovid `dt`, or PubMed `[crdt]` (create date) | 0 |
+| Publication year from 2017 | 2 |
+| Publication year from 2018 | 0 |
+
+: Which update windows catch the four late-indexed reports. From `case-pack/data/updating/README.md`, which also gives CD011787's three late-indexed reports: a completion-date window catches all three, an entry-date window one, a create-date window none. {#tbl-update-windows}
+
+The vendors' own advice points to the field that catches none of them. Ovid recommends its create date, `dt`, for searches over parts of years [@ovidgodates], and the PubMed User Guide says the create date "can be helpful when checking PubMed for citations added since the last time a query was run" [@pubmedhelp]. That advice is right for an original search that took every record regardless of indexing status. It is wrong for one limited on completion date, because records created before the original end date but completed after it fall into neither search. The error is not in either field. It is in defining the original limit and the update window on different fields.
+
+The entry date has its own traps. PubMed sets `[edat]` to the publication date when a citation is added more than twelve months after publication [@pubmedhelp], so a record added late can carry an entry date from years before. The create and entry dates can also disagree in ways the guide does not explain: one of CD011787's late-indexed reports was created in early 2016 but has an entry date later that year, after the review's limit. And the name does not settle the meaning. Ovid's field labelled Entry Date, `ed`, is the completion date; PubMed's Entry Date is when a citation was added. The Cochrane Handbook suggests that update searches be restricted "by date of entry into the database (rather than date of publication)" [@lefebvre2025, MECIR C35], which leaves the searcher to decide, and record, which field that means.
+
+Three rules follow.
+
+1. **Define the update window on the same field as the original limit**, and record which field that is. The Cochrane Technical Supplement maps Ovid's `ed` to PubMed's completion date, not to its entry date, so a strategy can be carried between the two platforms without changing the field [@lefebvre2024ts, sec. 3.8].
+2. **Never move from a record date to a publication date.** Publication years change when an article appears in print, and older material is added to databases late [@bramerbain2017].
+3. **Better still, avoid the choice.** @bramerbain2017 rerun the full strategy "from the original starting date (rather than limiting from the previous search date)", then remove the records already screened by deduplicating against the previous results. They argue that this "obviates the confusing task of choosing and reporting a date field for the beginning date of the new search". Ovid suggests the same with identifiers: save each run's identifiers and use `NOT` to find the difference [@ovidgodates]. Both need the previous run's results to have been kept.
+
+@tbl-date-fields summarises the fields for "added since" on six platforms, as documented in October 2026.
+
+| Platform | Field for records added since a date | What to know |
+|---|---|---|
+| Ovid MEDLINE | `dt`, Create Date: when the record was added to PubMed | `ed` is the completion date, not the date added. `up` resets with each annual reload [@ovidmedlineguide; @ovidgodates] |
+| PubMed | `[crdt]`, Create Date | `[edat]` is reset to the publication date for records added more than a year after publication. `[crdt]` and `[dcom]` are not searched by All Fields [@pubmedhelp] |
+| Embase.com | `/sd`, entry date | The entry date can mark a record's first appearance, as an article in press or in process, and also its full indexing [@embasecalendar; @embasereleasenotes] |
+| Scopus | `ORIG-LOAD-DATE`, first loaded | Records may be reloaded; `LOAD-DATE` is the latest load. Documented in Elsevier's developer documentation [@scopusloaddate] |
+| Web of Science Core Collection | None on the field-tag page | Only publication-date fields are listed [@wostags]. Use a publication-date window with a generous overlap, or rerun and deduplicate |
+| CINAHL (EBSCOhost) | `EM`, Entry Date | Year and month, or a full date [@cinahlhelp] |
+
+: Date fields for update searches, as documented on 22 October 2026. Each claim is dated in `claims/register.csv`. {#tbl-date-fields}
+
+### Two update methods in one review
+
+The Moran review updated its two searches on 4 February 2019 by different methods (`case-pack/cases/moran-translation.md`). In Web of Science, the authors re-ran the whole search and compared the 2,813 records with the first results by exact title, leaving 92 new ones. In Scopus they added `ORIG-LOAD-DATE > 20181110` and got 42. Combined and deduplicated, 120 records went forward to screening.
+
+Both are recognisable methods. The Web of Science approach is the rerun-and-compare method, but comparing by exact title is fragile: a corrected title makes an old record look new, and two different articles with the same title make a new one look old. Comparing identifiers is safer. The Scopus limit uses a first-load date, which suits the purpose, but `>` excludes 10 November itself, the day of the first search, so a record loaded later that day satisfies neither search. The update string also differed from the original: the first Web of Science search used `"risk taking behavio*"` and the update `"risk-taking behavio*"`. PRISMA-S item 12 asks that such changes be reported and explained.
+
+### Updating in a changed system
+
+An update rarely runs on the system the original ran on. @garner2016 note that an update's strategy "need not replicate the original search strategy, but could be refined", and that the update must be reported so it "could be replicated". Before rerunning an old strategy, check what has changed underneath it, and record the checks.
+
+- **Platform and file.** Segment names and coverage change. Record the current segment and its coverage dates.
+- **Vocabulary.** NLM "typically" does not re-index existing citations with new headings, so a heading added since the original search retrieves only records indexed after it [@nlm2024amp]. Headings that were replaced or renamed are changed on existing records at year end.
+- **Indexing regime.** Since April 2022 MEDLINE has been indexed automatically, with selected sets reviewed by people (@sec-indexing-automated). NLM says automated indexing is generally completed within a day of a citation's receipt [@nlmindexfaq], so for recent records a completion-date window behaves almost like a date-added window; the gap in @tbl-late-indexed belongs to the older records. After the 2026 vocabulary update, NLM said that its algorithm would assign some 2025 terms to new citations while it was retrained, and that those citations would then be updated to 2026 terms [@nlm2026jan]. A heading on a recent record can change after the search that found it.
+- **Ranking.** If any route used a relevance sort or a capped ranked list, its order has probably changed. PubMed's Best Match combines over 150 signals and "is not designed for comprehensive or systematic searches" [@nlmbestmatchka].
+- **Known items.** Rerun the original strategy with its original end date and check that the review's included reports are still retrieved, and how the count compares with the original. A shortfall is evidence of drift or of an error in the record; either needs to be explained before the update is run.
+
+The Cochrane Handbook requires searches to be rerun or updated within 12 months before a review or update is published [@lefebvre2025, sec. 4.4.10]. The checks above belong in the record of each rerun.
+
+## A record that serves all three readers {#sec-recording-minimum}
+
+Pulling the chapter together, a search record that lets another librarian rerun, audit and update the search keeps:
+
+- the protocol's planned searches, and every change from them, with reasons;
+- for each source: the name, platform, segment and coverage dates; the date and time of each run; the strategy as executed, exported from the search history; the count at every line; the total; and the full export, with identifiers;
+- every limit, with the field it uses and the justification;
+- any search filter, cited, with any modification;
+- other routes (registries, citation searching, contacts, websites), each with enough detail to repeat it, and what each added;
+- deduplication: tool, version, settings, steps, counts and the removed pairs;
+- for every AI or automation step, the items in @tbl-ai-record;
+- screening order and the stopping record (@sec-stop-decision);
+- for each update: the method, the field and dates of any window, the changes to the strategy and sources, and the checks made on the changed system.
+
+PRISMA-S and PRISMA 2020 say what to *report*. This list is what to *keep*, so that the report can be written, checked and updated.
+
+## Exercises {#sec-recording-exercises}
+
+Inputs are in this chapter and the case pack: `case-pack/data/moran-2021/README.md`, `case-pack/cases/moran-translation.md` and `case-pack/data/updating/`.
+
+### Exercise 11.1: Audit a record against PRISMA-S
+
+Using only what the case pack documents about the Moran searches (`case-pack/data/moran-2021/README.md` and `case-pack/cases/moran-translation.md`), go through @tbl-prisma-s. For which items can you write a complete entry, which partly, and which not at all?
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+**Complete or nearly so:**
+
+- item 1, Web of Science Core Collection and Scopus, each searched on its own platform;
+- item 12, the two update methods;
+- item 13, the dates of the first and update searches, with the slip in the script's header corrected;
+- item 15, 2,729 and 4,479 records initially, then 92 and 42 new records at update.
+
+**Partly:**
+
+- **Item 8.** The Web of Science update string is the database's own echo, but the first Web of Science string survives only as a typed comment with unbalanced quotation marks, and the Scopus strings are as recorded in the script, not as echoed by Scopus.
+- **Item 9.** The update's `ORIG-LOAD-DATE` limit is recorded but not justified, and the change from `"risk taking behavio*"` to `"risk-taking behavio*"` is not explained.
+- **Item 16.** The script names its tool (revtools, fuzzy title matching) and reports 5,509 records, but the article reports 5,453 screened, and nothing in the case pack explains the difference of 56.
+
+**Not at all, from these sources:**
+
+- items 3 to 7, other sources and routes;
+- item 10, filters (probably none used, but not stated);
+- item 11, prior work;
+- item 14, peer review.
+
+The article's supporting information may answer some of these. The point of the exercise is that a script and an export, the materials a later searcher is most likely to inherit, answer the mechanical items well and the judgement items hardly at all.
+:::
+
+### Exercise 11.2: Choosing an update window
+
+You are updating CD010558's MEDLINE search in Ovid in 2026. The original strategy ends `limit 32 to ed = "19480101-20170516"`. Using @tbl-late-indexed:
+
+a. A colleague proposes adding `limit to dt = "20170517-20261022"`, following Ovid's advice. Which of the four late-indexed reports would the update find?
+b. What window would you use instead, and why?
+c. What method avoids choosing a field, and what does it need from the original search?
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+a. None. All four were created in PubMed before 17 May 2017 (their entry dates run from January 2016 to March 2017), so a create-date window from that day excludes them. The original search excluded them too, because their indexing was completed after 16 May 2017. They fall between the two searches.
+
+b. `ed = "20170517-20261022"`: the same field as the original limit, starting the day after it ended. All four were completed between September and November 2017, so this window finds them. Record that the window is on the completion date, and why.
+
+c. Rerun the full strategy without a date limit, from the original start date, and remove the records already screened by deduplicating against the original results, preferably by identifier [@bramerbain2017]. It needs the original run's exported results. Without them, the date-field choice cannot be avoided.
+:::
+
+### Exercise 11.3: Recording deduplication
+
+Using the Moran deduplication figures (`case-pack/data/moran-2021/README.md`), draft the deduplication sentence for the methods section and the "duplicate records removed" entry for the flow diagram. Then list what you would keep so that a reader could check them.
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+**Methods.** "Records from Web of Science (2,729) and Scopus (4,479) were combined (7,208) and deduplicated in [tool, version] using [rule, for example DOI match followed by exact title match after removing punctuation], followed by manual checking of [which pairs]. 1,806 duplicates were removed, leaving 5,402 records." The figures here are for the DOI-or-exact-title rule; with another rule the numbers change, which is why the rule must be named.
+
+**Flow diagram.** "Duplicate records removed (n = 1,806)".
+
+**Keep:** the combined export before deduplication; the tool, version and settings; the order of automatic and manual steps; the count after each step; and a file listing every pair removed, with both identifiers, so that a reader can check whether any unique record was deleted. @mckeown2021 show that the choice of tool alone can move the false positives from none to more than 200 in a set of 3,130 records, so the rule and tool are part of the result.
+:::
+
+### Exercise 11.4: Recording an AI-assisted route
+
+A team adds an Elicit search to its database searches, as a supplementary route. Elicit initially searches up to 1,000 papers per review (`claims/register.csv`, `elicit-1000`). Draft the record the team should keep and the sentence for its methods section.
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+**Keep:** the question or query exactly as entered; the product, plan and mode; the date and time; any filters; the number of papers Elicit reported and the number reviewed; Elicit's changelog entries around the date of the search, since the product carries no version numbers; the full list of papers taken forward, with DOIs or other identifiers; which of those the database searches had not found; and the human checks applied.
+
+**Methods sentence.** "We searched Elicit (elicit.com; [plan], [mode]) on [date] with the query '[query]'; Elicit returned up to 1,000 papers, of which [n] were screened and [m] were not found by the database searches. Elicit's results vary between runs and versions [@elicitvariability], so the search cannot be repeated exactly; the identifiers of all records screened are in [supplementary file]. This route was used to supplement, not replace, the database searches."
+
+The position statement also asks for the justification and the limitations [@flemyng2025]. Here the limitation is that the route's coverage and ranking are not documented in enough detail to judge what it could miss, which is why it supplements the database searches rather than replacing one.
+:::
+
+### Exercise 11.5: Planning an update in a changed system
+
+You are asked to update CD010558's MEDLINE search in 2026, nine years after the original. Using @sec-recording-updating and @sec-indexing, list the checks you would make before running the update, and what you would record from each.
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+1. **Rerun the original strategy with its original end date.** Count the results and compare with the original count, if the record has one. Check that the included reports are retrieved. The strategy as CLEF distributed it has neither a count nor identifiers, so the comparison can only be made against the included studies. Record the shortfall: four reports, now explained by the `ed` limit.
+2. **Check the platform and segment.** Record the segment name and coverage today.
+3. **Check the vocabulary.** For each heading in the strategy, check whether it has been replaced, renamed or joined by a more specific heading since 2017, and whether a new publication type should be used.
+4. **Check the indexing regime.** Records from 2022 onwards were indexed automatically. Run the strategy's heading lines within each indexing set and compare their share with the text-word lines (@sec-indexing-testing).
+5. **Choose the update method.** Prefer rerunning from the original start and deduplicating against the original results. If those results were not kept, use an `ed` window from 17 May 2017, the same field as the original limit, and record why.
+6. **Record everything above** in the update's record, with any change to the strategy and its reason, as PRISMA-S item 12 asks.
+
+What the checks cannot do is recover what the original record failed to keep. Without the 2017 results, nobody can say which records the original run actually returned.
+:::
