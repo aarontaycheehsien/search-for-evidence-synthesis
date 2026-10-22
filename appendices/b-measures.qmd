@@ -6,7 +6,7 @@ This appendix defines the measures the book uses, each with a worked example fro
 
 Every measure here is a ratio of counts, and three choices fix what is being counted (@sec-missing-measures, @sec-validation-measures).
 
-- **The unit**: records in one database, reports, or studies. CD010558's re-run pool holds 10 of the review's 16 included reports that have a PubMed record, which report 4 of its 6 studies (@tbl-cd010558): 62.5% of reports and 67% of studies, from the same search.
+- **The unit**: records in one database, reports, or studies. CD010558's re-run pool holds 10 of the review's 16 included reports that have a PubMed record, which report 4 of its 6 studies (@tbl-cd010558): 63% of reports and 67% of studies, from the same search.
 - **The stage**: the search, screening within the search's results, or both together.
 - **The denominator**: which eligible records are known, and how they were found. A benchmark's labels know only what the review's own search found; a reference set built from other sources knows more (@sec-validation-reference).
 
