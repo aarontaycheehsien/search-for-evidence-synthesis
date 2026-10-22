@@ -22,6 +22,8 @@ from field_checks import check as moran_check  # noqa: E402
 from fetch_pubmed import parse_efetch  # noqa: E402
 from indexing_checks import Adj, Record, Terms, cd010558_row, words  # noqa: E402
 from ranking_measures import measures as ranking_measures  # noqa: E402
+from pipeline_checks import rerank, rrf, union_top  # noqa: E402
+from representation_checks import neighbour_labels  # noqa: E402
 from ranking_checks import bm25_scores, expand, ranks, recall_at  # noqa: E402
 from stopping_checks import first_stop, read_log  # noqa: E402
 from term_mining import mine, split  # noqa: E402
@@ -204,6 +206,32 @@ class RankingMeasuresTest(unittest.TestCase):
         self.assertEqual((m["first"], m["at95"], m["last"]), (1, 3, 3))
         self.assertAlmostEqual(m["wss95"], 0.65)
         self.assertEqual(m["recall_10pct"], 0.5)
+
+
+class PipelineChecksTest(unittest.TestCase):
+    def test_rerank_reorders_only_the_candidates(self):
+        first = [1, 2, 3, 4, 5]
+        second = [5, 4, 3, 2, 1]
+        self.assertEqual(rerank(first, second, 3), [3, 2, 1, 4, 5])
+
+    def test_rrf_prefers_records_both_rankings_like(self):
+        self.assertEqual(rrf([1, 2, 3], [3, 1, 2], k=60), [2, 1, 3])
+
+    def test_union_of_top_candidates(self):
+        self.assertEqual(union_top([1, 2, 3, 4], [4, 3, 2, 1], 2), {0, 1, 2, 3})
+        self.assertEqual(union_top([1, 2, 3, 4], [2, 1, 3, 4], 2), {0, 1})
+
+
+class RepresentationChecksTest(unittest.TestCase):
+    def test_neighbour_labels_counts_nearest_records(self):
+        import numpy as np
+        vectors = np.array([[1.0, 0.0], [0.9, 0.1], [0.0, 1.0], [0.1, 0.9]])
+        vectors = vectors / np.linalg.norm(vectors, axis=1, keepdims=True)
+        ta = np.array([1, 1, 1, 0])
+        ft = np.array([1, 0, 1, 0])
+        first, counts = neighbour_labels(vectors, ta, ft, 1)
+        self.assertEqual(first, {"included": 0, "title and abstract only": 1, "excluded": 1})
+        self.assertEqual(counts, first)
 
 
 if __name__ == "__main__":
