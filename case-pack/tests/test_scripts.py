@@ -22,6 +22,7 @@ from fetch_pubmed import parse_efetch  # noqa: E402
 from indexing_checks import Adj, Record, Terms, cd010558_row, words  # noqa: E402
 from ranking_checks import bm25_scores, expand, ranks, recall_at  # noqa: E402
 from stopping_checks import first_stop, read_log  # noqa: E402
+from term_mining import mine, split  # noqa: E402
 
 FIXTURES = HERE / "fixtures"
 
@@ -169,6 +170,28 @@ class BuildMoranTest(unittest.TestCase):
         self.assertEqual(stats["distinct_label_dois"], 3)
         self.assertEqual(stats["ft_included_in_labels"], 2)
         self.assertEqual(stats["ft_included_joined"], 1)
+
+
+class TermMiningTest(unittest.TestCase):
+    def test_split_is_fixed_and_complete(self):
+        ids = [str(i) for i in range(137)]
+        dev, val = split(ids)
+        self.assertEqual((len(dev), len(val)), (69, 68))
+        self.assertEqual(dev | val, set(ids))
+        self.assertEqual(split(ids), (dev, val))
+
+    def test_mine_keeps_common_failure_words_rare_in_pool(self):
+        tokens = {
+            "a": ["conspecific", "foraging", "|"],
+            "b": ["conspecific", "|", "common"],
+            **{f"p{i}": ["common", "|"] for i in range(40)},
+        }
+        pool_df = {}
+        for t in tokens.values():
+            for w in set(t):
+                pool_df[w] = pool_df.get(w, 0) + 1
+        words_found = [w for _, w, _, _ in mine(["a", "b"], tokens, pool_df, len(tokens))]
+        self.assertEqual(set(words_found), {"conspecific", "foraging"})
 
 
 if __name__ == "__main__":
