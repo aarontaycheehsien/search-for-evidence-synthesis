@@ -170,6 +170,12 @@ PubMed is the running case through this part. Every PubMed and NLM claim goes in
 | C. Case-pack documentation | None | New: provenance, licences and known limits of each dataset |
 | D. Terminology map | App D `#appendix-search-terminology` | Adapt |
 
+**B, drafted 2026-10-22.** Adapted from App F Table F.2 (`#appendix-evidence-synthesis-high-recall-retrieval`, commit `99bfb9c`): the recall@k, recall-at-stopping and WSS@95 rows and the WSS arithmetic, rewritten around the CLEF runs; and from Ch 14 "Precision and recall" and "Rank changes the question" (`#evaluation`, commit `99bfb9c`): the precision-and-recall framing and the account of MAP and nDCG, compressed. MRR and the recommender-system links were dropped. New: NNR (Bachmann et al., 2002), specificity, relative recall, stage recall and end-to-end recovery, stopping-point counts, capture–recapture, the ranked-list measures computed by `case-pack/scripts/ranking_measures.py`, and the summary table.
+
+**C, drafted 2026-10-22** as new text from `docs/case-pack.md`, `case-pack/sources.csv` and the data READMEs.
+
+**D, drafted 2026-10-22.** Adapted from App D (`#appendix-search-terminology`, commit `99bfb9c`): the families of method labels in its Tables D.1 to D.3 and three of its "misleading overlaps" (semantic, natural-language, vector), compressed into `tbl-terminology-labels` and the overlaps section. New: the crosswalks for evaluation, database searching, screening and supplementary routes, and the overlaps on sensitivity, test set, pool, filters, relevant and gold standard.
+
 ## Not carried over
 
 - The Word2Vec-to-BERT progression, manual vector arithmetic and loss-function detail.
