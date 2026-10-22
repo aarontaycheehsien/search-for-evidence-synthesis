@@ -47,7 +47,7 @@ Whether the review's own search in May 2017 found these records by another route
 
 ### To confirm before publication
 
-1. Optionally, the exact Date Completed values for the four late-indexed records, with `case-pack/scripts/fetch_pubmed.py` once NCBI is reachable.
+1. Done 2026-10-21: the Date Completed, entry and create dates of the late-indexed records of both reviews, as date windows, are in `case-pack/data/updating/late-indexed.csv`.
 2. The mapping of the ACP Journal Club entry (PMID 23588772), where the review's authors differ from PubMed's. CLEF's search-task labels map it to the same PMID, an independent agreement.
 
 ## CD011787: Parents' and informal caregivers' views and experiences of communication about routine childhood vaccination (qualitative evidence synthesis)
