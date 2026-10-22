@@ -116,6 +116,10 @@ What the exercise can draw out:
 
 **Limits.** Ten starting pairs per strategy show variation but do not bound it. The streak thresholds are illustrative, not recommendations. Title-and-abstract labels are the review team's decisions, which can contain errors.
 
+## Contamination risk
+
+The Moran review, its search strings, the authors' repository and the SYNERGY labels are all public, and SYNERGY is a widely used benchmark. Language models may have been trained on any of this, so a model's performance on this review is not evidence of how it would perform on a new question. Any exercise that tests an AI tool on this review must say so (Chapter 10, "Development and validation sets").
+
 ## Reference
 
 Moran, N. P., Sánchez-Tójar, A., Schielzeth, H., & Reinhold, K. (2021). Poor nutritional condition promotes high-risk behaviours: A systematic review and meta-analysis. *Biological Reviews, 96*(1), 269–288. https://doi.org/10.1111/brv.12655

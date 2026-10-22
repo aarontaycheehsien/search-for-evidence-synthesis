@@ -6,9 +6,9 @@ This appendix defines the measures the book uses, each with a worked example fro
 
 Every measure here is a ratio of counts, and three choices fix what is being counted (@sec-missing-measures, @sec-validation-measures).
 
-- **The unit**: records in one database, reports, or studies. CD010558's re-run pool holds 10 of the review's 16 included reports that have a PubMed record, which report 4 of its 6 studies (@tbl-cd010558): 63% of reports and 67% of studies, from the same search.
+- **The unit**: records in one database, reports, or studies. CD010558's re-run pool holds 10 of the review's 16 included reports that have a PubMed record, which report 4 of its 6 studies (@tbl-cd010558): 63% of the reports with a PubMed record and 67% of the studies, from the same search.
 - **The stage**: the search, screening within the search's results, or both together.
-- **The denominator**: which eligible records are known, and how they were found. A benchmark's labels know only what the review's own search found; a reference set built from other sources knows more (@sec-validation-reference).
+- **The denominator**: which eligible records are known, and how they were found. A benchmark's labels know only what the review's own search, or a re-run of it, returned; a reference set built from other sources knows more (@sec-validation-reference).
 
 A figure that does not state all three cannot be compared with another.
 
@@ -41,7 +41,7 @@ The share of the retrieved records that are eligible. *Example:* CD010558's pool
 
 $$\text{NNR} = \frac{1}{\text{precision}}$$
 
-The number of records screened, on average, for each eligible record found [@bachmann2002]. *Example:* 2,815 / 10 = 281.5 for CD010558's included records, and 2,815 / 37 = 76.1 for its title-and-abstract inclusions; 4,882 / 137 = 35.6 for Moran's included records. It turns precision into screening effort, which is why @adam2024 report it alongside sensitivity (@sec-dev-llm). *Cannot show:* the same as precision.
+The number of records screened, on average, for each eligible record found [@bachmann2002]. *Example:* 2,815 / 10 = 281.5 for CD010558's included records, and 2,815 / 37 = 76.1 for its title-and-abstract inclusions; 4,882 / 137 = 35.6 for Moran's included records. It turns precision into screening effort; @adam2024, for example, report a median of 1,206 alongside sensitivity for language-model queries (@sec-dev-llm). *Cannot show:* the same as precision.
 
 ### Specificity
 
@@ -81,13 +81,13 @@ $$\text{recall@}k = \frac{\text{eligible records in the top } k}{\text{all eligi
 
 ### Records screened to reach a recall target
 
-The rank at which a target share of the eligible records has been found. With *R* eligible records, a target of 95% needs ⌈0.95 *R*⌉ of them. *Example:* with 37 eligible records, 95% recall needs 36, which the Sheffield run reaches at rank 1,589. With CD010558's 10 included records, 95% recall needs all 10, so the 95% and 100% targets coincide; one record is ten percentage points of recall (@sec-validation-measures). *Cannot show:* whether a live review could have known it had reached the target (@sec-stop-measures).
+The rank at which a target share of the eligible records has been found. With *E* eligible records, a target of 95% needs ⌈0.95 *E*⌉ of them. *Example:* with 37 eligible records, 95% recall needs 36, which the Sheffield run reaches at rank 1,589. With CD010558's 10 included records, 95% recall needs all 10, so the 95% and 100% targets coincide; one record is ten percentage points of recall (@sec-validation-measures). *Cannot show:* whether a live review could have known it had reached the target (@sec-stop-measures).
 
 ### Work saved over sampling
 
 $$\text{WSS@}R = \frac{TN + FN}{N} - (1 - R)$$
 
-where *N* is the number of records and *R* the recall target, usually 0.95 [@cohen2006]. For a ranked list screened from the top until the target is reached, (*TN* + *FN*) / *N* is the share of the pool left unscreened, so WSS@95 is 0.95 minus the share screened: the saving over screening a random sample to the same expected recall. *Example:* the Sheffield run reaches 95% recall at rank 1,589 of 2,815, so WSS@95 = 0.95 − 0.564 = 0.39. *Cannot show:* a saving achievable without the labels, because it is computed at the point where the target was in fact reached (@sec-stop-measures). Its maximum, 0.95 × (1 − *p*) where *p* is the share of eligible records, depends on the dataset, so averages across datasets can mislead [@kusa2023]: about 0.94 for CD010558's title-and-abstract inclusions and 0.84 for Moran's.
+where *N* is the number of records and *R* is recall, which @cohen2006 fix at 0.95, so that WSS@95 = (*TN* + *FN*) / *N* − 0.05. For a ranked list screened from the top until the target is reached, (*TN* + *FN*) / *N* is the share of the pool left unscreened, so WSS@95 is 0.95 minus the share screened: the saving over screening a random sample to the same expected recall. *Example:* the Sheffield run reaches 95% recall at rank 1,589 of 2,815, so WSS@95 = 0.95 − 0.564 = 0.39. *Cannot show:* a saving achievable without the labels, because it is computed at the point where the target was in fact reached (@sec-stop-measures). Its maximum, 0.95 × (1 − *p*) where *p* is the share of eligible records, depends on the dataset, so averages across datasets can mislead [@kusa2023]: about 0.94 for CD010558's title-and-abstract inclusions and 0.84 for Moran's title-and-abstract inclusions.
 
 ### Average precision and mean average precision
 
@@ -97,17 +97,17 @@ Average precision is the mean, over the eligible records, of the precision at ea
 
 nDCG sums a gain for each eligible record, discounted by its rank, and divides by the same sum for an ideal ranking [@jarvelin2002]. In the form most used today, with binary eligibility, each eligible record at rank *i* contributes 1 / log~2~(*i* + 1); the original definition discounted only ranks beyond the base of the logarithm. Its main use is with graded judgements (highly relevant, partly relevant, not relevant), which screening decisions rarely provide. *Example:* the active-learning run's nDCG over the whole ranking is 0.521, against 0.443 and 0.391.
 
-**Why these two suit research better than review decisions.** Average precision and nDCG are dominated by the early ranks, because that is where the discounts and running precision are largest. A review team's question is about the late ones: how far down the last eligible records sit, and when it is safe to stop. @tbl-measures-clef shows the measures disagreeing. By average precision, nDCG and recall after 10% of the pool, the active-learning run is clearly best; by WSS@95 the Sheffield run is, because the active-learning run finds most eligible records early but needs 203 more records than Sheffield to reach 36 of the 37.
+**Why these two suit research better than review decisions.** Average precision and nDCG are dominated by the early ranks, because that is where the discounted gains and running precision are largest. A review team's question is about the late ones: how far down the last eligible records sit, and when it is safe to stop. @tbl-measures-clef shows the measures disagreeing. By average precision, nDCG and recall after 10% of the pool, the active-learning run is clearly best; by WSS@95 the Sheffield run is, because the active-learning run finds most eligible records early but needs 203 more records than Sheffield to reach 36 of the 37, although its last eligible record comes slightly earlier (2,027 against 2,055). Counting the 10 included records instead, the active-learning run leads on every measure but the rank of the first eligible record, so the choice of eligible set changes the verdict too.
 
 ## Measures at a stopping point {#sec-measures-stopping}
 
-When screening stops before the end of the pool, three counts describe the stop, and each needs labels for the records left unscreened, so they can only be computed in simulation.
+When screening stops before the end of the pool, three counts describe the stop. The last two need labels for the records left unscreened, so they can only be computed in simulation.
 
 - **Records screened at the stop**, and its share of the pool.
 - **Recall at the stop**: the share of eligible records found by then.
 - **Eligible records unseen**: the absolute number left in the unscreened part, which matters more to a review than a percentage when the numbers are small.
 
-*Example:* applied to ten simulated screening orders of the Moran pool by an active-learning model (TF-IDF features with a support vector machine), the statistical stopping criterion of @callaghan2020 stopped after a median of 2,927.5 records (60% of the pool), at a median title-and-abstract recall of 0.990, with no included record unseen. On random orders it stopped after a median of 4,602.5 records with a median of 7.5 included records unseen (`case-pack/data/stopping/`; @sec-stop-statistical).
+*Example:* applied to ten simulated screening orders of the Moran pool by an active-learning model (TF-IDF features with a support vector machine), the statistical stopping criterion of @callaghan2020 stopped after a median of 2,927.5 records (60% of the pool), at a median title-and-abstract recall of about 0.99, with no included record unseen. On random orders it stopped after a median of 4,602.5 records with a median of 7.5 included records unseen (`case-pack/data/stopping/`; @sec-stop-statistical).
 
 ## Estimating what was missed {#sec-measures-estimating}
 
@@ -119,7 +119,7 @@ and Chapman's version, less biased for small counts, is
 
 $$\hat{N} = \frac{(n_1 + 1)(n_2 + 1)}{m + 1} - 1$$
 
-*Example:* the Moran review's Web of Science and Scopus searches found 111 and 115 of the full-text inclusions, 89 of them in both; Chapman's estimate is 143.4 (95% interval 137.1 to 149.6), so about six included studies were missed by both (@sec-stop-search). *Cannot show:* studies that neither search could reach for the same reason. Two databases searched with one strategy are not independent, and dependence usually makes the estimate too low.
+*Example:* the Moran review's Web of Science and Scopus searches found 111 and 115 of the full-text inclusions, 89 of them in both; Chapman's estimate is 143.4 (95% interval 137.1 to 149.6), so about six included records were missed by both (@sec-stop-search). *Cannot show:* studies that neither search could reach for the same reason. Two databases searched with one strategy are not independent, and dependence usually makes the estimate too low.
 
 ## Summary {#sec-measures-summary}
 

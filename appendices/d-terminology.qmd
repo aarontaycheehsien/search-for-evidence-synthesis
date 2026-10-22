@@ -2,7 +2,7 @@
 
 Three communities write about searching for evidence, and each has its own words. Information retrieval research says *recall*, *relevance* and *test collection*; evidence-synthesis methods say *sensitivity*, *eligibility* and *reference set*; database documentation says *field tags*, *explode* and *filters*. Often the words name the same thing. Sometimes the same word names different things, which is worse.
 
-This appendix is a crosswalk, not a controlled vocabulary. Usage varies between papers and products, so read each row as a prompt to check what a particular source means. Where a definition comes from a named source, it is cited; otherwise the rows are a practitioner's reading of common usage. The last column points to where the book explains the mechanism.
+This appendix is a crosswalk, not a controlled vocabulary. Usage varies between papers and products, so read each row as a prompt to check what a particular source means. Where a definition comes from a named source, it is cited; otherwise the rows are a practitioner's reading of common usage. The last column points to where the book explains the mechanism; "(planned)" marks a chapter not yet drafted.
 
 ## Evaluation and units {#sec-terminology-evaluation}
 
@@ -14,7 +14,7 @@ This appendix is a crosswalk, not a controlled vocabulary. Usage varies between 
 | Whether an item counts | Relevance, judged by assessors for an information need | Eligibility, judged against criteria set in a protocol | @sec-missing-relevance |
 | The items being counted | Documents | Records, reports and studies, which differ [@page2021] | @sec-missing-units |
 | The known eligible items | Relevance judgements, qrels, ground truth | Reference set, gold standard, included studies, benchmark labels | @sec-validation-reference |
-| Recall against a partial reference set | Recall against pooled judgements | Relative recall [@sampson2006] | @sec-measures-set |
+| Recall against a partial reference set | Relative recall: recall against the relevant documents pooled from several systems | Relative recall, applied to search filters by @sampson2006 | @sec-measures-set |
 | A shared evaluation dataset | Test collection | Benchmark (CLEF TAR, SYNERGY) | @sec-validation-benchmarks |
 | Items used to build a method, and items kept back to test it | Training and test sets | Development and validation sets [@hausner2012] | @sec-validation-dev |
 
@@ -28,11 +28,11 @@ The same operations go by different names, and different syntax, on each platfor
 |---|---|---|---|
 | A thesaurus term assigned to records | Subject heading, controlled vocabulary term, descriptor, index term | MeSH heading or descriptor (MEDLINE); Emtree preferred term (Embase); CINAHL Subject Heading | @sec-indexing-headings |
 | Other names that lead to a thesaurus term | Synonyms, entry terms | *Entry Terms* in MeSH, *Synonyms* in Emtree [@bramer2018] | @sec-dev-words |
-| Including narrower thesaurus terms | Explode, explosion | Default in PubMed (`[mh:noexp]` turns it off); `exp` in Ovid; `/exp` in Embase; `+` in CINAHL, as in `(MH "Primary Health Care+")` [@pubmedhelp; @polyglotreadme] | @sec-dev-system |
-| Records where the heading is a main topic | Major topic, focus | `[majr]` in PubMed; *Focus* in Ovid; `/mj`, major focus, in Embase [@ovidmapping; @embasehowsearch] | @sec-indexing-headings |
+| Including narrower thesaurus terms | Explode, explosion | Default in PubMed (`[mh:noexp]` turns it off); `exp` in Ovid; `/exp` in Embase.com; `+` in CINAHL, as in `(MH "Primary Health Care+")` [@pubmedhelp; @polyglotreadme] | @sec-dev-system |
+| Records where the heading is a main topic | Major topic, focus | `[majr]` in PubMed; *Focus* in Ovid; `/mj`, major focus, in Embase.com [@pubmedhelp; @ovidmapping; @embasehowsearch] | @sec-dev-system |
 | The part of a record searched | Field | Field tags (PubMed `[tiab]`, Web of Science `TS=`); field codes (Embase); field suffixes (Ovid `.ti,ab.`) | @sec-dev-translation |
 | Matching word endings or internal characters | Truncation, wildcards | The symbols and minimum stem lengths differ by platform | @sec-boolean-platforms |
-| Two words near each other | Proximity, adjacency | `adjn` (Ovid), `NEAR/n` (Web of Science, Embase), `W/n` and `PRE/n` (Scopus), `Nn` and `Wn` (EBSCOhost), `[tiab:~n]` (PubMed); what *n* counts differs | @sec-boolean-platforms |
+| Two words near each other | Proximity, adjacency | `adjn` (Ovid), `NEAR/n` (Web of Science, Embase.com), `W/n` and `PRE/n` (Scopus), `Nn` and `Wn` (EBSCOhost), `[tiab:~n]` (PubMed); what *n* counts differs | @sec-boolean-platforms |
 | Rewriting typed words before searching | Query transformation, mapping | Automatic term mapping (PubMed); *Map Term to Subject Heading* (Ovid); broad search (Embase); *Suggest Subject Terms* and expanders (EBSCOhost) | @sec-dev-system |
 | Restricting results by a record property | Limits | *Filters* in PubMed's sidebar; *limits* in Ovid | @sec-boolean-not |
 | A tested block of terms for a study design or topic | Search filter, hedge | Clinical Queries (PubMed, Ovid) | @sec-indexing-filters |
@@ -44,7 +44,7 @@ The same operations go by different names, and different syntax, on each platfor
 | Concept | Common terms | Read in this book |
 |---|---|---|
 | Ordering records so the likely eligible ones are screened first | Screening prioritisation, priority screening, technology-assisted review (TAR), active learning | @sec-stop-order |
-| Records labelled before the model's first ranking | Prior knowledge, seed records, starting records | @sec-stop-order |
+| Records labelled before the model's first ranking | Prior knowledge, seed records, starting records | @sec-validation-variability |
 | Deciding when to stop screening a ranked list | Stopping rule, stopping criterion, stopping heuristic | @sec-stop-heuristics, @sec-stop-statistical |
 | Searching from known relevant records | Citation searching, the umbrella term in TARCiS, with backward and forward citation searching and reference list checking [@hirt2024]; also called snowballing or citation chasing | @sec-supp-citation |
 | The known records a citation search starts from | Seed references [@hirt2024] | @sec-supp-citation |
@@ -62,24 +62,24 @@ Product descriptions name representations, mechanisms, pipeline stages, interfac
 | Keyword, lexical, full-text search | Matching on analysed words, normally through an inverted index | Whether all words are required, or how results are ordered | @sec-boolean |
 | Boolean search | Admission by a logical expression: a record is in or out | Anything about order | @sec-boolean-yes-no |
 | Ranked retrieval, relevance sort, Best Match | Records ordered by a score | What evidence the score uses, and how many records can be seen | @sec-ranking |
-| Semantic search | A goal: matching meaning beyond literal words | The mechanism, which may be query expansion, learnt representations, reranking or several of these | @sec-representations |
-| Vector, embedding or dense retrieval | Records and queries represented as vectors and compared by similarity | What the vectors were trained to capture; vectors need not be learnt or semantic | @sec-representations |
-| Hybrid search | Results or signals from two or more routes combined | Which routes, and how they are combined | @sec-pipelines |
-| Reranking | A second stage that reorders a shortlist | Anything about records outside the shortlist, which it cannot add | @sec-pipelines |
+| Semantic search | A goal: matching meaning beyond literal words | The mechanism, which may be query expansion, learnt representations, reranking or several of these | @sec-representations (planned) |
+| Vector, embedding or dense retrieval | Records and queries represented as vectors and compared by similarity | What the vectors were trained to capture; vectors need not be learnt or semantic | @sec-representations (planned) |
+| Hybrid search | Results or signals from two or more routes combined | Which routes, and how they are combined | @sec-pipelines (planned) |
+| Reranking | A second stage that reorders a shortlist | Anything about records outside the shortlist, which it cannot add | @sec-pipelines (planned) |
 | Natural-language search | How the query is entered | The backend: the sentence may become a Boolean query, a vector or several searches | @sec-dev-system |
 | AI-assisted, AI-powered search | Some machine-learning or generative component | Which stage it affects: the query, retrieval, ranking or the answer | @sec-ranking-ai |
-| Retrieval-augmented generation, answer engine | Retrieval supplies records to a model that writes an answer | The retriever, which may be lexical, dense or hybrid | @sec-pipelines |
-| Agentic search, deep research | A process that plans, searches repeatedly and follows evidence | Whether each search is lexical or dense, and what was searched | @sec-pipelines |
+| Retrieval-augmented generation, answer engine | Retrieval supplies records to a model that writes an answer | The retriever, which may be lexical, dense or hybrid | @sec-pipelines (planned) |
+| Agentic search, deep research | A process that plans, searches repeatedly and follows evidence | Whether each search is lexical or dense, and what was searched | @sec-pipelines (planned) |
 
 : Labels for retrieval methods. {#tbl-terminology-labels}
 
 ## Words that mean different things in different places {#sec-terminology-overlaps}
 
-**Sensitivity.** In a search, the share of eligible studies retrieved. In a review of diagnostic test accuracy, the share of people with a condition whom the test detects. A search for diagnostic accuracy studies has both, and they are unrelated.
+**Sensitivity.** In a search, the share of eligible records or reports retrieved. In a review of diagnostic test accuracy, the share of people with a condition whom the test detects. A search for diagnostic accuracy studies has both, and they are unrelated.
 
-**Test set.** In machine learning, the data kept back to test a model. In @hausner2015, the *test set* is the set used to develop the search strategy, and the records kept back are the *comparator set*; @hausner2012 call them the development and validation sets. Check which is which before comparing figures.
+**Test set.** In machine learning, the data kept back to test a model. In @hausner2015, the *test set* is the set used to develop the search strategy, and the records kept back are the *comparator set*; @hausner2012 call them the development and validation sets, and use *test set* for the whole reference set before it is split. Check which is which before comparing figures.
 
-**Pool.** In information retrieval, a *pool* is the set of documents judged for relevance, formed from the top results of the systems being compared; unjudged documents are counted as irrelevant [@zobel1998]. In this book, the *pool* is the set of records a review's own search returned, all carrying the review's screening decisions, as in the CLEF TAR and SYNERGY benchmarks [@kanoulas2019; @debruin2023]. Both kinds of pool miss eligible records outside them, for different reasons.
+**Pool.** In information retrieval, a *pool* is the set of documents judged for relevance, formed from the top results of the systems being compared; unjudged documents are counted as irrelevant [@zobel1998]. In this book, the *pool* is the set of records returned by a review's own search, or by a re-run of it, all carrying the review's screening decisions, as in the CLEF TAR and SYNERGY benchmarks [@kanoulas2019; @debruin2023]. Both kinds of pool miss eligible records outside them, for different reasons.
 
 **Filters.** In evidence synthesis, a *search filter* is a tested block of terms. In PubMed's interface, *Filters* are limits on article type, date or language applied to a result. A strategy can use both, and a report should say which.
 
