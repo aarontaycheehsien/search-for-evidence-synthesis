@@ -29,7 +29,7 @@ Run the tests with `python -m unittest discover -s case-pack/tests`.
 
 ## Rules for the case pack
 
-1. **Commit identifiers, labels and our own derived files. Do not commit third-party titles, abstracts or database exports.** Fetch them at build time with a script and record the fetch date. NLM states that PubMed abstracts may be protected by copyright and that it gives no permission to redistribute them (National Library of Medicine [NLM], n.d.). Web of Science and Scopus exports are covered by their providers' terms.
+1. **Commit identifiers, labels and our own derived files. Do not commit third-party titles, abstracts or database exports.** Fetch them at build time with a script and record the fetch date. NLM states that PubMed abstracts may be protected by copyright and assumes no responsibility for their redistribution (National Library of Medicine [NLM], n.d.). Web of Science and Scopus exports are covered by their providers' terms.
 2. **Record provenance for every file:** source, version or commit, licence, retrieval date and every transformation.
 3. **Label synthetic material as synthetic.**
 4. **State the contamination risk.** Public review topics and labels may be in the training data of language models. Any exercise that tests an AI tool on these topics must say so.

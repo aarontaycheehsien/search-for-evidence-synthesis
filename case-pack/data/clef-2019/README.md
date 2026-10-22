@@ -26,6 +26,10 @@ Rebuild with:
 python case-pack/scripts/clef_label_scope.py --tar PATH_TO_CLEF_TAR_CHECKOUT
 ```
 
+## Contamination risk
+
+CLEF TAR's topics, the reviews' search strategies, the PubMed identifiers and the relevance labels were released publicly between 2017 and 2019, and the Cochrane reviews themselves are published. Language models may have been trained on any of this, so a model's performance on these topics is not evidence of how it would perform on a new question. Any exercise that tests an AI tool on these topics must say so (Chapter 10, "Development and validation sets").
+
 ## Reference
 
 Kanoulas, E., Li, D., Azzopardi, L., & Spijker, R. (2019). CLEF 2019 technology assisted reviews in empirical medicine overview. In *CLEF 2019 Working Notes* (CEUR Workshop Proceedings, Vol. 2380, paper 250). https://ceur-ws.org/Vol-2380/paper_250.pdf

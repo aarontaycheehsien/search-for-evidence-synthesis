@@ -4,6 +4,7 @@ Run from the repository root:
   python -m unittest discover -s case-pack/tests
 """
 
+import math
 import sys
 import unittest
 from pathlib import Path
@@ -20,6 +21,7 @@ from common import normalise_doi  # noqa: E402
 from field_checks import check as moran_check  # noqa: E402
 from fetch_pubmed import parse_efetch  # noqa: E402
 from indexing_checks import Adj, Record, Terms, cd010558_row, words  # noqa: E402
+from ranking_measures import measures as ranking_measures  # noqa: E402
 from ranking_checks import bm25_scores, expand, ranks, recall_at  # noqa: E402
 from stopping_checks import first_stop, read_log  # noqa: E402
 from term_mining import mine, split  # noqa: E402
@@ -192,6 +194,16 @@ class TermMiningTest(unittest.TestCase):
                 pool_df[w] = pool_df.get(w, 0) + 1
         words_found = [w for _, w, _, _ in mine(["a", "b"], tokens, pool_df, len(tokens))]
         self.assertEqual(set(words_found), {"conspecific", "foraging"})
+
+
+class RankingMeasuresTest(unittest.TestCase):
+    def test_measures_on_a_small_ranking(self):
+        m = ranking_measures([3, 1], 10)
+        self.assertAlmostEqual(m["ap"], (1 + 2 / 3) / 2)
+        self.assertAlmostEqual(m["ndcg"], 1.5 / (1 + 1 / math.log2(3)))
+        self.assertEqual((m["first"], m["at95"], m["last"]), (1, 3, 3))
+        self.assertAlmostEqual(m["wss95"], 0.65)
+        self.assertEqual(m["recall_10pct"], 0.5)
 
 
 if __name__ == "__main__":

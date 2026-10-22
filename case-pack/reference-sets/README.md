@@ -85,6 +85,10 @@ The overview says included references were checked by hand when a title search d
 - **Chapter 10, validation.** Against the review's included studies, the CLEF screening labels recover 28 of 38 (74%): 4 lost to coverage, 3 to the entry-date limit and 3 to wrong mappings. A score computed on the screening labels cannot see any of these.
 - **Chapter 11, updating.** A second instance of the entry-date mechanism.
 
+## Contamination risk
+
+The reference sets are built from the published reference lists of two Cochrane reviews, and the reviews, their strategies and their included studies are public. Language models may have been trained on any of this, so a model's performance on these reviews is not evidence of how it would perform on a new question. Any exercise that tests an AI tool on these reviews must say so (Chapter 10, "Development and validation sets").
+
 ## References
 
 Ames, H. M., Glenton, C., & Lewin, S. (2017). Parents' and informal caregivers' views and experiences of communication about routine childhood vaccination: A synthesis of qualitative evidence. *Cochrane Database of Systematic Reviews*, (2), CD011787. https://doi.org/10.1002/14651858.CD011787.pub2

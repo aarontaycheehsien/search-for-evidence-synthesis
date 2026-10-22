@@ -1,10 +1,64 @@
 # Case-pack documentation {#sec-case-pack}
 
-::: {.callout-note}
-## Not yet drafted
-:::
+The case pack supplies the inputs and worked answers for the book's exercises. It lives in the `case-pack/` folder of the book's repository. This appendix records where each dataset came from, under what terms, what it can and cannot show, and how to rebuild what the book reports. The repository's [`docs/case-pack.md`](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/case-pack.md) and the README in each data folder give the full detail.
 
-## Planned contents
+## Rules {#sec-case-pack-rules}
 
-- Provenance, licences and known limits of each dataset: the CLEF 2019 topics, the SYNERGY Moran labels, the reference sets and the synthetic collection.
-- How to rebuild each dataset with the scripts in the repository.
+1. **Only identifiers, labels and derived files are committed.** Titles, abstracts and database exports belong to third parties. PubMed abstracts may be protected by copyright, and NLM accepts no responsibility for their redistribution [@nlmdownload]; Web of Science and Scopus exports are covered by their providers' terms. Such text is kept in `case-pack/cache/`, which Git ignores, or read from a local copy of its source.
+2. **Provenance is recorded.** `case-pack/sources.csv` records each source's version, licence and retrieval date, and each data folder's README records how its files were made.
+3. **Synthetic material is labelled as synthetic.**
+4. **Contamination risk is stated.** The public review topics and their labels may be in the training data of language models. The READMEs for the CLEF data, the reference sets and the Moran data say so, and an exercise that tests an AI tool on these topics must say so too (@sec-validation-dev).
+5. **Every reference set states what it can and cannot show** (@sec-validation-reference).
+
+## Datasets {#sec-case-pack-datasets}
+
+| Dataset | Source and version | Licence or terms | Committed | Third-party text used, not committed | Used in |
+|---|---|---|---|---|---|
+| CLEF TAR 2019 [@kanoulas2019] | `CLEF-TAR/tar` at commit `dbc13d0`, checked 2026-10-21 | MIT. The strategies come from Cochrane reviews, whose rights the MIT licence may not cover; they are quoted individually with attribution | For CD010558: PubMed identifiers, labels and three participant runs' orderings. For all 31 test topics: label counts | None | Chapters 1, 3, 8, 9, 10, 11; Appendix B |
+| Reference sets for CD010558 [@ijaz2018] and CD011787 [@ames2017] | The reviews' lists of included studies, mapped by hand to PubMed and OpenAlex | Bibliographic facts only; no text copied | Short citations, identifiers, pool and label flags, and the mapping method | PubMed records of the included reports, transcribed from the PubMed connector | Chapters 1, 2, 3, 7, 8, 10, 11 |
+| Moran et al. (2021) labels [@moran2021] | SYNERGY's `Moran_2021_corrected` variant, added in January 2025 and not part of version 1 [@debruin2023], at commit `dc2dadf` of `asreview/synergy-dataset` | CC0 1.0 | DOIs and two-stage labels for 4,882 records | Titles and abstracts from the authors' screening export | Chapters 1, 4, 7, 9, 10; Appendix B |
+| Moran et al. (2021) search materials | `NPMoran/metah06_condition-dependence-of-boldness_OSF` at commit `b25a3c2` | CC BY 4.0 for the OSF project; no licence in the GitHub repository | Quoted strategies, with attribution; counts | Web of Science and Scopus exports, read from a local clone of the authors' repository | Chapters 1, 2, 7, 9, 10, 11 |
+| Synthetic collection, version 0.1 | Written for this book | CC BY 4.0 | Everything | None | Chapters 1, 2, 3, 7, 8, 11 |
+| PubMed and OpenAlex observations | Queries run through the PubMed and OpenAlex connectors, dated in each README | NLM terms; OpenAlex data are CC0 | Queries, counts, identifiers and PubMed's query translations | None | Chapters 7, 8, 11 |
+
+: The datasets in the case pack. Licences as recorded in `case-pack/sources.csv` on 21 and 22 October 2026. {#tbl-case-pack-datasets}
+
+## Known limits {#sec-case-pack-limits}
+
+- **Benchmark labels judge only one search's results.** SYNERGY's labels cover the records each review's own search returned; CLEF TAR's screening labels cover the records returned when the organisers re-ran the review's MEDLINE strategy in 2019. Either way they can test screening order and stopping but cannot show what the search missed. CD010558's CLEF pool holds reports of 4 of the review's 6 included studies (@sec-missing-case).
+- **Labels can be wrong.** SYNERGY version 1's labels for the Moran review are the authors' update-search export, not their inclusions: of the 107 records labelled as included that have a DOI, 2 were full-text inclusions. The case pack uses the corrected variant, which matches the article's counts. CLEF's mapping of references to PubMed identifiers is wrong for three included studies of CD011787.
+- **A strategy run today is not the strategy run then.** Indexing changes, the move to automated MeSH indexing in 2022 and late-indexed records mean a re-run returns a different set (@sec-recording-rerun, @sec-recording-updating).
+- **Observations are dated.** PubMed counts and query translations, OpenAlex citation links and vendor documentation change. Each README records when its observations were made; rerun them before relying on them.
+- **Emulations are approximations.** The scripts that apply strategies to cached text emulate each platform's analyser and syntax as documented, not the platforms themselves, and say what they leave out.
+- **The non-health case is one review.** Moran et al. (2021) is a behavioural-ecology review searched in Web of Science and Scopus; its figures describe that strategy in those databases.
+
+## What was built, and how to rebuild it {#sec-case-pack-rebuild}
+
+Most analyses have a script in `case-pack/scripts/` that writes the committed files. Rebuilding needs Python 3. The stopping analysis also needs buscarpy 0.0.2, and regenerating the screening simulations needs ASReview 3.0.8 with scikit-learn. Some scripts read a local checkout of `CLEF-TAR/tar` or a local clone of the Moran authors' repository rather than the cache, and the scripts that fetch from GitHub need network access.
+
+| Analysis | Script | Output | Used in |
+|---|---|---|---|
+| Moran pool: text joined to corrected labels | `build_moran_pool.py` | `data/moran-2021/labels.csv`, manifest; text in the cache | Chapters 1, 4, 7, 9, 10 |
+| Moran deduplication and each database's contribution | `moran_sources.py` | `data/moran-2021/sources-and-deduplication.json` | Chapters 1, 9, 10, 11 |
+| Which strategy lines admit each included record | `indexing_checks.py` | `data/indexing/` | Chapters 1, 3, 7 |
+| Proximity and hyphen handling on CD010558 | `analyser_checks.py` | `data/indexing/CD010558-analyser.csv` | Chapter 2 |
+| CLEF label scope | `clef_label_scope.py` | `data/clef-2019/label-scope.csv` | Chapter 10 |
+| CLEF participant runs on CD010558 | `clef_runs.py` | `data/clef-2019/CD010558/` | Chapters 9, 10 |
+| ASReview simulation logs for Moran | `screening_logs.py`, from the ASReview projects | `data/moran-2021/screening/`, `screening-seeds/` | Chapters 9, 10 |
+| BM25 ranking of the Moran pool | `ranking_checks.py` | `data/moran-2021/ranking/` | Chapter 4 |
+| Ranked-list measures for the CLEF runs | `ranking_measures.py` | `data/clef-2019/CD010558/measures.md` | Appendix B |
+| Statistical stopping on every screening log | `stopping_checks.py` | `data/stopping/` | Chapter 9 |
+| Capture–recapture on the Moran searches, from the deduplication counts | `capture_recapture.py` | `data/stopping/capture-recapture.csv` | Chapter 9 |
+| The Moran strategy on title and abstract only | `field_checks.py` | `data/moran-2021/fields/` | Chapter 7 |
+| Term mining on the title-and-abstract translation | `term_mining.py` | `data/moran-2021/fields/term-mining.md` | Chapter 7 |
+| Synthetic collection answer key | `synthetic/answer_key.py` | `synthetic/answer-key.md` | Chapters 1, 2, 3, 7, 8, 11 |
+
+: Scripts and the files they write. Paths are relative to `case-pack/`. {#tbl-case-pack-scripts}
+
+Some inputs were built by hand or from connector queries, because the services' APIs were not reachable from the build environment:
+
+- **The reference sets** were compiled by hand from the reviews' reference lists and checked against PubMed and OpenAlex (`reference-sets/README.md`).
+- **The PubMed records of the included reports**, which `indexing_checks.py` and `analyser_checks.py` read from `cache/pubmed/records.json`, were transcribed from the PubMed connector. `fetch_pubmed.py` fetches the same records from NCBI E-utilities but writes a different file and field names, so its output does not yet feed those scripts directly.
+- **The PubMed date windows** for late-indexed reports (`data/updating/`), **the citation-searching test** (`data/citation/`) and **the PubMed translation checks** (`data/pubmed-translation/`) were recorded from connector queries. Their READMEs give the method and example queries, and the files hold the identifiers needed to rerun them; `pubmed-translation/observed.csv` lists every query.
+
+The tests run offline: `python -m unittest discover -s case-pack/tests`.

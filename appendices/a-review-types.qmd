@@ -1,10 +1,96 @@
 # Review types and what they ask of the search {#sec-review-types}
 
-::: {.callout-note}
-## Not yet drafted
-:::
+Review types differ less in the mechanics of searching than in what they ask of the search: how complete it must be, which sources it must cover, whether limits are acceptable, which supplementary routes are expected, who should write and check the strategy, and how it is reported. This appendix sets out what the main methods organisations say, quoting their current guidance.
 
-## Planned contents
+The guidance changes. Between 2023 and 2026 Campbell replaced its search guide and its methodological standards, JBI rewrote its scoping-review chapter, the Cochrane Rapid Reviews Methods Group updated its recommendations, and the Cochrane Handbook withdrew its chapter on qualitative evidence. Everything here was checked on 22 October 2026; check the current versions before relying on it.
 
-- Systematic, scoping, rapid, qualitative evidence and mapping reviews, and what each asks of the search.
-- The Cochrane, Campbell, JBI and CEE traditions.
+## Labels are not methods {#sec-review-types-labels}
+
+@grantbooth2009 analysed 14 review types and found that "few review types possess prescribed and explicit methodologies and many fall short of being mutually exclusive". Their summary of what each type asks of the search is still a useful starting point:
+
+- systematic review: "Aims for exhaustive, comprehensive searching";
+- scoping review: "Completeness of searching determined by time/scope constraints. May include research in progress";
+- rapid review: "Completeness of searching determined by time constraints";
+- mapping review: "Completeness of searching determined by time/scope constraints";
+- qualitative evidence synthesis: "May employ selective or purposive sampling";
+- umbrella review: "Identification of component reviews, but no search for primary studies".
+
+Those descriptions are from 2009. Current guidance for scoping reviews and maps asks for more than the time-limited search they describe, as the sections below show. A review's label therefore says less about its search than the guidance its authors follow and the decisions they record.
+
+## Systematic reviews of interventions {#sec-review-types-systematic}
+
+The three main health and social-science traditions agree on the aim and differ in detail.
+
+**Cochrane.** Searches should "maximize sensitivity whilst striving for reasonable precision" (MECIR C32), using controlled vocabulary and free text in several databases, with trial registers, grey literature and citation searching as supplementary routes and an information specialist involved. Peer review of the strategy before the searches are run is "strongly recommended" [@lefebvre2025, sec. 4.4.8]. The information specialist helps ensure that reporting aligns with PRISMA and PRISMA-S (sec. 4.2.1). Chapters 7, 8, 9 and 11 of this book discuss this guidance.
+
+**Campbell.** Campbell's search guide, revised in 2023 and published in 2024, replaces @kugley2017. It asks for "a thorough, objective, and reproducible search of a range of sources to identify as many relevant studies as possible (within resource limits)", says that "searches should aim for high sensitivity and review teams should be prepared to accept low precision", and states flatly that "a search of one database alone is not considered adequate" [@macdonald2024, secs. 3.2.1, 6.10]. Its older wording was that one database was "typically" not adequate. It recommends involving an information specialist, and that "the search strategy go through an additional process of peer review prior to protocol or manuscript submission" (sec. 6.8). PRISMA-S is "not required" but "strongly encouraged" (sec. 9.1.2). The Campbell Standards, 35 items that replaced a MECCIR checklist of more than 130, set the goal as "to identify all eligible studies", require reporting of "exact dates when the search was conducted, the results of the search, database and platform names, and the exact search strategy for each database" [@aloe2024, table 1, standard 3], and require reviews to follow PRISMA 2020.
+
+**JBI.** The JBI Manual describes a three-step search: "an initial exploratory search (usually of MEDLINE and CINAHL databases) to find 'seed references'"; a comprehensive strategy built from their keywords and index terms, developed in one database and "then translated across to other databases and grey literature sources"; and "supplementary searching of the grey literature, citation searching and handsearching" [@aromataris2024, sec. 2.4.2]. Searches "must be as comprehensive as possible while recognising that there are limitations to this goal" (sec. 2.4.1). JBI sets no number of databases, noting that "most reviews search at least three" (sec. 2.4.5), and encourages "including literature in all languages" (sec. 2.4.1). Peer review is optional: searchers "may choose to have their search strategy independently reviewed, using a tool such as" PRESS, best "at the protocol stage" (sec. 2.4.4). On citation searching the manual is inconsistent: section 2.4.2 calls forward and backward citation searching "mandatory" for complex questions, while a later subsection says it "should be seriously considered".
+
+**Overviews of reviews.** An overview searches for systematic reviews, not primary studies. Cochrane's guidance asks for a "comprehensive search for relevant systematic reviews" [@pollock2023, table V.4.a]. An overview of Cochrane reviews alone "will only need to search the CDSR"; one that includes other reviews needs further databases, usually MEDLINE and Embase, and optionally repositories such as Epistemonikos, and can restrict the search using "validated systematic review search filters" (sec. V.4.5). Overviews do not aim to "conduct a study-level search for primary studies not included in any systematic review" (sec. V.3.1). A search filter for review designs is a classifier with its own limits (@sec-indexing-filters).
+
+## Scoping reviews {#sec-review-types-scoping}
+
+JBI's scoping-review chapter, rewritten in 2026, now aligns the search with a systematic review's: scoping reviews "should have an explicit, comprehensive and transparent literature search that must attempt to identify all the available evidence sources. The conduct and reporting of a scoping review search align with those undertaken in systematic reviews" [@pollock2026, sec. 10.2.6]. It adds that "grey literature searching is worthwhile and necessary for many scoping reviews". The earlier chapter allowed a search "as comprehensive as possible within the constraints of time and resources" [@peters2020, sec. 10.2.5], so a scoping review's protocol should say which version it follows. The 2026 chapter also says that backward and forward citation searching "should be attempted in all scoping reviews" [@pollock2026, sec. 10.2.7], more than JBI asks of its systematic reviews.
+
+The original framework for scoping studies also put completeness first: "the whole point of scoping the field is to be as comprehensive as possible in identifying primary studies (published and unpublished) and reviews" [@arksey2005].
+
+Reporting follows PRISMA-ScR, whose search items ask authors to "describe all information sources in the search (e.g., databases with dates of coverage and contact with authors to identify additional sources), as well as the date the most recent search was executed", and to "present the full electronic search strategy for at least 1 database, including any limits used, such that it could be repeated" [@tricco2018, items 7 and 8]. That is less than PRISMA-S asks: one strategy rather than all. Its explanation asks that "any search limitations, such as language, date of publication, and study design filters, should be clearly documented with a rationale provided" [@tricco2018]. JBI notes that "the PRISMA-ScR extension is currently being updated, and a new version is due for release in 2026" [@pollock2026, sec. 10.3]; check whether it has appeared.
+
+## Rapid reviews {#sec-review-types-rapid}
+
+Rapid reviews shorten the search deliberately, and the guidance says where. The Cochrane Rapid Reviews Methods Group's 2024 recommendations, which replace its 2020 interim guidance [@garritty2021], are [@garritty2024]:
+
+- "the search process for a rapid review follows the same steps as for a systematic review";
+- "select a small number (but at least two) bibliographic databases"; for reviews of randomised trials, two of MEDLINE, CENTRAL and Embase, or MEDLINE with a supplementary search if neither of the others is available;
+- "we recommend limiting grey literature and supplemental searches", for example to "clinical trial registries and review of reference lists in included studies or similar articles searches";
+- consider restricting the date range, "with clinical or methodological justification"; but "language restrictions during the initial search process are discouraged", and should be applied at study selection instead;
+- "at minimum an information specialist such as a librarian should be consulted";
+- "the primary search strategy should be peer reviewed using the PRESS checklist when possible", and at a minimum "double checked for typographical or spelling errors, missed keywords, and correct use of Boolean operators".
+
+The group's guidance on searching makes the trade explicit: "SR search strategies generally aim to maximise sensitivity. RR searches may aim to increase precision to reduce the search result" [@klerings2023, table 1]. It also sets a test that a precision-focused strategy should pass: "Even a precision-focused systematic search should identify the majority—we suggest at least 80%–90%—of known studies." This is the known-item check of @sec-stop-problem and @sec-validation, with a threshold. The same paper rules out the shortest cut: "searching MEDLINE alone is not a viable option".
+
+A rapid review is therefore where the book's chapters on ranking, stopping and validation matter most. A capped or ranked route (@sec-ranking-ai), a stopping rule (@sec-stopping) or a single database each removes recall that a rapid review has less room to lose, and the known-study test is the cheapest way to show what was kept.
+
+## Qualitative evidence synthesis {#sec-review-types-qualitative}
+
+Qualitative evidence syntheses divide on whether the search should be comprehensive at all. The archived Cochrane chapter put it as "a key decision, aligned to the purpose of the qualitative evidence synthesis": "whether to use the comprehensive, exhaustive approaches that characterize quantitative searches or whether to use purposive sampling that is more sensitive to the qualitative paradigm" [@noyes2019, sec. 21.7]. That chapter has been withdrawn from version 6.5.1 of the Handbook, which now refers readers to the Cochrane-Campbell Handbook for Qualitative Evidence Synthesis; its searching chapter requires a Cochrane account and was not read for this book.
+
+The Cochrane Qualitative and Implementation Methods Group's guidance frames the choice by purpose. Aggregative syntheses need "as comprehensive a sample of studies as possible", because "every study counts"; theory-generating syntheses are "predicated on a view that 'every meaning matters'", and "if comprehensive sampling is not used reviewers must justify their sampling strategy, match it to their synthesis method and describe it in full" [@harris2018]. For health topics it asks for "MEDLINE and CINAHL as a minimum", says searches "should generally privilege specificity (retrieval of only relevant items) over sensitivity", while warning that this "should not, however, be used as a rationale for a less intensive search effort", and makes reference checking "a default for every review". JBI requires a comprehensive search for its own method: "for systematic reviews using meta-aggregation, a comprehensive search is essential" [@porritt2024, sec. 3.3.9]. @booth2016 offers the reconciling position: "the sampling method should be appropriate to the type of review and its purpose".
+
+Three things make qualitative searches harder. Qualitative reports appear more often in "book chapters, theses and grey literature reports"; "search filters for qualitative studies lack the specificity of their quantitative counterparts"; and "poor indexing of qualitative studies makes citation searching (forward and backward) and the Related Articles features of electronic databases particularly useful" [@noyes2019, sec. 21.7]. CD011787, the case pack's qualitative review, shows how qualitative headings and filters miss included studies (@sec-indexing-filters).
+
+## Environmental evidence {#sec-review-types-environmental}
+
+The Collaboration for Environmental Evidence (CEE) sets standards for reviews in environmental management, the field closest to the Moran case. Its guidelines ask that searches "be as comprehensive as possible, and they should be documented so they can be repeated" [@cee2022, sec. 4.2], and say that "searching only one database is not considered as adequate" (sec. 4.2.11). Its standards ask for "both commercially published scientific literature and grey literature", searched through "a combination of databases, search engines and specialist websites", with any restriction "on publication date, publication format, or language" stated and justified (standards 2.1 and 2.4).
+
+Two CEE requirements go further than the health guidance. Searches must pass a comprehensiveness test against a list of known relevant articles: "the test list should be fully captured when searches from all bibliographic sources are combined" (sec. 4.2.5). That is the known-item check of @sec-validation-reference, made a standard. And Google Scholar "cannot be used as a standalone resource for evidence synthesis" (sec. 4.2.9.2), which @sec-ranking explains through its display cap. Reporting follows ROSES [@haddaway2018roses]: CEE "now considers it mandatory" for authors of review and map protocols and reports to complete the relevant checklist [@ceeroses]. CEE's guidance on searching draws heavily on @livoreil2017.
+
+The Moran review was published in *Biological Reviews*, not through CEE. It searched Web of Science and Scopus, reported no search for grey literature, and added 15 "non-systematic" records identified from other sources [@moran2021]. Judged against CEE's standards, its search would need a stated justification for searching two databases and no grey literature.
+
+## Mapping reviews {#sec-review-types-maps}
+
+Systematic maps and evidence and gap maps describe the extent and distribution of evidence rather than synthesising its findings. Their guidance asks for a systematic review's search, at a larger scale.
+
+- **CEE systematic maps.** "Searching for evidence and recording the methods for searching and the numbers of articles captured within a systematic map follows the same procedures as within a systematic review", and "in some cases, systematic maps may return a greater volume of evidence than would be expected for systematic reviews" [@james2016].
+- **Campbell evidence and gap maps.** "The search, screening and coding follow the usual systematic review approach" [@white2020, sec. 2]. Supplementary searching is scaled back for practical reasons: because "maps usually have hundreds of included studies, there are limits to the feasibility" of reference snowballing and citation tracking, so the guidance recommends snowballing the references of "the twenty or so most recent studies" and citation tracking "for 10–20 highly cited studies", together with "unzipping" included reviews so that their eligible studies are in the map (sec. 10). Screening is larger too: "a review may typically screen some 2,000–5,000 studies, whereas screening for a map may be 15,000–30,000 studies or sometime more", and "annual updating is recommended" (secs. 10, 19).
+
+Maps are therefore where screening prioritisation and stopping (@sec-stopping) save the most work, and where an unvalidated stopping rule can lose the most.
+
+## Summary {#sec-review-types-summary}
+
+| | Aim of the search | Sources | Limits | Supplementary routes | Information specialist and peer review | Reporting |
+|---|---|---|---|---|---|---|
+| Cochrane systematic review | Maximise sensitivity with reasonable precision | Several databases, registers, grey literature | No language limits; date and format limits justified | Citation searching, registers, contacts | Information specialist; peer review strongly recommended before the search runs | PRISMA 2020 and PRISMA-S |
+| Campbell systematic review | As many relevant studies as possible, within resource limits; accept low precision | One database not adequate; grey literature | Justified; ideally no language limits | Reference checking; citation searching for hard topics; contacts | Information specialist recommended; peer review recommended | Campbell Standards and PRISMA 2020; PRISMA-S strongly encouraged |
+| JBI systematic review | As comprehensive as possible | No set number; most search at least three | All languages encouraged | Grey literature, citation searching, handsearching | Librarian where possible; PRESS optional | PRISMA, PRISMA-S |
+| Overview of reviews (Cochrane) | All relevant systematic reviews | CDSR; MEDLINE and Embase for non-Cochrane reviews; optional repositories | Review-design filters may be used | Not specific | As for reviews | Handbook guidance |
+| Scoping review (JBI 2026) | Comprehensive, as for a systematic review | Databases and, often, grey literature | Documented with a rationale (PRISMA-ScR) | Citation searching in all scoping reviews | As for a systematic review | PRISMA-ScR (update in development) |
+| Rapid review (Cochrane 2024) | Same steps; may favour precision; find at least 80% to 90% of known studies | At least two databases, or one with a supplementary search | Dates if justified; language at selection | Limited: registers, reference lists, similar articles | Consult a specialist; PRESS when possible, or at least an error check | PRISMA 2020 and PRISMA-S, adapted |
+| Qualitative evidence synthesis | Comprehensive or purposive, matched to the synthesis method; comprehensive for meta-aggregation (JBI) | MEDLINE and CINAHL at minimum for health topics | No language limits (JBI) | Reference checking by default; citation searching | Specialist recommended | ENTREQ with PRISMA and STARLITE (Harris et al.); PRISMA 2020 and PRISMA-S (JBI) |
+| Environmental (CEE) | As comprehensive as possible; capture all of a test list | Several databases, search engines, websites, grey literature | Stated and justified | Snowballing, citation searching, contacts | Specialist recommended; strategy peer reviewed in the protocol | ROSES (mandatory) |
+| Evidence and gap map (Campbell) | As for a systematic review | Several databases; registers for ongoing studies | Not addressed | Scaled: recent and highly cited studies; unzipping reviews | Not addressed | Campbell EGM checklist; PRISMA flow diagram |
+
+: What guidance asks of the search, by review type, as checked on 22 October 2026. Each row summarises the sources cited in this appendix; read them before relying on a cell. The qualitative row rests partly on a withdrawn Cochrane chapter and 2018 guidance, and the map row on 2020 guidance that still cites Campbell's superseded 2017 search guide. {#tbl-review-types}
+
+Across the traditions, four expectations are close to universal: more than one database (overviews of Cochrane reviews alone excepted), a stated reason for every limit, some route beyond the databases, and a searcher with training in systematic searching. Where the guidance relaxes completeness for rapid reviews and purposive qualitative syntheses, it asks for the relaxation to be justified; map guidance scales back supplementary searching without asking for that. In every case, the record should state what was relaxed. That is the record this book's chapters on validation and reporting are designed to produce (@sec-validation, @sec-recording).

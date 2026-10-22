@@ -26,7 +26,7 @@ From `summary.md`, median (minimum to maximum) across ten starting pairs; the Mo
 
 | Strategy | Records screened at the stop | Title-and-abstract recall at the stop | Full-text inclusions unseen |
 |---|---|---|---|
-| TF-IDF + SVM (`elas_u4`) | 2,927.5 (2,860 to 3,195) | 0.990 (0.990 to 0.997) | 0 (0 to 0) |
+| TF-IDF + SVM (`elas_u4`) | 2,927.5 (2,860 to 3,195) | 0.991 (0.990 to 0.997) | 0 (0 to 0) |
 | TF-IDF + naive Bayes (`tfidf_nb`) | 3,445 (3,430 to 3,530) | 0.995 (0.995 to 0.997) | 0 (0 to 0) |
 | Random order | 4,602.5 (4,375 to 4,700) | 0.94 (0.87 to 0.97) | 7.5 (3 to 19) |
 

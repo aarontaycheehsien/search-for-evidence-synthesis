@@ -1,10 +1,143 @@
 # Measures reference {#sec-measures}
 
-::: {.callout-note}
-## Not yet drafted
-:::
+This appendix defines the measures the book uses, each with a worked example from the case pack and a note on what it cannot show. @sec-validation-measures explains how to choose among them; @sec-terminology maps the names different communities use for the same quantity.
 
-## Planned contents
+## Before any measure: unit, stage and denominator {#sec-measures-before}
 
-- Precision, recall, relative recall, number needed to read, recall at fixed effort, recall at the stopping point and work saved over sampling, each with a worked example from the case pack.
-- Mean average precision and nDCG, briefly, and why they suit ranking research better than review decisions.
+Every measure here is a ratio of counts, and three choices fix what is being counted (@sec-missing-measures, @sec-validation-measures).
+
+- **The unit**: records in one database, reports, or studies. CD010558's re-run pool holds 10 of the review's 16 included reports that have a PubMed record, which report 4 of its 6 studies (@tbl-cd010558): 63% of the reports with a PubMed record and 67% of the studies, from the same search.
+- **The stage**: the search, screening within the search's results, or both together.
+- **The denominator**: which eligible records are known, and how they were found. A benchmark's labels know only what the review's own search, or a re-run of it, returned; a reference set built from other sources knows more (@sec-validation-reference).
+
+A figure that does not state all three cannot be compared with another.
+
+The counts behind the set measures are those of a two-by-two table. For a search, *eligible* means meeting the review's criteria; for a screening tool evaluated on labelled data, it means carrying the label the tool is asked to find.
+
+| | Eligible | Not eligible |
+|---|---|---|
+| **Retrieved (or screened)** | True positives, TP | False positives, FP |
+| **Not retrieved (or not screened)** | False negatives, FN | True negatives, TN |
+
+: The counts behind the set measures. {#tbl-measures-counts}
+
+## Measures of a set {#sec-measures-set}
+
+These treat a search result as a set: a record is in it or not, and its position does not matter.
+
+### Recall, or sensitivity
+
+$$\text{recall} = \frac{TP}{TP + FN}$$
+
+The share of the eligible records that the search retrieved. Information retrieval calls it *recall*; search-filter studies and evidence-synthesis guidance usually call it *sensitivity* [@lefebvre2025, sec. 4.4.3]. *Example:* measured against the CLEF labels for CD010558, the re-run strategy's recall is 10 of 10 included records, 100%; measured against the review's reference set, it is 10 of 16 reports with PubMed records (@sec-missing-case). *Cannot show:* anything about eligible records outside the denominator.
+
+### Precision
+
+$$\text{precision} = \frac{TP}{TP + FP}$$
+
+The share of the retrieved records that are eligible. *Example:* CD010558's pool has 2,815 records, of which 37 passed title and abstract screening (1.3%) and 10 were included (0.36%). The Moran pool has 4,882 records, of which 586 passed title and abstract screening (12.0%) and 137 were included (2.8%). *Cannot show:* how many eligible records were missed. Precision depends on the topic as much as on the strategy, so it is a poor basis for comparing strategies across reviews.
+
+### Number needed to read
+
+$$\text{NNR} = \frac{1}{\text{precision}}$$
+
+The number of records screened, on average, for each eligible record found [@bachmann2002]. *Example:* 2,815 / 10 = 281.5 for CD010558's included records, and 2,815 / 37 = 76.1 for its title-and-abstract inclusions; 4,882 / 137 = 35.6 for Moran's included records. It turns precision into screening effort; @adam2024, for example, report a median of 1,206 alongside sensitivity for language-model queries (@sec-dev-llm). *Cannot show:* the same as precision.
+
+### Specificity
+
+$$\text{specificity} = \frac{TN}{TN + FP}$$
+
+The share of the records that are not eligible which the search leaves out. Search-filter studies report it with sensitivity [@haynes2005]; @sec-indexing-filters gives examples. *Example:* a filter for treatment studies reached a sensitivity of 99.3% at a specificity of 70.4% [@haynes2005]. *Cannot show:* screening effort. In a database the number of true negatives is enormous, so specificity stays close to 100% even when a strategy retrieves thousands of irrelevant records; precision or NNR describes the workload better.
+
+### Relative recall
+
+Recall measured against a reference set gathered by other routes, such as the included studies of many reviews or the union of several searches, rather than against every eligible record that exists [@sampson2006]. *Example:* @sampson2006 validated filters for randomised trials against the included studies of 105 Cochrane reviews; the filters' relative recall ranged from 0.91 to 0.98 (@sec-validation-reference). *Cannot show:* eligible records that every route missed. A reference set gathered by searching tends to hold the records searching finds easily, so relative recall tends to overstate true recall, as recall is overestimated in pooled test collections [@zobel1998; @sec-validation-reference].
+
+### Recall by stage, and end-to-end recovery
+
+Recall can be computed for the search, for screening within the search's results, and for both together:
+
+$$\text{end-to-end recovery} = \text{retrieval recall} \times \text{screening recall within the pool}$$
+
+*Example:* in the synthetic 100/90/81 example, a search retrieves 90 of 100 eligible reports and screening finds 81 of those 90, so each stage has a recall of 90% and the review recovers 81% (@sec-missing-measures). *Cannot show:* a stage's figure says nothing about losses at the other stages.
+
+## Measures of a ranking {#sec-measures-ranked}
+
+A ranked list adds position. These measures ask how early the eligible records come, or how much screening a given recall costs. The examples use the three CLEF 2019 runs on CD010558's 2,815 records (@tbl-measures-clef), computed by `case-pack/scripts/ranking_measures.py`.
+
+| Run | Average precision | nDCG | First eligible at | 95% recall at | WSS@95 | Last eligible at | Recall after 10% of the pool |
+|---|---|---|---|---|---|---|---|
+| Sheffield BM25 | 0.044 | 0.443 | 9 | 1,589 | 0.39 | 2,055 | 0.35 |
+| Padua BM25 | 0.023 | 0.391 | 12 | 2,320 | 0.13 | 2,360 | 0.22 |
+| Padua active learning | 0.118 | 0.521 | 13 | 1,792 | 0.31 | 2,027 | 0.86 |
+
+: Ranked-list measures for three CLEF 2019 runs on CD010558, counting the 37 records that passed title and abstract screening as eligible. From `case-pack/data/clef-2019/CD010558/measures.md`, which also gives the figures for the 10 included records. {#tbl-measures-clef}
+
+### Recall and precision at depth *k*
+
+$$\text{recall@}k = \frac{\text{eligible records in the top } k}{\text{all eligible records}} \qquad \text{precision@}k = \frac{\text{eligible records in the top } k}{k}$$
+
+*Example:* ranked by BM25 with the words of its strategy, the Moran pool has 81 of its 137 included records in the top 1,000: recall@1,000 is 0.59 and precision@1,000 is 0.081 (`case-pack/data/moran-2021/ranking/`; @sec-ranking). Recall after screening a fixed share of the pool is the same measure with *k* set as a proportion: in @tbl-measures-clef, the active-learning run has found 86% of the eligible records after 10% of the pool. *Cannot show:* what happens below depth *k*. A system that displays only its top *k* has a recall ceiling of recall@*k*.
+
+### Records screened to reach a recall target
+
+The rank at which a target share of the eligible records has been found. With *E* eligible records, a target of 95% needs ⌈0.95 *E*⌉ of them. *Example:* with 37 eligible records, 95% recall needs 36, which the Sheffield run reaches at rank 1,589. With CD010558's 10 included records, 95% recall needs all 10, so the 95% and 100% targets coincide; one record is ten percentage points of recall (@sec-validation-measures). *Cannot show:* whether a live review could have known it had reached the target (@sec-stop-measures).
+
+### Work saved over sampling
+
+$$\text{WSS@}R = \frac{TN + FN}{N} - (1 - R)$$
+
+where *N* is the number of records and *R* is recall, which @cohen2006 fix at 0.95, so that WSS@95 = (*TN* + *FN*) / *N* − 0.05. For a ranked list screened from the top until the target is reached, (*TN* + *FN*) / *N* is the share of the pool left unscreened, so WSS@95 is 0.95 minus the share screened: the saving over screening a random sample to the same expected recall. *Example:* the Sheffield run reaches 95% recall at rank 1,589 of 2,815, so WSS@95 = 0.95 − 0.564 = 0.39. *Cannot show:* a saving achievable without the labels, because it is computed at the point where the target was in fact reached (@sec-stop-measures). Its maximum, 0.95 × (1 − *p*) where *p* is the share of eligible records, depends on the dataset, so averages across datasets can mislead [@kusa2023]: about 0.94 for CD010558's title-and-abstract inclusions and 0.84 for Moran's title-and-abstract inclusions.
+
+### Average precision and mean average precision
+
+Average precision is the mean, over the eligible records, of the precision at each one's rank. It rewards placing many eligible records early, and every eligible record contributes, however late it comes. Mean average precision (MAP) averages it over several topics [@manning2008, ch. 8]. *Example:* in @tbl-measures-clef, the active-learning run's average precision is 0.118, against 0.044 and 0.023 for the BM25 runs.
+
+### Normalised discounted cumulative gain
+
+nDCG sums a gain for each eligible record, discounted by its rank, and divides by the same sum for an ideal ranking [@jarvelin2002]. In the form most used today, with binary eligibility, each eligible record at rank *i* contributes 1 / log~2~(*i* + 1); the original definition discounted only ranks beyond the base of the logarithm. Its main use is with graded judgements (highly relevant, partly relevant, not relevant), which screening decisions rarely provide. *Example:* the active-learning run's nDCG over the whole ranking is 0.521, against 0.443 and 0.391.
+
+**Why these two suit research better than review decisions.** Average precision and nDCG are dominated by the early ranks, because that is where the discounted gains and running precision are largest. A review team's question is about the late ones: how far down the last eligible records sit, and when it is safe to stop. @tbl-measures-clef shows the measures disagreeing. By average precision, nDCG and recall after 10% of the pool, the active-learning run is clearly best; by WSS@95 the Sheffield run is, because the active-learning run finds most eligible records early but needs 203 more records than Sheffield to reach 36 of the 37, although its last eligible record comes slightly earlier (2,027 against 2,055). Counting the 10 included records instead, the active-learning run leads on every measure but the rank of the first eligible record, so the choice of eligible set changes the verdict too.
+
+## Measures at a stopping point {#sec-measures-stopping}
+
+When screening stops before the end of the pool, three counts describe the stop. The last two need labels for the records left unscreened, so they can only be computed in simulation.
+
+- **Records screened at the stop**, and its share of the pool.
+- **Recall at the stop**: the share of eligible records found by then.
+- **Eligible records unseen**: the absolute number left in the unscreened part, which matters more to a review than a percentage when the numbers are small.
+
+*Example:* applied to ten simulated screening orders of the Moran pool by an active-learning model (TF-IDF features with a support vector machine), the statistical stopping criterion of @callaghan2020 stopped after a median of 2,927.5 records (60% of the pool), at a median title-and-abstract recall of about 0.99, with no included record unseen. On random orders it stopped after a median of 4,602.5 records with a median of 7.5 included records unseen (`case-pack/data/stopping/`; @sec-stop-statistical).
+
+## Estimating what was missed {#sec-measures-estimating}
+
+Without a complete reference set, the number of eligible studies that every search missed can only be estimated. Capture–recapture treats two independent searches as two catches [@spoor1996]. If the first finds *n*~1~ eligible studies, the second *n*~2~, and *m* are found by both, the Lincoln–Petersen estimate of the total is
+
+$$\hat{N} = \frac{n_1 n_2}{m}$$
+
+and Chapman's version, less biased for small counts, is
+
+$$\hat{N} = \frac{(n_1 + 1)(n_2 + 1)}{m + 1} - 1$$
+
+*Example:* the Moran review's Web of Science and Scopus searches found 111 and 115 of the full-text inclusions, 89 of them in both; Chapman's estimate is 143.4 (95% interval 137.1 to 149.6), so about six included records were missed by both (@sec-stop-search). *Cannot show:* studies that neither search could reach for the same reason. Two databases searched with one strategy are not independent, and dependence usually makes the estimate too low.
+
+## Summary {#sec-measures-summary}
+
+| Measure | Question it answers | Needs | What it cannot show |
+|---|---|---|---|
+| Recall (sensitivity) | What share of the known eligible records was retrieved? | A reference set | Eligible records outside the reference set |
+| Precision | What share of the retrieved records is eligible? | Screening of the results | Missed records |
+| Number needed to read | How many records are screened per eligible record? | Screening of the results | Missed records |
+| Specificity | What share of the ineligible records was left out? | Counts of true negatives | Screening effort |
+| Relative recall | What share of a multi-source reference set was retrieved? | Several routes | Records every route missed |
+| End-to-end recovery | What share of eligible records reached the review? | Recall at each stage | Losses outside the stages measured |
+| Recall@*k*, precision@*k* | How many eligible records are in the top *k*? | A ranking and labels | Records below *k* |
+| Records to a recall target | How much screening does a given recall cost? | Full labels | Whether a live review could know it had got there |
+| WSS@95 | How much screening does the order save at 95% recall? | Full labels | The same, and comparability across datasets |
+| Average precision, MAP, nDCG | How early do the eligible records come? | Full labels | How late the last eligible records come |
+| Recall at the stop, eligible unseen | What did a stopping rule leave behind? | Labels for the unscreened records | Performance in a live review |
+| Capture–recapture | How many eligible studies were missed by every route? | Two or more independent routes | Studies all routes miss for the same reason |
+
+: The measures in this appendix. {#tbl-measures-summary}
+
+Whatever the measure, report the unit, the stage, the eligible records counted and how they were found, the dataset's size and share of eligible records, and, for anything run more than once, the spread across runs (@sec-validation-variability).
