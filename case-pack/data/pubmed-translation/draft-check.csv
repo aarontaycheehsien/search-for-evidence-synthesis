@@ -1,0 +1,7 @@
+line,query,pubmed_translation,results,included_reports_admitted_of_16
+1,"""Treatment Resistant Depression""[Mesh]","""Treatment Resistant Depression""[Mesh]",0,0
+2,"""treatment resistant depression""[tiab] OR ""treatment-resistant depression""[tiab] OR ""refractory depression""[tiab]","""treatment-resistant depression""[Title/Abstract] OR ""treatment-resistant depression""[Title/Abstract] OR ""refractory depression""[Title/Abstract]",6356,
+3,"""Psychological Therapies""[Mesh] OR ""Cognitive Behavioural Therapy""[Mesh] OR ""Psychotherapy""[Mesh]","""Psychotherapy""[MeSH Terms]",244031,
+4,"psychotherap*[tiab] OR ""cognitive behav* therap*""[tiab] OR CBT[tiab]","""psychotherap*""[Title/Abstract] OR ""cognitive behav* therap*""[Title/Abstract] OR ""CBT""[Title/Abstract]",94229,
+5,(#1 OR #2) AND (#3 OR #4) AND (randomized controlled trial[pt] OR random*[tiab]),the heading lines of #1 and #3 that match nothing are absent from the translation,186,12
+5 corrected,"#5 with #1 replaced by ""Depressive Disorder, Treatment-Resistant""[Mesh]","""depressive disorder, treatment resistant""[MeSH Terms] appears in the translation",209,12
