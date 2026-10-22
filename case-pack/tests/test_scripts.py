@@ -17,6 +17,7 @@ from capture_recapture import estimate  # noqa: E402
 from clef import read_qrels, read_topic  # noqa: E402
 from clef_label_scope import scope  # noqa: E402
 from common import normalise_doi  # noqa: E402
+from field_checks import check as moran_check  # noqa: E402
 from fetch_pubmed import parse_efetch  # noqa: E402
 from indexing_checks import Adj, Record, Terms, cd010558_row, words  # noqa: E402
 from ranking_checks import bm25_scores, expand, ranks, recall_at  # noqa: E402
@@ -265,3 +266,17 @@ class CaptureRecaptureTest(unittest.TestCase):
         self.assertEqual(round(result["chapman"]), 160)
         self.assertEqual(result["chapman_low"], 158)
         self.assertEqual(round(result["chapman_high"]), 164)
+
+
+class FieldChecksTest(unittest.TestCase):
+    def test_moran_blocks_on_title_and_abstract(self):
+        hit = moran_check("Hunger increases boldness",
+                          "Starved fish showed bolder behaviour in response to a novel object.")
+        self.assertEqual(hit, {"condition": True, "risk": True, "behaviour": True})
+
+    def test_proximity_window_for_food_terms(self):
+        near = moran_check("Food availability and boldness", "Personality was measured.")
+        far = moran_check("Food was given once a day in the laboratory with no change in "
+                          "availability", "Boldness and personality were measured.")
+        self.assertTrue(near["condition"])
+        self.assertFalse(far["condition"])
