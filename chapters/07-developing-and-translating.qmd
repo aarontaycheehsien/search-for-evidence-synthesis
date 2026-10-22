@@ -10,7 +10,7 @@ Eligibility criteria are written for screeners; blocks are written for an index.
 
 The Cochrane Handbook builds this into its guidance. A strategy should be structured around "the main concepts of the review", but "it is usually unnecessary, however, and may even be undesirable, to search on every aspect of the review's clinical question" [@lefebvre2025, sec. 4.4.2]. For a general database such as MEDLINE it says a strategy will typically have three sets of terms: the health condition, the intervention and the study design. Searching for the comparator "may be possible and reasonable" in some cases, "for example if the comparator is explicitly placebo and reported consistently". The MECIR standard asks searchers to "maximize sensitivity whilst striving for reasonable precision" (C32). @bramer2018 state the cost of each extra block plainly: "Adding an element to a search strategy increases the chance of missing relevant references. Therefore, the number of elements in a search strategy should remain as low as possible to optimize recall." They also note that elements "do not necessarily follow the patient, intervention, comparison, outcome (PICO) structure".
 
-CD010558 drops one of the Handbook's three typical sets. The Handbook allows exceptions: "for reviews of complex interventions, it may be necessary to search only for the population or the intervention" (C32). Its MEDLINE strategy has a block for the condition and a block for trial design, and no block for the therapies (@sec-missing-case). A therapy block would claim that every eligible trial's record names its therapy in words or headings the block anticipates, for a class of interventions with no single heading. PubMed has no heading called *Psychological Therapies*; searching for one returns nothing (@sec-dev-system). The review pays at screening instead: the CLEF re-run returned 2,815 records. At the Handbook's estimate of 60 to 120 records an hour for title and abstract screening [@lefebvre2025, sec. 4.4.3], that is roughly 23 to 47 hours for one screener.
+CD010558 drops one of the Handbook's three typical sets. The Handbook allows exceptions: "for reviews of complex interventions, it may be necessary to search only for the population or the intervention" (C32). Its MEDLINE strategy has a block for the condition and a block for trial design, and no block for the therapies (@sec-missing-case). A therapy block would claim that every eligible trial's record names its therapy in words or headings the block anticipates, for a class of interventions with no single heading. PubMed has no heading called *Psychological Therapies*; searching for `"Psychological Therapies"[mh]` returns nothing (@sec-dev-system). The review pays at screening instead: the CLEF re-run returned 2,815 records. At the Handbook's estimate of 60 to 120 records an hour for title and abstract screening [@lefebvre2025, sec. 4.4.3], that is roughly 23 to 47 hours for one screener.
 
 Before a criterion becomes a block, five questions decide whether it earns its place (@tbl-dev-criteria).
 
@@ -60,7 +60,7 @@ The words in a strategy are not always the words that reach the index. Four diff
 - **Query understanding** interprets the request: it recognises a phrase, a heading, a journal name or an author.
 - **Query transformation** changes what retrieval receives: it corrects, maps, expands or restructures the query.
 
-Understanding and transformation travel together but are not the same: understanding is what the system concludes, transformation is what it does about it. Neither is a kind of retrieval. The transformed query still goes to whatever engine sits behind the interface, which in a bibliographic database is usually Boolean admission. Mapping words to subject headings is the oldest transformation in bibliographic searching, and the one most likely to differ between two interfaces to the same database.
+Understanding and transformation travel together but are not the same: understanding is what the system concludes, transformation is what it does about it. Neither is a kind of retrieval. The transformed query still goes to whatever engine sits behind the interface, which in a bibliographic database is usually Boolean admission. Mapping words to subject headings is a long-established transformation in bibliographic searching, and one likely to differ between two interfaces to the same database.
 
 ### PubMed's automatic term mapping
 
@@ -72,7 +72,7 @@ PubMed matches untagged terms "in this order" against a subject translation tabl
 |---|---|---|
 | `psychotherapy AND depression` | Exploded headings *Psychotherapy*, *Depression* and *Depressive Disorder*, plus the words and variants in all fields, including the German *psychotherapie* | 53,914 |
 | `psychotherap* AND depress*` | The truncated words in all fields only; no headings | 37,587 |
-| `treatment-resistant depression[mh]` | The heading *Depressive Disorder, Treatment Resistant* | 3,174 |
+| `treatment-resistant depression[mh]` | The heading *Depressive Disorder, Treatment-Resistant* | 3,174 |
 | `"Treatment Resistant Depression"[Mesh]` | The string as typed, which is not a heading | 0 |
 | `"Cognitive Behavioural Therapy"[mh]` | The string as typed: the heading is spelt *Behavioral* | 0 |
 | `"Cognitive Behavioral Therapy"[Mesh]` | The heading | 45,113 |
@@ -82,24 +82,24 @@ PubMed matches untagged terms "in this order" against a subject translation tabl
 
 Three lessons follow.
 
-- **Truncation is not a broader version of the untagged word in PubMed.** The truncated query returned 16,327 fewer records than the untagged one, most likely because the untagged words also brought in records indexed only under narrower headings, such as *Cognitive Behavioral Therapy*, whose text need not contain *psychotherap\** at all. PubMed's own guidance adds that wildcards may be unnecessary for spelling variants, because mapping "includes alternate spellings for many terms" [@nlmwildcard2024].
-- **A heading that does not exist fails silently.** A plausible name for a real concept, a British spelling or an invented class name returns no records and no warning.
+- **Truncation is not a broader version of the untagged word in PubMed.** The truncated query returned 16,327 fewer records in all than the untagged one (each finds some records the other misses), most likely because the untagged words also brought in records indexed only under narrower headings, such as *Cognitive Behavioral Therapy*, whose text need not contain *psychotherap\** at all. PubMed's own guidance adds that wildcards may be unnecessary for spelling variants, because mapping "includes alternate spellings for many terms" [@nlmwildcard2024].
+- **A heading that does not exist fails silently.** In quotation marks, a string that is not the exact heading (a plausible name for a real concept, a British spelling or an invented class name) returns no records and no warning. Unquoted, PubMed may map it, correctly or not.
 - **In an `OR` line, the failure disappears.** PubMed drops the unmatched strings from the translation and runs the rest. The line still returns hundreds of thousands of records, so nothing looks wrong unless someone reads the translation term by term.
 
 ### The same transformation, elsewhere
 
-Every major interface maps words to headings, but by different defaults, and two of them leave the default to the library (@tbl-dev-mapping).
+Every major interface to a database with a thesaurus maps words to headings, but by different defaults, and one, EBSCOhost, leaves the default to the library (@tbl-dev-mapping).
 
 | Platform | What an unqualified word does by default | How mapping is turned off or bypassed | Where to see what ran |
 |---|---|---|---|
 | PubMed | Automatic term mapping: exploded heading OR all fields, with variants [@pubmedhelp] | Field tags (except `[all]`), wildcards, quoted phrases in the phrase index | *Details* in the Advanced Search history |
-| Ovid | *Map Term to Subject Heading* is on by default: "statistical analysis" proposes the best-matching headings, and the searcher ticks *Explode* or *Focus*; *Search as Keyword* runs the word in the database's default fields [@ovidmapping] | Untick the mapping box, or type command-line syntax, which is not mapped | The mapping display and the search history |
+| Ovid | *Map Term to Subject Heading* is "enabled by default in databases that have a controlled vocabulary", but not in multi-database sessions: "statistical analysis" proposes the best-matching headings, and the searcher ticks *Explode* or *Focus*; *Search as Keyword* runs the word in the database's default fields [@ovidmapping] | Untick the mapping box, or type command-line syntax, which is not mapped | The mapping display and the search history |
 | Embase.com | Quick search maps the word to the preferred Emtree term, explodes it, and ORs it with a free-text search in all fields [@embasehowsearch] | Choose another search option, or use field codes such as `/de` (heading, not exploded) | *Display full query* before the search runs |
-| EBSCOhost (CINAHL) | *Suggest Subject Terms* and the *Apply equivalent subjects* expander may each be on or off: the library administrator sets the default [@ebscosuggest; @ebscoexpanders] | Untick them; equivalent subjects apply only to unqualified keyword searches, and only in a subject field [@ebscoequivalent] | The search history |
+| EBSCOhost | *Suggest Subject Terms* may be on or off by default, as the library administrator sets it [@ebscosuggest]; so may the *Apply equivalent subjects* expander, which adds mapped vocabulary terms [@ebscoequivalent; @ebscoexpanders] | Untick them; equivalent subjects apply only to unqualified keyword searches, only in a subject field, and only in databases whose vocabulary EBSCO has mapped, a list that in 2016 included MeSH and PsycINFO but not CINAHL [@ebscoequivalent] | Not stated on the pages checked; record which expanders were on |
 
 : What happens to an unqualified word on four platforms, as documented when checked on 22 October 2026 (claims register: `pubmed-atm`, `ovid-mapping`, `ovid-medline-mp`, `embase-broad-search`, `ebsco-subject-mapping`). {#tbl-dev-mapping}
 
-The defaults also differ in what they consider an unqualified word. In Ovid MEDLINE, *Search as Keyword* and `.mp.` cover 15 fields, including title, abstract, heading words, keyword heading words and several supplementary concept fields [@ovidmedlineguide]. In EBSCOhost, unlike PubMed, a truncated root that matches a concept still brings in the equivalent subjects [@ebscowildcards]. And within one product the same words can run different searches: Embase warns that its results-page search box "is not equivalent to Quick Search", because *Search as broadly as possible* is not checked there by default [@embaserefine].
+The defaults also differ in what they consider an unqualified word. In Ovid MEDLINE, *Search as Keyword* and `.mp.` cover 15 fields, including title, abstract, heading words, keyword heading words and several supplementary concept fields [@ovidmedlineguide]. In EBSCOhost, unlike PubMed, a truncated root that matches a concept still brings in the equivalent subjects when that expander is on [@ebscowildcards]. And within one product the same words can run different searches: Embase warns that its results-page search box "is not equivalent to Quick Search", because *Search as broadly as possible* is not checked there by default [@embaserefine].
 
 A strategy is therefore only reproducible when it states its fields and headings explicitly, and the record of a search should be what the system ran, not what the searcher typed: the Ovid history, PubMed's *Details* translation, Embase's full query (@sec-recording).
 
@@ -143,10 +143,10 @@ Database vendors now build language-model drafting into their interfaces (@tbl-a
 
 | Tool | What the documentation says about the generated query |
 |---|---|
-| Scopus AI Query Builder | Concepts are combined with `AND` and related keywords with `OR`; "the generated query can be edited manually before running" [@scopusai] |
+| AI Query Builder in Scopus | Concepts are combined with `AND` and related keywords with `OR`; "the generated query can be edited manually before running" [@scopusai] |
 | Web of Science Research Assistant | Users "can then review, adjust or approve the strategy before the search runs", and receive copy-ready query language [@wosra2026] |
 | Embase AI | The generated Embase query can be reviewed, opened on the results page and copied; "Review generated queries before relying on them for formal or systematic searching" [@embaseai] |
-| EBSCO AI-assisted search | *Show refined query* displays it; "Terms added by the LLM are not pulled from controlled vocabularies"; "the refined query may change when the search is re-run" [@ebscoaifaq] |
+| EBSCO AI-assisted search | *Show refined query* displays it; "Terms added by the LLM are not pulled from controlled vocabularies"; "the refined query may change when the search is re-run from the My dashboard" [@ebscoaifaq] |
 | Ovid Discovery AI Assisted Query | A preview box shows the query "translated into a Boolean search", and a query builder below it is filled in [@ovidaiquery] |
 
 : Language-model query drafting in database interfaces, as documented when checked on 22 October 2026 (claims register: `ai-query-drafting`). {#tbl-ai-drafting}
@@ -171,7 +171,7 @@ Translation tools handle the syntax well and the vocabulary poorly, by design (@
 | Tool | What it translates | What it leaves to the searcher |
 |---|---|---|
 | Polyglot Search Translator (Systematic Review Accelerator; an upgraded version is in TERA) | The syntax of a PubMed or Ovid MEDLINE strategy, into other databases' syntax [@polyglotreadme; @sranotice] | Subject headings: "Thesaurus terms need to be manually translated by the searcher" [@clark2020, appendix A] |
-| MEDLINE Transpose | Syntax between Ovid MEDLINE and PubMed; `exp Deliberately Silly Example/` becomes `"Deliberately Silly Example"[Mesh]` [@transpose] | The headings and words themselves; dates, filters and limits; it "does not have the capability to replicate what PubMed does" with untagged terms |
+| MEDLINE Transpose | Syntax between Ovid MEDLINE and PubMed (a 2024 version for EBSCO MEDLINE is under construction); `exp Deliberately Silly Example/` becomes `"Deliberately Silly Example"[Mesh]` [@transpose] | The headings and words themselves; dates, filters and limits; it "does not have the capability to replicate what PubMed does" with untagged terms |
 | Embase PubMed-to-Embase translation tool | MeSH headings to Emtree terms, flagging a heading not found in Emtree [@embasetranslator] | PubMed's automatic term mapping, unless the expanded query is pasted in; some field codes and pharmacological actions (beta limits) |
 
 : Search translation tools, as documented when checked on 22 October 2026 (claims register: `polyglot-tera`, `medline-transpose`, `embase-pubmed-translator`). {#tbl-translation-tools}
@@ -180,7 +180,7 @@ A randomised trial of Polyglot, designed and run by its creators, found that it 
 
 ### The quiet error: fields
 
-The error no tool flags is a change of field. The Moran strategy ran as `TS=` in Web of Science and `TITLE-ABS-KEY` in Scopus (@sec-boolean-translation). Both fields search more than the title and abstract: `TS=` adds author keywords and Keywords Plus, words taken from the titles of the works a record cites [@wostags; @wosqrg]; `TITLE-ABS-KEY` adds author keywords and index terms [@scopustips]. A translation into an interface whose closest field is title and abstract, such as Ovid's `.ti,ab.` or PubMed's `[tiab]`, keeps every word and operator and drops those fields. It runs without complaint and returns plenty of records. How many of the review's included studies would it lose?
+The error no tool flags is a change of field. The Moran strategy ran as `TS=` in Web of Science and `TITLE-ABS-KEY` in Scopus (@sec-boolean-translation). Both fields search more than the title and abstract: `TS=` adds author keywords and Keywords Plus, words taken from the titles of the works a record cites [@wostags; @wosqrg]; `TITLE-ABS-KEY` adds keywords: author keywords, index terms, trade names and chemical names [@scopustips]. A translation into an interface whose closest field is title and abstract, such as Ovid's `.ti,ab.` or PubMed's `[tiab]`, keeps every word and operator and drops those fields. It runs without complaint and returns plenty of records. How many of the review's included studies would it lose?
 
 The case pack answers by applying the strategy's three blocks to the title and abstract alone (@tbl-moran-fields).
 
@@ -193,7 +193,7 @@ The case pack answers by applying the strategy's three blocks to the title and a
 
 : Records the Moran strategy no longer admits when only the title and abstract are searched. Each row counts records whose text is available from that source; the database texts are from the authors' own exports. From `case-pack/data/moran-2021/fields/`. {#tbl-moran-fields}
 
-Fifty-three of the 137 included records, 39%, fail on title and abstract. All 53 also fail on the title and abstract each database itself held, so each could only have been admitted through a keyword field. The exports contain no keyword fields, so the case pack cannot say which one. Thirty-six of the 53 fail the behaviour block, 15 the risk block and 7 the condition block, and widening the proximity windows by up to ten words changes the count only to between 51 and 56. A literal translation of this strategy would lose about two in five of the review's studies, and nothing on the screen would say so.
+Fifty-three of the 137 included records, 39%, fail on title and abstract. All 53 also fail on the title and abstract each database itself held, so, within the limits of the emulation, each was most likely admitted through a keyword field. The exports contain no keyword fields, so the case pack cannot say which one. Thirty-six of the 53 fail the behaviour block, 15 the risk block and 7 the condition block, and widening the proximity windows by up to ten words changes the count only to between 51 and 56. A literal translation of this strategy would lose about two in five of the review's included records, and nothing on the screen would say so.
 
 Three habits prevent it:
 
@@ -208,9 +208,9 @@ The objective approach can repair a translation as well as build a strategy. The
 1. The 137 included records were split at random into a development half of 69 and a validation half of 68.
 2. For each block, the development records that fail it were mined for words found in at least 20% of them and at most 5% of the pool's records. The pool is what the original search retrieved, not a random sample of the database, so this ceiling is a rough stand-in for Hausner's population set.
 3. Each block's failures were checked for the block's own head word elsewhere in the text.
-4. Additions chosen from the development lists alone were tested on both halves.
+4. Additions chosen by reading the development records alone were tested on both halves.
 
-The mined lists were noisy. The six words that cleared the thresholds for the behaviour block were *conspecific*, *manipulated*, *deprivation*, *deprived*, *chemical* and *additional*: two describe the nutritional manipulation, not behaviour, and two are generic. The informative result came from step 3: 12 of the 17 development failures on the behaviour block contain *behavio\**, just not within five words of the block's other terms. Mining for words had found a proximity problem. Three additions were chosen: *behavio\** on its own in the behaviour block, *activ\** in the behaviour block, and *conspecific\** and *competit\** in the risk block (@tbl-moran-mining).
+The mined lists were noisy. The six words that cleared the thresholds for the behaviour block were *conspecific*, *manipulated*, *deprivation*, *deprived*, *chemical* and *additional*: three describe the nutritional manipulation rather than behaviour, two are generic, and one, *conspecific*, points to a social setting. The informative result came from step 3: 12 of the 17 development failures on the behaviour block contain *behavio\**, just not within five words of the block's other terms. Mining for words had found a proximity problem. Three additions were chosen: *behavio\** on its own in the behaviour block, from step 3; *conspecific\** and *competit\** in the risk block, from the mined list; and *activ\** in the behaviour block, from reading the development failures, where *active* appears in 6 of the 17 but just misses the mining ceiling, at 5.2% of the pool (@tbl-moran-mining).
 
 | Strategy | Development (of 69) | Validation (of 68) | Pool records retrieved |
 |---|---|---|---|
@@ -224,9 +224,9 @@ The mined lists were noisy. The six words that cleared the thresholds for the be
 
 Three points stand out.
 
-- **The additions generalised.** Validation rose from 41 to 58 of 68, by as much as development did, although the validation records played no part in choosing the words.
+- **The additions generalised.** Validation rose from 41 to 58 of 68, by more than development did (17 records against 14), although the validation records played no part in choosing the words.
 - **The repair is partial and has a price.** Ten of the 68 validation records still fail. The pool records retrieved rose by 769, or 42%, and that is a floor: in the database itself, *behavio\** on its own would add far more.
-- **The split only protects what it is allowed to protect.** An exploratory look at all 137 records had suggested *forag\** for the risk block. It is not in the development list and was not used: an addition chosen with sight of the validation records would turn the validation into a second development set.
+- **The split only protects what it is allowed to protect.** An exploratory look at all 137 records had suggested *forag\** for the risk block. Because that look included the validation records, *forag\** was not used: an addition chosen with sight of the validation records would turn the validation into a second development set.
 
 ## Peer review before the search runs {#sec-dev-press}
 
@@ -284,7 +284,7 @@ c. Why did `treatment-resistant depression[mh]` find the heading, while `"Treatm
 ::: {.callout-tip collapse="true"}
 ## Worked answer
 
-a. Wildcards turn automatic term mapping off, so the truncated query searched the words in all fields and nothing else. The untagged query also searched the exploded headings, which admit records indexed under narrower headings, such as *Cognitive Behavioral Therapy* or *Depressive Disorder, Major*, whose text need not contain the truncated stems.
+a. Wildcards turn automatic term mapping off, so the truncated query searched the words in all fields and nothing else. The untagged query also searched the exploded headings, which admit records indexed under narrower headings, such as *Cognitive Behavioral Therapy* or *Major Depressive Disorder*, whose text need not contain the truncated stems.
 
 b. It searches the string as a heading, finds none, and returns no records, with no warning: the heading is spelt *Cognitive Behavioral Therapy*. On a line of its own it shows as a zero in the hits per line. ORed with other terms it vanishes from PubMed's translation and the line still returns records, so only reading the *Details* translation term by term would show it.
 
@@ -337,7 +337,7 @@ a. Before the MEDLINE strategy is translated or run: the research question in PI
 b. Probably none of them.
 - The CoBalT pilot has no PubMed record. That is a coverage loss, outside any strategy.
 - The four late-indexed reports were lost to the `ed` limit only when the strategy was re-run later. A reviewer might question an indexing-date field as an end date under the checklist's limits element, but the loss would not have shown at the time (@sec-recording-updating).
-- The letter and commentary were removed deliberately, by the `NOT` block. A reviewer could point to the Handbook's advice that `NOT` "should be avoided where possible", but here the loss cost two reports and no study.
+- The letter and commentary fail the trial-design block, and are also removed, deliberately, by the `NOT` block. A reviewer could point to the Handbook's advice that `NOT` "should be avoided where possible", but dropping the `NOT` line would not have recovered them, and the loss cost two reports and no study.
 
 Peer review checks the strategy's logic. It does not find coverage losses or test the strategy on eligible records; known-study testing and supplementary routes do that.
 :::

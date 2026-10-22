@@ -25,9 +25,12 @@ records. The steps are:
 4. Test the additions chosen from steps 2 and 3 (ADDITIONS, below) on
    both halves and on the whole pool.
 
-The additions were chosen by reading the development lists only. They are
-a judgement, as in Hausner's method, and another searcher might choose
-differently.
+The additions were chosen by reading the development records only:
+conspecific* and competit* from step 2's risk list, behavio* from step 3,
+and activ* from the development failures on the behaviour block, where
+"active" is common but narrowly misses step 2's pool ceiling (step 2b
+prints its counts). They are a judgement, as in Hausner's method, and
+another searcher might choose differently.
 
 Reads case-pack/cache/moran-2021/pool.csv and
 case-pack/data/moran-2021/fields/ti-ab-only.csv. Writes
@@ -55,10 +58,11 @@ MIN_IN_FAILURES = 0.20
 MAX_IN_POOL = 0.05
 MIN_LENGTH = 4
 SHOWN = 15
+OUTSIDE_THRESHOLDS = {"active": "behaviour"}
 
 HEAD_WORDS = {"behaviour": Terms("behavio*"), "risk": Terms("risk*"), "condition": Terms("condition*")}
 
-# Chosen from the development lists printed by steps 2 and 3, and nothing else.
+# Chosen by reading the development records only; see the module docstring.
 ADDITIONS = {
     "behavio* anywhere (behaviour)": {"behaviour": Terms("behavio*")},
     "activ* (behaviour)": {"behaviour": Terms("activ*")},
@@ -121,6 +125,13 @@ def main():
         mined = mine(failures, tokens, pool_df, n_pool)
         shown = ", ".join(f"{w} {c}/{len(failures)} (pool {p:.1%})" for _, w, c, p in mined[:SHOWN])
         lines.append(f"- **{block}** ({len(failures)} development failures): {shown or 'none'}")
+
+    lines += ["", "## Step 2b: a word chosen outside the step 2 thresholds", ""]
+    for word, block in OUTSIDE_THRESHOLDS.items():
+        failures = [i for i in dev if flags[i][block] == "0"]
+        count = sum(1 for i in failures if word in tokens[i])
+        lines.append(f"- **{word}** ({block}): {count} of {len(failures)} development failures, "
+                     f"{pool_df[word] / n_pool:.1%} of pool records")
 
     lines += ["", "## Step 3: failures that contain the block's head word elsewhere", ""]
     for block in blocks:

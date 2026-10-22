@@ -12,6 +12,10 @@ Words of at least 4 letters in at least 20% of the development records that fail
 - **risk** (7 development failures): hopping 2/7 (pool 0.1%), nests 2/7 (pool 1.4%), conspecific 3/7 (pool 2.3%), supplemented 2/7 (pool 1.6%), brood 2/7 (pool 1.6%), swimming 2/7 (pool 1.7%), morphology 2/7 (pool 2.4%), prevalence 2/7 (pool 3.2%), deprived 2/7 (pool 3.3%), chemical 2/7 (pool 3.5%), extent 2/7 (pool 3.6%), remains 2/7 (pool 3.8%), additional 2/7 (pool 4.0%), difference 2/7 (pool 4.4%), competition 2/7 (pool 5.0%)
 - **behaviour** (17 development failures): conspecific 5/17 (pool 2.3%), manipulated 4/17 (pool 2.6%), deprivation 5/17 (pool 3.8%), deprived 4/17 (pool 3.3%), chemical 4/17 (pool 3.5%), additional 4/17 (pool 4.0%)
 
+## Step 2b: a word chosen outside the step 2 thresholds
+
+- **active** (behaviour): 6 of 17 development failures, 5.2% of pool records
+
 ## Step 3: failures that contain the block's head word elsewhere
 
 - **condition**: 4 of 5

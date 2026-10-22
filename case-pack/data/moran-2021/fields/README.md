@@ -43,7 +43,7 @@ Of the 53 included records that fail on pool text, 36 fail the behaviour block, 
 
 - The 137 included records were split at random (seed 7) into 69 for development and 68 for validation.
 - For each block, the development records that fail it were mined for words in at least 20% of them and at most 5% of the pool, and checked for the block's head word elsewhere in the text.
-- Three additions were chosen from the development lists only: `behavio*` on its own in the behaviour block (12 of the 17 development failures on that block contain it, but not within five words of the block's other terms), `activ*` in the behaviour block, and `conspecific*` and `competit*` in the risk block.
+- Three additions were chosen by reading the development records only: `behavio*` on its own in the behaviour block (12 of the 17 development failures on that block contain it, but not within five words of the block's other terms); `activ*` in the behaviour block (*active* is in 6 of those 17 failures but in 5.2% of the pool, just over the mining ceiling, so it was taken from the development failures rather than the mined list); and `conspecific*` and `competit*` in the risk block, from the mined list.
 
 | Strategy | Development (of 69) | Validation (of 68) | Pool records retrieved |
 |---|---|---|---|
@@ -52,7 +52,7 @@ Of the 53 included records that fail on pool text, 36 fail the behaviour block, 
 
 `term-mining.md` gives each addition separately.
 
-**A note on method.** A first, exploratory look mined the failures among all 137 included records, and suggested `forag*` for the risk block. That word is not in the development-only list and is not used: an addition chosen with sight of the validation records would make the validation meaningless.
+**A note on method.** A first, exploratory look mined the failures among all 137 included records, and suggested `forag*` for the risk block. Because that look included the validation records, `forag*` is not used: an addition chosen with sight of the validation records would make the validation meaningless.
 
 **Limits.**
 - The pool is what the original search retrieved, not the database. The 769 extra pool records are a floor for the cost: in a database, `behavio*` on its own would add far more.

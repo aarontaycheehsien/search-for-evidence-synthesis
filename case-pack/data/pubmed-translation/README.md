@@ -17,4 +17,4 @@ What the rows show:
 
 - Line 1 matches nothing. Line 3's two non-existent headings match nothing either, but its third heading, *Psychotherapy*, is exploded and so covers *Cognitive Behavioral Therapy*.
 - The combined strategy returns 186 records; with line 1 replaced by the real heading, *Depressive Disorder, Treatment-Resistant*, it returns 209. Both admit the same 12 of the 16 included reports.
-- The four not admitted are two that fail the condition block (Feldman 2009, PMID 19232571, and the Nakagawa 2014 protocol, 25335963, neither of which uses the block's phrases or carries the heading) and the two that fail the trial-design block (the CoBalT letter, 23588772, and the ACP Journal Club commentary, 23706799).
+- The four not admitted are two that fail the condition block (Feldman 2009, PMID 19232571, and the Nakagawa 2014 protocol, 25335963, neither of which uses the block's phrases or carries the heading) and the two that fail the trial-design block (the ACP Journal Club commentary, 23588772, and the CoBalT authors' reply letter, 23706799).
