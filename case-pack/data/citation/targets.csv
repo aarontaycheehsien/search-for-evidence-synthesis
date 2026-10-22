@@ -1,0 +1,15 @@
+review,report,doi,pmid,openalex_id,why_missing_from_pool,seeds_it_cites,seeds_citing_it,reached_in_one_round,note
+CD010558,"Town 2017, J Affect Disord 214:15-25",10.1016/j.jad.2017.02.035,28266318,W2592399410,entry-date limit,W2140815719;W2233786344,,forward,The study's only journal report
+CD010558,"Nakagawa 2017, J Clin Psychiatry 78(8):1126-35",10.4088/JCP.15m10511,28252882,W2594090197,entry-date limit,,,no,OpenAlex holds no references for this record (referenced_works_count 0)
+CD010558,"Wiles 2008 (CoBalT pilot), Behav Cogn Psychother 36:21-33",10.1017/S135246580700389X,,W2066146596,not in PubMed,,W2140815719;W2047582412;W2137111843,backward,The study's only report
+CD010558,"Abel 2016, J Consult Clin Psychol 84(8):726-37",10.1037/ccp0000101,27100125,W2336082226,entry-date limit,W2093437418,,forward,
+CD010558,"Wiles 2016, Lancet Psychiatry 3(2):137-44",10.1016/S2215-0366(15)00495-2,26777773,W2225653379,entry-date limit,W2140815719;W2074056096;W2137111843,,forward,
+CD010558,"ACP Journal Club 2013, Ann Intern Med 158(8):JC7",10.7326/0003-4819-158-8-201304160-02007,23588772,W2046758341,NOT block and design block,,,no,"Its one OpenAlex reference is another trial (STAR*D); the CoBalT paper it comments on appears only as text in the abstract field"
+CD010558,"Wiles 2013, Lancet 381(9880):1814-5 (authors' reply)",10.1016/S0140-6736(13)61119-8,23706799,W2098107547,NOT block and design block,W2140815719,,forward,
+CD011787,"Blaisdell 2016, Med Decis Making 36(4):479-89",10.1177/0272989x15607855,26506958,W2274302245,entry-date limit,W1983670362;W2053564023;W2172264114,,forward,
+CD011787,"Dube 2016, Qual Health Res 26(3):411-25",10.1177/1049732315573207,25711847,W2091327588,entry-date limit,W1983670362;W2068933068;W2134180949,,forward,
+CD011787,"Sobo 2016, Med Anthropol 35(6):529-46",10.1080/01459740.2016.1145219,26814029,W2331415818,entry-date limit,W2068933068,,forward,
+CD011787,"Figueiredo 2011, Rev Lat Am Enfermagem 19(3):598-605",10.1590/s0104-11692011000300020,,W2018606257,not in PubMed,W196910698,,forward,
+CD011787,"Guillaume 2004, Health Informatics J 10(1):5-22",10.1177/1460458204040664,,W1973190708,not in PubMed,W1798570304;W2031710289,,forward,OpenAlex lists the authors as Preston and Bath
+CD011787,"Tadesse 2009, Arch Med Sci 5(2):233-40",,,W168833950,not in PubMed,,,no,"Seven references in OpenAlex, none a seed; no seed cites it"
+CD011787,"Tomlinson 2013, Diversity and Equality in Health and Care 10(2):101-13",,,,not in PubMed,,,no,Not found in OpenAlex
