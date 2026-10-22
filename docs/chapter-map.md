@@ -109,10 +109,10 @@ PubMed is the running case through this part. Every PubMed and NLM claim goes in
 
 | Source section | Anchor | Treatment |
 |---|---|---|
-| Ch 11 Understanding, transforming and routing queries | `#query-transformation` | Adapt |
-| Ch 4: "The words sent to retrieval may not be the words you typed" | `#beyond-boolean` | Adapt |
+| Ch 11 Understanding, transforming and routing queries | `#query-transformation` | Not used |
+| Ch 4: "The words sent to retrieval may not be the words you typed" | `#beyond-boolean` | Compress |
 
-**New:** eligibility criteria versus search concepts, and why not every criterion becomes a block; term mining and the objective approach (Hausner et al., 2012, 2015); PubMed automatic term mapping (NLM, n.d.-a); LLM-drafted Boolean strategies (Wang et al., 2023; Staudinger et al., 2024); one worked translation with a quiet error; the separate roles of PRESS and PRISMA-S.
+**Drafted 2026-10-22.** Adapted from Ch 4 "The words sent to retrieval may not be the words you typed" (`#beyond-boolean`, commit `99bfb9c`): the four jobs between the typed words and the index (analysis, execution rules, understanding, transformation) and the point that transformation is not retrieval, compressed into the opening of `sec-dev-system`. Ch 11 (`#query-transformation`) was not used; its routing and feedback material belongs in Chapters 6 and 8. New: criteria versus blocks (Cochrane Handbook 4.4.2, MECIR C32; Bramer et al., 2018), `tbl-dev-criteria`; the conceptual approach (Bramer et al., 2018; MECIR C33) and the objective approach with its evidence (Hausner et al., 2012, 2015, 2016); PubMed automatic term mapping and the case-pack observations (`case-pack/data/pubmed-translation/`), including silent zero-result headings that PubMed drops from an `OR` line; mapping defaults in Ovid, Embase and EBSCOhost (claims checked 2026-10-22); LLM drafting evidence (Wang et al., 2023; Staudinger et al., 2024; Adam et al., 2024; Park et al., 2025) and a drafted strategy checked against CD010558's included reports; vendor AI query drafting (claims checked 2026-10-22); translation tools and the Polyglot trial (Clark et al., 2020); the Moran field-dependence test, 53 of 137 included records lost on title and abstract (`case-pack/data/moran-2021/fields/`); term mining on a development and validation split to repair it; errors in strategies (Sampson & McGowan, 2006; Franco et al., 2018; Salvador-Oliván et al., 2019), PRESS and PRISMA-S; five exercises.
 
 ### 8. Citation, similarity and other supplementary routes
 

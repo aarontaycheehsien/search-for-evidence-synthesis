@@ -1,0 +1,16 @@
+query,pubmed_translation,results,what_it_shows
+treatment resistant depression psychotherapy,"(""depressive disorder, treatment resistant""[MeSH Terms] OR (""depressive""[All Fields] AND ""disorder""[All Fields] AND ""treatment resistant""[All Fields]) OR ""treatment-resistant depressive disorder""[All Fields] OR (""treatment""[All Fields] AND ""resistant""[All Fields] AND ""depression""[All Fields]) OR ""treatment resistant depression""[All Fields]) AND (""psychotherapie""[All Fields] OR ""psychotherapy""[MeSH Terms] OR ""psychotherapy""[All Fields] OR ""psychotherapies""[All Fields] OR ""psychotherapy s""[All Fields])",1439,"Untagged words: automatic term mapping adds a heading and variants, including a German spelling"
+treatment-resistant depression[mh],"""depressive disorder, treatment resistant""[MeSH Terms]",3174,A non-standard heading form mapped silently to the official heading
+"""Depressive Disorder, Treatment-Resistant""[mh]","""depressive disorder, treatment resistant""[MeSH Terms]",3174,The official heading
+"""Cognitive Behavioural Therapy""[mh]","""Cognitive Behavioural Therapy""[mh]",0,British spelling of a heading: no mapping and no results
+"""talking therapies""[mh]","""talking therapies""[mh]",0,Not a heading: no mapping and no results
+"""psychological therapies""[mh]","""psychological therapies""[mh]",0,Not a heading: no mapping and no results
+psychotherapy AND depression,"(""psychotherapie""[All Fields] OR ""psychotherapy""[MeSH Terms] OR ""psychotherapy""[All Fields] OR ""psychotherapies""[All Fields] OR ""psychotherapy s""[All Fields]) AND (""depressed""[All Fields] OR ""depression""[MeSH Terms] OR ""depression""[All Fields] OR ""depressions""[All Fields] OR ""depression s""[All Fields] OR ""depressive disorder""[MeSH Terms] OR (""depressive""[All Fields] AND ""disorder""[All Fields]) OR ""depressive disorder""[All Fields] OR ""depressivity""[All Fields] OR ""depressive""[All Fields] OR ""depressively""[All Fields] OR ""depressiveness""[All Fields] OR ""depressives""[All Fields])",53914,Untagged words: mapped to headings and word variants
+psychotherap* AND depress*,"""psychotherap*""[All Fields] AND ""depress*""[All Fields]",37587,"Truncation: no automatic term mapping, All Fields only"
+"""treatment resist*""[tiab]","""treatment resist*""[Title/Abstract]",27655,Truncated phrase in title and abstract
+"""treatment resistant""[tiab:~2]","""treatment resistant""[Title/Abstract:~2]",39114,Proximity search in title and abstract
+"""Treatment Resistant Depression""[Mesh]","""Treatment Resistant Depression""[Mesh]",0,A plausible heading name in quotes that is not the heading: no mapping and no results
+"""Cognitive Behavioral Therapy""[Mesh]","""Cognitive Behavioral Therapy""[MeSH Terms]",45113,The heading in its official (US) spelling
+"""Psychotherapy""[Mesh]","""Psychotherapy""[MeSH Terms]",244031,An exploded heading that includes Cognitive Behavioral Therapy
+"""Psychological Therapies""[Mesh] OR ""Cognitive Behavioural Therapy""[Mesh] OR ""Psychotherapy""[Mesh]","""Psychotherapy""[MeSH Terms]",244031,Terms that match nothing are dropped from the translation without a warning
+"""treatment resistant depression""[tiab]","""treatment resistant depression""[Title/Abstract]",5735,"A phrase in the phrase index, searched in title and abstract"
