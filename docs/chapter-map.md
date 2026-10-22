@@ -116,6 +116,8 @@ PubMed is the running case through this part. Every PubMed and NLM claim goes in
 
 ### 8. Citation, similarity and other supplementary routes
 
+**Drafted 2026-10-22.** Adapted from Ch 11 "Before phrasing: identify the query object" and "Using several query objects together" (`#query-transformation`, commit `99bfb9c`): the idea that a route is defined by what stands for the need, compressed into `tbl-supp-routes`, and the points on seed-based methods (Greenhalgh & Peacock, 2005; Sjögårde & Ahlgren, 2024), both re-verified. Ch 12 (`#agentic-search`) was not used; seed dependence in agentic tools belongs in Chapter 6. New: TARCiS terminology and recommendations (Hirt et al., 2024) and the evidence on citation searching (Hirt et al., 2023; Wright et al., 2014; Briscoe et al., 2020); the case-pack citation test on CD010558 and CD011787 (`case-pack/data/citation/`); citation-index coverage (Martín-Martín et al., 2021; Culbert et al., 2025); the citation and similarity tools table (claims checked 2026-10-22); similarity routes (Lin & Wilbur, 2007; Sampson et al., 2016; Lau & Golder, 2025); registers, grey literature and contacts (Cochrane Handbook MECIR C27 to C31; Cooper et al., 2018); recording; five exercises.
+
 | Source section | Anchor | Treatment |
 |---|---|---|
 | Ch 11: seeds, citation edges and feedback | `#query-transformation` | Adapt |

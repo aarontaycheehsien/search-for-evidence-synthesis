@@ -1,16 +1,225 @@
 # Citation, similarity and other supplementary routes {#sec-supplementary}
 
-::: {.callout-note}
-## Not yet drafted
+A database strategy finds records whose words, headings and fields match its terms. Everything it misses, it misses for one of the reasons in @sec-missing-boundaries: the report is not in the database, its record does not carry the words or headings the strategy uses, a limit removes it, or it falls below a cap. A second database searched with the same strategy shares most of those reasons. A route that works by a different mechanism does not.
 
-This chapter is an outline. See the [plan](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/plan.md) and [chapter map](https://github.com/aarontaycheehsien/search-for-evidence-synthesis/blob/main/docs/chapter-map.md) for its sources and status.
-:::
+This chapter covers those routes: following citations, asking a system for records similar to a known one, searching trial registers and grey literature, and asking people. Each finds studies the strategy cannot, and each has its own boundary. The question for every one is the same: what can it add, under what coverage, and how is it recorded so that a reader can judge it.
 
 **After this chapter you should be able to** decide what a supplementary route can add, under what coverage, and how to record it.
 
-## Planned contents
+## A different mechanism fails differently {#sec-supp-mechanism}
 
-- Citation searching terminology and reporting [@hirt2024].
-- Citation-index coverage as a boundary; seed selection and iteration.
-- Similar-articles features and AI research assistants as supplementary routes.
-- Registers, theses and other sources treated as coverage questions, using CD011787's four studies absent from PubMed.
+What stands for the information need differs from route to route, and so does what each route can reach (@tbl-supp-routes).
+
+| Route | What stands for the need | What it can reach that the strategy cannot | What it cannot reach |
+|---|---|---|---|
+| Database strategy | Words, headings and fields | (the baseline) | Reports outside the database; records without the strategy's words or headings; records removed by limits |
+| Backward citation searching | A known study's reference list | Older reports, whatever their wording or indexing, that the known study cites | Reports the known studies do not cite; references the index failed to capture |
+| Forward citation searching | Works that cite a known study | Later reports that cite it, including late-indexed and differently worded ones | Reports that do not cite the known studies; citing works the index does not hold |
+| Similar articles | A known record, compared by words or links | Records close to it in vocabulary or citation neighbourhood | Records unlike the seed; anything outside the tool's corpus |
+| Trial registers | A trial's registration | Trials with no journal report, and links between a trial's reports | Unregistered studies; non-trial designs |
+| Grey literature and contacts | An organisation, website or person | Reports outside indexed journals; unpublished and ongoing studies | Whatever those sources and people do not know of or share |
+
+: Routes to the evidence and what each can reach. {#tbl-supp-routes}
+
+A route earns its place by failing for different reasons from the strategy. That is also what makes it a useful check: @sec-stop-search showed that a capture–recapture estimate is most trustworthy when the two routes are independent, and two databases searched with one strategy are not.
+
+How much other routes add depends on the topic. In a systematic review of complex evidence, whose 495 sources included 213 empirical studies and 261 theoretical or overview sources, @greenhalgh2005 traced how each source had been found. Only 30% came from the protocol's database and hand searches. Snowballing found 51%: 44% by checking reference lists and 7% by forward citation tracking. Another 24% came from the authors' own knowledge or contacts. Electronic database searching took about two weeks and yielded "one useful paper every 40 minutes"; hand searching, "one paper per nine hours"; citation tracking of selected papers, "around one useful paper for every 15 minutes". These are figures from one review of complex evidence, not general rates.
+
+## Citation searching {#sec-supp-citation}
+
+### Terms
+
+The TARCiS statement standardised the vocabulary [@hirt2024]. *Citation searching* is the umbrella term. *Seed references* are "relevant articles that are known beforehand and used as a starting point". *Backward citation searching* retrieves and screens the references the seeds cite; *reference list checking* is the manual version of it. *Forward citation searching* retrieves and screens the works that cite the seeds. *Co-cited* and *co-citing* citation searching retrieve works cited together with a seed, or citing the same references as a seed. *Iterative citation searching* repeats the process, using newly included records as the next seeds.
+
+### When and how
+
+TARCiS makes ten recommendations. Those on practice are, in brief:
+
+- For topics that are difficult to search, backward and forward citation searching "should be seriously considered". For topics that are easier to search and covered by a highly sensitive strategy, they are "not explicitly recommended", but checking the reference lists of included records can confirm the strategy's sensitivity.
+- The seeds should be all the records included from the primary search.
+- Backward searching should ideally screen titles and abstracts of the seeds' references as provided by a citation index, not titles alone from reference lists.
+- Combining two citation indexes "should be considered if access is available", especially when a seed is missing from one index.
+- Results should be deduplicated before screening.
+- If new eligible records are found, another iteration should be considered.
+- "Standalone citation searching should not be used for literature searches that aim at completeness of recall."
+
+The Cochrane Handbook makes checking the reference lists of included studies and relevant reviews mandatory (MECIR C30), and forward citation searching good practice but "not a requirement" [@lefebvre2025; @lefebvre2024ts]. It adds a diagnostic use: "If the citation searches yield a large number of additional relevant records, this may suggest that the original searches were not optimal and should be revisited" [@lefebvre2025, sec. 4.4.11].
+
+### What it adds
+
+The evidence is consistent about direction and inconsistent about size. A scoping review found 47 methodological studies of citation searching; of the 45 that assessed its benefit, 43 found added value, though many qualified it, and almost all had used a single citation index [@hirt2023]. In a case study of a review of multiple risk behaviour interventions, @wright2014 ran forward citation searches on its 40 included studies in Google Scholar, Scopus, Web of Science and Ovid MEDLINE. After deduplication there were 1,789 records to screen, about five days of extra work, and one additional included study, which had not been in the databases when the original searches were run. The authors concluded that, for that review, citation searching "may not be the best use of valuable time and resources".
+
+Practice lags the guidance. Of 198 Cochrane reviews examined by @briscoe2020, 172 (87%) reported backward citation searching and 18 (9%) forward; only one review reported all the details the authors' checklist asked for, for each direction.
+
+## The case pack: citation searching from what the search found {#sec-supp-case}
+
+The two health reviews in the case pack lost included reports at different boundaries: coverage, an entry-date limit, `NOT` lines (@tbl-cd010558; `case-pack/reference-sets/README.md`). Suppose each review team had done one round of backward and forward citation searching, as TARCiS recommends, with the included reports the MEDLINE search had returned as seeds. Which of the missing reports would it have reached? The case pack answers this in OpenAlex (`case-pack/data/citation/`).
+
+| | CD010558 | CD011787 |
+|---|---|---|
+| Seeds: included reports in the MEDLINE pool | 10 | 31 |
+| Missing reports that are journal publications | 7 | 7 |
+| Of which not in PubMed at all | 1 | 4 |
+| Reached by forward citation searching | 4 | 5 |
+| Reached by backward citation searching | 1 | 0 |
+| Not reached | 2 | 2 |
+| Unique records from one round, at the time of the original search | 678 | 1,318 |
+| Size of the MEDLINE pool, for comparison | 2,815 | 4,369 |
+
+: One round of citation searching in OpenAlex from the included reports each MEDLINE pool returned. Checked on 22 October 2026. From `case-pack/data/citation/`. {#tbl-citation-case}
+
+**What it reached.** In CD010558, both studies that the pool lacked entirely. The Town trial's only journal report cites the CoBalT trial's main paper and another included trial, so forward searching finds it, although an entry-date limit had excluded it from the MEDLINE re-run (@sec-recording-updating). The CoBalT pilot, which has no PubMed record, is cited by three CoBalT reports, so backward searching finds it. In CD011787, forward searching reaches the three late-indexed reports and two of the four studies that are not in PubMed. Citation links ignore wording, indexing dates and the searched database's coverage, which is exactly why they reach what the strategy missed.
+
+**What it missed, and why.** Three of the four misses are failures of the index; one is a limit of the method.
+
+- CD010558's Nakagawa results paper has no reference list in OpenAlex, so no forward link to any seed, including its own trial's protocol, can be followed.
+- A journal-club commentary on CoBalT has one reference in OpenAlex, to a different trial; the paper it comments on appears only as text in its abstract field.
+- CD011787's Tadesse 2009 has seven references in OpenAlex, none to a seed, and no seed cites it. Here the links may simply not exist: one round from these seeds cannot reach it in any index.
+- Tomlinson 2013 is not in OpenAlex at all.
+
+A second index might hold some of the missing links, which is why TARCiS suggests two.
+
+**What it cost.** One round produced 678 and 1,318 records, before removing those the database search had already returned. Measured against the reports it found that the search had missed, its yield was low: 5 in 678 and 5 in 1,318. But the yield is not the point. In CD010558, three of the five reports it found were missing because of the strategy's entry-date limit. Finding them would have been the signal the Handbook describes, that "the original searches were not optimal and should be revisited", and would have led the team to the limit's field (@sec-recording-updating).
+
+**Limits.** The seeds are chosen with hindsight: a review team knows its included reports only after screening. The results describe one index on one day; OpenAlex's links change as references are added and records merged. And among the CD010558 seeds' references, OpenAlex lists a record credited with 169,710 citations that is not what the seeds cited: index errors enter the screening set too.
+
+## Citation indexes are boundaries too {#sec-supp-indexes}
+
+A citation search can only follow the links its index holds. Coverage differs widely. For 2,515 highly cited documents from 2006, @martinmartin2021 found that Google Scholar held 88% of all the citations found by any of six sources, and a quarter of all citations were found only by Google Scholar. Scopus found 93% of the citations Web of Science found, and Web of Science 83% of those Scopus found. Comparing OpenAlex with Web of Science and Scopus for recent publications that all three hold, @culbert2025 found OpenAlex's reference numbers and internal coverage comparable to both, while urging caution because of "volatility and data quality issues".
+
+@tbl-citation-tools summarises what the main sources document about their citation and similarity features, as of October 2026.
+
+| Source | Citations and references | Similarity feature | Limits and caveats |
+|---|---|---|---|
+| PubMed | "Cited by" from publisher data and NCBI resources, "may not be a complete list"; reference lists for PMC open-access articles and where publishers supplied them | Similar articles: words from title, abstract and MeSH terms, weighted; no other fields | Display and export up to 10,000 [@pubmedhelp] |
+| Web of Science Core Collection | Citing articles and cited references within the Core Collection | Related Records: records that share two or more cited references | Citing counts cover all editions, but access depends on the subscription; export 1,000 records at a time [@wosfullrecord; @wosallcited; @wosexport] |
+| Scopus | Cited by and references | Similar documents, based on authors, keywords or references; weighting not documented | Up to 20,000 items per export [@scopussimilar; @scopusexport] |
+| Google Scholar | Cited by | Related articles; method not documented | Up to 1,000 results per query; no bulk access; references parsed automatically [@scholarhelp] |
+| OpenAlex | References from publisher metadata and, for open-access works, the full text; citations are the matched references | Related works, described as recent works sharing the most topics | Many Crossref records carry no references [@openalexcitations; @openalexwork] |
+| citationchaser (Lens.org) | All references and citations of a set of seeds at once | None | Its README calls the Lens token free; Lens's terms now require an institutional subscription for the API; the web app needs no token [@citationchaserreadme; @lensapiterms; @haddaway2022] |
+
+: Citation and similarity features as documented on 22 October 2026. Each claim is dated in `claims/register.csv`. {#tbl-citation-tools}
+
+Two practical points follow. First, the index used is part of the method and belongs in the record, with the date. Second, batch tools matter. Collecting references and citations seed by seed in a web interface is slow and error-prone; citationchaser was built to collect them "from across an entire set of starting records in a single step" [@haddaway2022].
+
+## Similarity and seed-based routes {#sec-supp-similarity}
+
+Similarity routes start from a known record and return others like it, by words, by citation neighbourhood or by both. They are not citation searching in TARCiS's sense, because they do not follow a defined relation, and they inherit their corpus and their ranking.
+
+**Text similarity.** PubMed's Similar articles compares "words from the title, abstract, and MeSH terms using a word-weighted algorithm", pre-computed for every record [@pubmedhelp; @lin2007]. In a test on 16 updated reviews, a Clinical Queries search combined with related articles recalled 91% of the new studies, against 69% and 66% for each alone, but related articles "showed least stability over time" [@sampson2016].
+
+**Citation neighbourhoods.** @sjogarde2024 compared ways of finding further relevant publications from five seeds drawn from each of 3,000 systematic reviews. Co-citation did better than bibliographic coupling or direct citation, and combining all three did best; adding PubMed's related-article score added little to total recall. Co-citation cannot find new work that nobody has cited yet, which is an argument for keeping direct citation in the mix.
+
+**Seed-based discovery tools.** Connected Papers builds a graph from co-citation and bibliographic coupling over the Semantic Scholar corpus [@connectedpapers]. Litmaps returns the most interconnected articles among a seed's citations, references and co-citations, with a separate text-similarity option [@litmapsalgorithms]. ResearchRabbit searches the citations and references of the seeds and ranks by influence in that network [@researchrabbithow]. All three rank and cut: the user sees the strongest connections, not the whole neighbourhood, which makes them useful for exploring and weak as a systematic route.
+
+**AI research assistants.** These start from a question rather than seeds (@sec-ranking-ai). In four case studies, Elicit found on average 39.5% of the included studies, against 94.5% for the original reviews' searches, but it also found 11 eligible studies the reviews had not included, and its searches could not be replicated because "Elicit does not provide access to the complete search strategy" [@lau2025]. That profile fits a supplementary route, and only that (@sec-validation-claims).
+
+## Registers, grey literature and people {#sec-supp-other}
+
+Some studies are not in any bibliographic database. For these, the route is a coverage decision.
+
+**Trial registers.** The Cochrane Handbook makes searching trials registers mandatory for intervention reviews, through ClinicalTrials.gov and the WHO ICTRP portal searched separately (MECIR C27), and advises against limiting by trial status [@lefebvre2025]. The ICTRP portal is not itself a registry: it groups records about the same trial from about 20 data providers, updated weekly, but on 12 October 2026 several providers' latest imports were months old [@ictrp]. In CD010558, two included studies were represented by registry records as well as journal reports, and the Nakagawa trial's results paper gives its registration in the Japanese UMIN registry. A registry record is also a route to a trial's other reports.
+
+**Other databases and grey literature.** Four of CD011787's 38 included studies have no PubMed record: qualitative studies in a Brazilian nursing journal, a health informatics journal, a general medical journal (a study from Ethiopia) and a journal on diversity in health care (`case-pack/reference-sets/README.md`). The review also searched Embase, CINAHL and Anthropology Plus. Citation searching in OpenAlex reached two of the four (@tbl-citation-case). Which sources hold the other two is a coverage question the case pack does not settle; it is the question to ask when choosing sources for a qualitative review.
+
+**People and organisations.** The Handbook rates contacting individuals and organisations about unpublished or ongoing studies as highly desirable (MECIR C31). In a review of public health and environmental enhancement, a protocol built on contacting organisations and experts, supplemented by web searching, found 9 included studies that the bibliographic databases did not hold, from 453 records screened; the database searches found 2 unique included studies from 21,409 [@cooper2018]. One more included study came only from backward citation chasing. For that topic, much of the evidence lay outside the indexed journals.
+
+## Recording a supplementary route {#sec-supp-recording}
+
+A supplementary route is only as useful as its record. TARCiS item 10 lists what to report for citation searching:
+
+- the seed references, with a justification if they differ from the included records;
+- the direction: backward, forward, co-cited, co-citing;
+- the date of each search;
+- the number of iterations, and why searching stopped;
+- every citation index, and any tool used to reach it;
+- how results were deduplicated;
+- how they were screened;
+- the number of records, in the "other methods" side of the PRISMA 2020 flow diagram.
+
+The same structure fits the other routes (PRISMA-S items 3 to 7; @tbl-prisma-s). For a similarity or AI tool, record the seeds or the question, the tool and its mode, the date, any settings, how many results were shown and screened, and the identifiers of everything taken forward (@tbl-ai-record). For a registry, record the portal, the date, the query and any filters. For contacts, record whom, when and what was asked, and what came back.
+
+Report what each route added. A route that added nothing is evidence too: it tells the reader that the database searches had already found what that route could reach.
+
+## Exercises {#sec-supp-exercises}
+
+Inputs are in this chapter and the case pack: `case-pack/data/citation/` and `case-pack/reference-sets/`.
+
+### Exercise 8.1: Which route would have found it?
+
+For each of these losses from the case pack, name the route most likely to recover the study, and say why the database strategy could not.
+
+a. The CoBalT pilot trial, whose only report has no PubMed record.
+b. The Town trial's only journal report, excluded by an entry-date limit.
+c. A CoBalT letter removed by the strategy's `NOT` lines.
+d. CD011787's Tomlinson 2013, in a journal held neither in PubMed nor in OpenAlex.
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+a. **Backward citation searching** from the CoBalT reports, which cite it (@tbl-citation-case), or a database that indexes the journal. MEDLINE cannot return a record it does not hold.
+
+b. **Forward citation searching** from the included trials it cites, or rerunning the search with an update window on the right date field (@sec-recording-updating). Citation links do not depend on indexing dates.
+
+c. **None needed for the study**, since other CoBalT reports were found; if it mattered, forward searching from the trial's main paper would be the route. The `NOT` line is a deliberate exclusion, so record it.
+
+d. **Other databases and grey literature**, such as nursing, social-science or regional databases, or **contacting** the review's authors or experts in the field. A citation index that does not hold the record cannot reach it, however good the seeds.
+:::
+
+### Exercise 8.2: Why was the Nakagawa results paper not reached?
+
+Using `case-pack/data/citation/README.md`, explain why one round of citation searching in OpenAlex did not reach the Nakagawa 2017 results paper, although its trial's protocol was a seed. What would you try next?
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+Forward citation searching from the protocol can find the results paper only if the index holds the results paper's references and has matched one of them to the protocol. OpenAlex holds no reference list for the results paper (`referenced_works_count` is 0), so the link does not exist in that index. Backward searching cannot help either: the seeds are older and cannot cite it.
+
+Next steps, in order of cost:
+
+1. Run the forward search from the protocol in a second index, such as Web of Science or Scopus, as TARCiS recommends when a seed's links may be missing from one index.
+2. Search the trial's registration, here in the UMIN registry, which may list the results publication.
+3. Search the database for the trial's authors or acronym, since a trial's reports usually share them.
+4. Contact the authors.
+
+The lesson for the record: a route that found nothing for a given report may have been blind to it, not proof that nothing existed.
+:::
+
+### Exercise 8.3: Is it worth it?
+
+Using @tbl-citation-case, compute the share of records from one round of citation searching that were missing included reports, for each review. Compare it with the share of included reports in each MEDLINE pool (10 of 2,815 for CD010558; 31 of 4,369 for CD011787). What does the comparison show, and what does it miss?
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+Citation round: 5 of 678 (0.74%) for CD010558 and 5 of 1,318 (0.38%) for CD011787. MEDLINE pools: 0.36% and 0.71%. The two routes have similar, low precision, and some of the citation records would have been duplicates of the pool and removed before screening, which lowers the screening cost.
+
+What the comparison misses is that the two routes find different things. Every report the citation round counted here was one the MEDLINE search had missed, including both of CD010558's missing studies and two studies that are not in PubMed. Precision measures cost per record, not what a route can reach that no other route does. In @wright2014, by contrast, one round added a single study for 1,789 records and five days' work. Whether citation searching is worth it depends on how much the strategy misses for reasons citation links can get round, which is why TARCiS recommends it most strongly for topics that are hard to search.
+:::
+
+### Exercise 8.4: Reporting a citation search
+
+Write the methods paragraph for the citation search in @tbl-citation-case for CD010558, following TARCiS item 10.
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+"We conducted one iteration of backward and forward citation searching on 22 October 2026, using as seeds the 10 included reports retrieved by the MEDLINE search (listed in [supplementary file]). References and citing works were retrieved from OpenAlex through its search interface, restricted for forward searching to works published before 17 May 2017. The 678 records retrieved were deduplicated against each other and against the database results by DOI and title, and screened in the same way as the database results. [n] further reports were included. We did not run a second iteration because [reason]. OpenAlex holds no reference list for one included report (Nakagawa 2017), so forward citation links from that report could not be followed."
+
+The paragraph names the seeds and why they were chosen, the directions, the date, the index and access route, the iterations and the reason for stopping, deduplication, screening and the count for the flow diagram. The last sentence records a known limit of the index, which a reader needs to judge what the route could not see.
+:::
+
+### Exercise 8.5: A seed-based tool instead of citation searching?
+
+A colleague proposes replacing forward and backward citation searching in Scopus with a seed-based discovery tool, because it "shows the whole citation network at a glance". Using @sec-supp-similarity and @tbl-citation-tools, what would you ask before agreeing?
+
+::: {.callout-tip collapse="true"}
+## Worked answer
+
+1. **What corpus?** Connected Papers draws on Semantic Scholar; Litmaps and ResearchRabbit on Crossref, Semantic Scholar and OpenAlex. Does that corpus hold the review's seeds and their references and citations? Check the included studies.
+2. **Which relations, and how many?** These tools rank and show the strongest connections, not every citing and cited work. Citation searching under TARCiS screens all of them. A ranked selection of a neighbourhood is a similarity route, not citation searching.
+3. **Can the result be exported and recorded?** Can every record shown be exported with identifiers, and can the run be dated and repeated?
+4. **What has it been tested against?** Has it been compared with full citation searching on reviews like this one?
+
+A defensible answer is to keep full citation searching for the systematic route, using a batch tool to save time, and to use the seed-based tool, if at all, for exploration when developing the strategy (@sec-developing), recorded as such.
+:::
