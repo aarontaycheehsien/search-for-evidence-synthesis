@@ -1,0 +1,34 @@
+id,study_id,category,rank_dense,rank_bm25,cosine
+R001,S01,eligible study,5,2,0.806
+R002,S01,eligible study,4,3,0.806
+R003,S01,eligible study,8,19,0.758
+R004,S02,eligible study,16,22,0.669
+R005,S03,eligible study,11,17,0.722
+R006,S03,eligible study,19,24,0.649
+R007,S04,eligible study,18,23,0.654
+R008,S05,eligible study,7,7,0.764
+R009,S06,eligible study,22,14,0.607
+R010,S07,eligible study,6,10,0.798
+R011,S08,eligible study,13,16,0.717
+R012,S08,eligible study,17,6,0.663
+R013,S09,eligible study,9,9,0.757
+R014,S10,"on topic, ineligible",2,5,0.851
+R015,S11,"on topic, ineligible",14,15,0.682
+R016,S12,"on topic, ineligible",3,1,0.825
+R017,S13,"on topic, ineligible",23,28,0.520
+R018,S14,"on topic, ineligible",1,11,0.882
+R019,S15,"on topic, ineligible",15,20,0.671
+R020,S16,"on topic, ineligible",20,13,0.628
+R021,S17,"on topic, ineligible",21,27,0.622
+R022,S18,"on topic, ineligible",10,12,0.743
+R023,S19,"on topic, ineligible",12,8,0.720
+R024,N01,"off topic, shares words",25,25,0.424
+R025,N02,"off topic, shares words",27,30,0.362
+R026,N03,"off topic, shares words",26,32,0.410
+R027,N04,"off topic, shares words",28,21,0.358
+R028,N05,"off topic, shares words",24,26,0.433
+R029,N06,"off topic, shares words",31,4,0.254
+R030,N07,"off topic, shares words",29,33,0.333
+R031,N08,"off topic, shares words",32,29,0.206
+R032,N09,"off topic, shares words",33,31,0.162
+R033,N10,"off topic, shares words",30,18,0.298

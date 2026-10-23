@@ -122,7 +122,7 @@ Many AI research assistants are ranked systems with a cap built in. Two vendors'
 
 Both make sensible engineering choices for their purpose, and both mean that what a user sees is the top of a ranking whose signals include popularity and recency. An eligible study that is new, rarely cited or published outside a mainstream journal starts at a disadvantage that no later step can undo. @sec-representations and @sec-pipelines look at how these systems retrieve and rerank.
 
-The documentation itself moves. A library guide dated April 2026 quotes an earlier version of Consensus's page, under which the second stage re-ranked "the top 1,500 most relevant papers" [@corbitt2026]; the current page gives no figure. A cap is a product setting, and it should be checked, dated and recorded each time a tool is used.
+The documentation itself moves. A library guide dated April 2026 reproduces an earlier version of Consensus's page, under which the second stage re-ranked "the top 1,500 most relevant papers" [@corbitt2026]; the current help-centre page gives no figure, while the company's separate documentation site, which is undated, says that "the top 1,500 papers are re-ranked" [@consensusdocs]. A cap is a product setting, and it should be checked, dated and recorded each time a tool is used.
 
 ## Is a capped system suitable for systematic searching? {#sec-ranking-suitability}
 
