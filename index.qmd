@@ -3,7 +3,7 @@
 ::: {.callout-warning}
 ## Working draft
 
-This is an incomplete draft. Chapters marked "Not yet drafted" are outlines. Figures, counts and product claims may change before the first public edition. Please report errors through the repository's issue tracker.
+This is a first draft. Every chapter and appendix is written, but Chapters 5 and 6 are at a provisional depth until practising librarians have piloted the book. Figures, counts and product claims may change before the first edition. Please report errors through the repository's issue tracker.
 :::
 
 This book is for librarians and information specialists who already build structured Boolean searches and who support or conduct systematic, scoping, rapid or other evidence syntheses. It does not teach how to conduct a review or how to search a database for the first time. It explains how search systems decide which records a review team ever sees, so that you can:

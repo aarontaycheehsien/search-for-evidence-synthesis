@@ -19,7 +19,7 @@ Question query (written for the case pack): `Does poor nutritional condition, su
 | 500 | 0.10 | 0.23 | 0.41 | 0.09 | 0.36 |
 | 1,000 | 0.20 | 0.35 | 0.59 | 0.24 | 0.55 |
 | 2,000 | 0.41 | 0.55 | 0.79 | 0.46 | 0.82 |
-| Rank of the last one | about 4,882 | 4,797 | 4,494 | 4,846 | 4,499 |
+| Rank of the last one | about 4,848 | 4,797 | 4,494 | 4,846 | 4,499 |
 
 ## Recall of title-and-abstract inclusions within the top k
 
@@ -30,7 +30,7 @@ Question query (written for the case pack): `Does poor nutritional condition, su
 | 500 | 0.10 | 0.13 | 0.26 | 0.10 | 0.27 |
 | 1,000 | 0.20 | 0.23 | 0.45 | 0.27 | 0.48 |
 | 2,000 | 0.41 | 0.46 | 0.70 | 0.56 | 0.76 |
-| Rank of the last one | about 4,882 | 4,874 | 4,706 | 4,846 | 4,786 |
+| Rank of the last one | about 4,875 | 4,874 | 4,706 | 4,846 | 4,786 |
 
 ## Nearest neighbours of the 137 included records
 
@@ -65,7 +65,7 @@ A logistic regression (balanced class weights) trained on the title-and-abstract
 | 250 | 0.10 | 0.43 | 0.35 | 0.47 |
 | 500 | 0.20 | 0.61 | 0.55 | 0.71 |
 | 1,000 | 0.41 | 0.78 | 0.79 | 0.94 |
-| Rank of the last one | about 2,441 | 2,256 | 2,049 | 1,224 |
+| Rank of the last one | about 2,411 | 2,256 | 2,049 | 1,224 |
 
 ## Truncation
 

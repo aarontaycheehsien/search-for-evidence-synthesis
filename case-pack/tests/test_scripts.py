@@ -24,7 +24,7 @@ from indexing_checks import Adj, Record, Terms, cd010558_row, words  # noqa: E40
 from ranking_measures import measures as ranking_measures  # noqa: E402
 from pipeline_checks import rerank, rrf, union_top  # noqa: E402
 from representation_checks import neighbour_labels  # noqa: E402
-from ranking_checks import bm25_scores, expand, ranks, recall_at  # noqa: E402
+from ranking_checks import bm25_scores, expand, expected_last_rank, ranks, recall_at  # noqa: E402
 from stopping_checks import first_stop, read_log  # noqa: E402
 from term_mining import mine, split  # noqa: E402
 
@@ -126,6 +126,14 @@ class RankingChecksTest(unittest.TestCase):
         self.assertEqual(scores[2], 0.0)
         self.assertEqual(ranks(scores), [1, 2, 3])
         self.assertEqual(recall_at([1, 2, 3], [0, 1, 1], 2), 0.5)
+
+    def test_expected_last_rank_in_random_order(self):
+        # One eligible record among n sits, on average, in the middle.
+        self.assertEqual(expected_last_rank(9, 1), 5)
+        # Brute force over every placement of two eligible records among four.
+        from itertools import combinations
+        places = list(combinations(range(1, 5), 2))
+        self.assertAlmostEqual(expected_last_rank(4, 2), sum(max(p) for p in places) / len(places))
 
 
 class ParseEfetchTest(unittest.TestCase):

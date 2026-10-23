@@ -67,7 +67,7 @@ The Moran pool shows the same effect. The case pack ranks the pool by BM25 with 
 | 500 | 10% | 23% | 41% |
 | 1,000 | 20% | 35% | 59% |
 | 2,000 | 41% | 55% | 79% |
-| Rank of the last included record | | 4,797 | 4,494 |
+| Rank of the last included record | about 4,848 | 4,797 | 4,494 |
 
 : Recall of the Moran review's 137 included records within the top *k* of a BM25 ranking of its 4,882-record pool. From `case-pack/data/moran-2021/ranking/summary.md`. {#tbl-moran-cap}
 
@@ -75,7 +75,7 @@ Three readings follow.
 
 - **A cap turns ranking quality into recall.** If only the top 1,000 records could be seen, the better query would keep 59% of the included studies and the title query 35%. Both beat random order, and both lose most of what a complete screen would find.
 - **The query matters as much as the formula.** The strategy's richer vocabulary nearly doubles recall at 1,000 over the title's seven words. Changing *behaviours* to *behavio\** in the title query makes almost no difference, because the term is too common to carry weight.
-- **No static ranking finds everything early.** Under both queries the last included record sits within a few hundred places of the bottom of the pool. A screening tool that learns from the reviewers' decisions does better: in the case pack's active-learning simulations on the same pool, a median of 82% of included records were found within the first 20% of records screened (@sec-validation-variability).
+- **No static ranking finds everything early.** Under both queries the last included record sits within a few hundred places of the bottom of the pool. A screening tool that learns from the reviewers' decisions does better: in the case pack's active-learning simulations on the same pool, a median of 82% of included records were found within the first 20% of records screened with TF-IDF and SVM, and 77% with naive Bayes (`case-pack/data/moran-2021/screening-seeds/aggregate.md`; @sec-validation-variability).
 
 These figures describe ranking within a pool the review's Boolean searches had already admitted. A web-scale system with a display cap ranks its whole index, so its top 1,000 is drawn from a far larger and noisier set. They are not an estimate of any product's recall; they show the mechanism by which a cap costs studies.
 
