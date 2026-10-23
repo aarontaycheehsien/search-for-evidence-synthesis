@@ -32,11 +32,13 @@ The emulation approximates Ovid MEDLINE; it is not Ovid:
   subheading or heading parts.
 
 Usage:
-  python case-pack/scripts/indexing_checks.py
-    (reads case-pack/cache/pubmed/records.json; writes
+  python case-pack/scripts/indexing_checks.py [--records FILE]
+    (reads case-pack/cache/pubmed/records.json, or FILE in the same layout
+    as written by fetch_pubmed.py; writes
     case-pack/data/indexing/CD010558-lines.csv and CD011787-lines.csv)
 """
 
+import argparse
 import csv
 import json
 import re
@@ -353,8 +355,15 @@ def write(review, row_function, records, out_dir):
     return rows
 
 
-def main():
-    records = load_records(CACHE / "pubmed" / "records.json")
+def records_argument(argv, description):
+    parser = argparse.ArgumentParser(description=description)
+    parser.add_argument("--records", type=Path, default=CACHE / "pubmed" / "records.json",
+                        help="cached PubMed records (default: %(default)s)")
+    return parser.parse_args(argv).records
+
+
+def main(argv=None):
+    records = load_records(records_argument(argv, "Which strategy lines admit each included record."))
     out_dir = DATA / "indexing"
     out_dir.mkdir(parents=True, exist_ok=True)
     for review, function in (("CD010558", cd010558_row), ("CD011787", cd011787_row)):

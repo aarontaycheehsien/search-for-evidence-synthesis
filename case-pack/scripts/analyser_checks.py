@@ -14,7 +14,7 @@ The hyphen variant is a thought experiment about analysers in general, not
 a description of any platform.
 
 Usage:
-  python case-pack/scripts/analyser_checks.py
+  python case-pack/scripts/analyser_checks.py [--records FILE]
 """
 
 import csv
@@ -55,8 +55,8 @@ def min_gap(record):
     return best
 
 
-def main():
-    records = ic.load_records(ic.CACHE / "pubmed" / "records.json")
+def main(argv=None):
+    records = ic.load_records(ic.records_argument(argv, "Analyser choices on CD010558's condition block."))
     rows = []
     for ref in ic.reference_rows("CD010558"):
         data = records[ref["pmid"]]

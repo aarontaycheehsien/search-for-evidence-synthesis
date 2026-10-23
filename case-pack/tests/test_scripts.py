@@ -19,7 +19,7 @@ from clef import read_qrels, read_topic  # noqa: E402
 from clef_label_scope import scope  # noqa: E402
 from common import normalise_doi  # noqa: E402
 from field_checks import check as moran_check  # noqa: E402
-from fetch_pubmed import parse_efetch  # noqa: E402
+from fetch_pubmed import parse_efetch, reference_set_pmids  # noqa: E402
 from indexing_checks import Adj, Record, Terms, cd010558_row, words  # noqa: E402
 from ranking_measures import measures as ranking_measures  # noqa: E402
 from pipeline_checks import rerank, rrf, union_top  # noqa: E402
@@ -148,9 +148,26 @@ class ParseEfetchTest(unittest.TestCase):
         self.assertEqual(first["date_completed"], "2017-06-02")
         self.assertEqual(first["entrez_date"], "2017-3-7")
         self.assertEqual(first["indexing_method"], "Automated")
-        self.assertIn("Randomized Controlled Trial", first["publication_types"])
-        self.assertEqual(first["mesh_headings"], ["Depressive Disorder, Treatment-Resistant"])
+        self.assertIn("Randomized Controlled Trial", first["article_types"])
+        self.assertEqual(first["mesh_terms"], ["Depressive Disorder, Treatment-Resistant"])
         self.assertEqual(first["doi"], "10.9999/synthetic.0001")
+        self.assertEqual(first["year"], "2016")
+        self.assertEqual(first["journal"], "Synthetic journal of trials")
+        self.assertEqual(first["journal_abbreviation"], "Synth J")
+        self.assertEqual(first["language"], "eng")
+
+    def test_output_feeds_the_indexing_scripts(self):
+        record = Record(self.records[0])
+        self.assertEqual(record.headings, {"depressive disorder, treatment-resistant"})
+        self.assertIn("randomized controlled trial", record.types)
+        self.assertEqual(record.language, "eng")
+        self.assertTrue(record.has(Terms("synthetic"), "ti"))
+
+    def test_reference_set_pmids(self):
+        pmids = reference_set_pmids([HERE.parent / "reference-sets" / "CD010558.csv"])
+        self.assertTrue(pmids)
+        self.assertTrue(all(p.isdigit() for p in pmids))
+        self.assertEqual(len(pmids), len(set(pmids)))
 
     def test_missing_parts(self):
         second = self.records[1]
@@ -158,6 +175,9 @@ class ParseEfetchTest(unittest.TestCase):
         self.assertEqual(second["date_completed"], "")
         self.assertEqual(second["status"], "In-Process")
         self.assertEqual(second["doi"], "")
+        self.assertEqual(second["year"], "")
+        self.assertEqual(second["journal"], "Synth J")
+        self.assertEqual(second["language"], "")
 
 
 class BuildMoranTest(unittest.TestCase):

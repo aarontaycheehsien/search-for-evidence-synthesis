@@ -130,6 +130,7 @@ Version 0.1 is built: a fictional education review with 33 records and 9 eligibl
 2. Done 2026-10-21: the completion, entry and create dates of the late-indexed CD010558 and CD011787 records, to within a fortnight to a year, are in `case-pack/data/updating/`.
 3. Build a reference set for CD012069 if it is used (CD011787 is done).
 4. Pilot the synthetic collection's exercises and extend it after feedback.
+5. Where NCBI E-utilities are reachable, run `fetch_pubmed.py --reference-sets case-pack/reference-sets/*.csv --name records-ncbi`, rerun `indexing_checks.py` and `analyser_checks.py` with `--records` on its output, and compare with the connector-built results. The fetcher writes the same layout since 2026-10-23 but has been tested only offline.
 
 ## References
 

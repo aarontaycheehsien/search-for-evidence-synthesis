@@ -5,7 +5,14 @@ need, including Date Completed (Ovid's Entry Date) for the date-limit case.
 Abstracts may be under publisher copyright, so output goes to the ignored
 cache, never to Git.
 
-Usage:
+The output, cache/pubmed/NAME.json, has the same layout and field names as
+cache/pubmed/records.json, which indexing_checks.py and analyser_checks.py
+read. To fetch the included reports from NCBI and run those scripts on them:
+
+  python case-pack/scripts/fetch_pubmed.py --reference-sets case-pack/reference-sets/*.csv --name records-ncbi
+  python case-pack/scripts/indexing_checks.py --records case-pack/cache/pubmed/records-ncbi.json
+
+Other usage:
   python case-pack/scripts/fetch_pubmed.py --pmids FILE --name NAME
   python case-pack/scripts/fetch_pubmed.py --clef-topic TOPIC_FILE --name NAME
 
@@ -14,6 +21,7 @@ allows 3 requests a second without a key and 10 with one.
 """
 
 import argparse
+import csv
 import json
 import os
 import sys
@@ -56,14 +64,23 @@ def parse_efetch(xml_bytes):
             d.get("PubStatus"): _date(d)
             for d in article.findall("PubmedData/History/PubMedPubDate")
         }
+        abbreviation = art.findtext("Journal/ISOAbbreviation", "").strip()
+        pub_date = art.find("Journal/JournalIssue/PubDate")
+        year = ""
+        if pub_date is not None:
+            year = (pub_date.findtext("Year") or pub_date.findtext("MedlineDate") or "").strip()[:4]
+        # Field names match cache/pubmed/records.json, which the indexing scripts read.
         records.append(
             {
                 "pmid": citation.findtext("PMID", "").strip(),
                 "title": _text(art.find("ArticleTitle")),
                 "abstract": abstract,
-                "journal": art.findtext("Journal/ISOAbbreviation", "").strip(),
-                "publication_types": [_text(p) for p in art.findall("PublicationTypeList/PublicationType")],
-                "mesh_headings": [_text(m) for m in citation.findall("MeshHeadingList/MeshHeading/DescriptorName")],
+                "mesh_terms": [_text(m) for m in citation.findall("MeshHeadingList/MeshHeading/DescriptorName")],
+                "article_types": [_text(p) for p in art.findall("PublicationTypeList/PublicationType")],
+                "year": year,
+                "journal": art.findtext("Journal/Title", "").strip() or abbreviation,
+                "journal_abbreviation": abbreviation,
+                "language": art.findtext("Language", "").strip(),
                 "indexing_method": citation.get("IndexingMethod", ""),
                 "status": citation.get("Status", ""),
                 "date_completed": _date(citation.find("DateCompleted")),
@@ -76,6 +93,18 @@ def parse_efetch(xml_bytes):
             }
         )
     return records
+
+
+def reference_set_pmids(paths):
+    """PMIDs from reference-set CSV files, in order, without duplicates."""
+    pmids = []
+    for path in paths:
+        with open(path, newline="", encoding="utf-8") as handle:
+            for row in csv.DictReader(handle):
+                pmid = (row.get("pmid") or "").strip()
+                if pmid.isdigit() and pmid not in pmids:
+                    pmids.append(pmid)
+    return pmids
 
 
 def fetch(pmids, pause):
@@ -98,11 +127,14 @@ def main(argv=None):
     source = parser.add_mutually_exclusive_group(required=True)
     source.add_argument("--pmids", type=Path, help="file with one PMID per line")
     source.add_argument("--clef-topic", type=Path, help="CLEF TAR topic file")
-    parser.add_argument("--name", required=True, help="output name, e.g. CD010558")
+    source.add_argument("--reference-sets", type=Path, nargs="+", help="reference-set CSV files with a pmid column")
+    parser.add_argument("--name", required=True, help="output name, e.g. CD010558 or records-ncbi")
     args = parser.parse_args(argv)
 
     if args.pmids:
         pmids = [line.strip() for line in args.pmids.read_text().splitlines() if line.strip().isdigit()]
+    elif args.reference_sets:
+        pmids = reference_set_pmids(args.reference_sets)
     else:
         pmids = read_topic(args.clef_topic)["pmids"]
     pause = 0.11 if os.environ.get("NCBI_API_KEY") else 0.34
@@ -113,9 +145,13 @@ def main(argv=None):
         raise SystemExit(f"Could not reach NCBI E-utilities ({error}). Check network access to eutils.ncbi.nlm.nih.gov.")
     out_dir = CACHE / "pubmed"
     out_dir.mkdir(parents=True, exist_ok=True)
-    with open(out_dir / f"{args.name}.jsonl", "w", encoding="utf-8") as handle:
-        for record in records:
-            handle.write(json.dumps(record, ensure_ascii=False) + "\n")
+    with open(out_dir / f"{args.name}.json", "w", encoding="utf-8") as handle:
+        json.dump(
+            {"fetched_on": today(), "source": f"NCBI E-utilities efetch ({EFETCH})", "records": records},
+            handle,
+            ensure_ascii=False,
+            indent=1,
+        )
 
     returned = {r["pmid"] for r in records}
     write_manifest(
