@@ -49,7 +49,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from common import CACHE, CASE_PACK, DATA  # noqa: E402
 from encoder import MODEL_NAME, MAX_TOKENS, Encoder  # noqa: E402
-from ranking_checks import bm25_scores, ranks, recall_at, words  # noqa: E402
+from ranking_checks import bm25_scores, expected_last_rank, ranks, recall_at, words  # noqa: E402
 
 TITLE = "Poor nutritional condition promotes high-risk behaviours"
 QUESTION = ("Does poor nutritional condition, such as food restriction or starvation, "
@@ -146,7 +146,7 @@ def main():
         for k in cutoffs:
             rows.append(f"| {k:,} | {k / size:.2f} | "
                         + " | ".join(f"{recall_at(r, labels, k):.2f}" for _, r in columns) + " |")
-        rows.append("| Rank of the last one | about " + f"{size:,} | "
+        rows.append(f"| Rank of the last one | about {round(expected_last_rank(size, sum(labels))):,} | "
                     + " | ".join(f"{max(x for x, l in zip(r, labels) if l):,}" for _, r in columns) + " |")
         return rows
 

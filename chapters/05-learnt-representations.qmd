@@ -58,7 +58,7 @@ The case pack ranks the Moran pool with all-MiniLM-L6-v2, a small general-purpos
 | 500 | 0.10 | 0.23 | 0.41 | 0.09 | 0.36 |
 | 1,000 | 0.20 | 0.35 | 0.59 | 0.24 | 0.55 |
 | 2,000 | 0.41 | 0.55 | 0.79 | 0.46 | 0.82 |
-| Rank of the last included record | about 4,882 | 4,797 | 4,494 | 4,846 | 4,499 |
+| Rank of the last included record | about 4,848 | 4,797 | 4,494 | 4,846 | 4,499 |
 
 : Recall of the 137 included records within the top *k* of the Moran pool's 4,882 records. From `case-pack/data/moran-2021/representations/summary.md`; the BM25 columns are from @sec-ranking. {#tbl-rep-moran}
 

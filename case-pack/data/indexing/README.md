@@ -2,7 +2,7 @@
 
 Built on 2026-10-22 by `case-pack/scripts/indexing_checks.py`. For every included-study record of CD010558 and CD011787 that has a PubMed record, the script applies lines of the review's Ovid MEDLINE strategy (as distributed by CLEF 2019) to the record's title, abstract, MeSH headings, publication types and language as PubMed holds them today. Each file has one row per record, with 1 or 0 for each group of lines. No title or abstract text is stored here.
 
-The PubMed records were fetched on 2026-10-22 through the PubMed connector into `case-pack/cache/pubmed/records.json`, which Git ignores. NCBI's E-utilities were not reachable from the build environment, so the fields were transcribed from the connector's output; `case-pack/scripts/fetch_pubmed.py` can rebuild the cache directly where NCBI is reachable.
+The PubMed records were fetched on 2026-10-22 through the PubMed connector into `case-pack/cache/pubmed/records.json`, which Git ignores. NCBI's E-utilities were not reachable from the build environment, so the fields were transcribed from the connector's output. Where NCBI is reachable, `python case-pack/scripts/fetch_pubmed.py --reference-sets case-pack/reference-sets/*.csv --name records-ncbi` writes the same records in the same layout, and `indexing_checks.py --records case-pack/cache/pubmed/records-ncbi.json` runs on them; the fetcher has been tested only against a synthetic record, so compare its output with the connector's before relying on either.
 
 ## The emulation is an approximation
 

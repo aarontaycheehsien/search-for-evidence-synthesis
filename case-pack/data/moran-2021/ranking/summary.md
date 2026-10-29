@@ -17,7 +17,7 @@ Strategy query: `*nutrition* *nourish* calori* hunger starv* diet* food restrict
 | 500 | 0.10 | 0.23 | 0.41 |
 | 1,000 | 0.20 | 0.35 | 0.59 |
 | 2,000 | 0.41 | 0.55 | 0.79 |
-| Rank of the last included record | about 4,882 | 4,797 | 4,494 |
+| Rank of the last included record | about 4,848 | 4,797 | 4,494 |
 
 ## Recall of title-and-abstract inclusions within the top k
 

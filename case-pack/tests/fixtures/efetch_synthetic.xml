@@ -7,7 +7,11 @@
       <DateCompleted><Year>2017</Year><Month>06</Month><Day>02</Day></DateCompleted>
       <DateRevised><Year>2019</Year><Month>01</Month><Day>10</Day></DateRevised>
       <Article>
-        <Journal><ISOAbbreviation>Synth J</ISOAbbreviation></Journal>
+        <Journal>
+          <JournalIssue><PubDate><Year>2016</Year><Month>Dec</Month></PubDate></JournalIssue>
+          <Title>Synthetic journal of trials</Title>
+          <ISOAbbreviation>Synth J</ISOAbbreviation>
+        </Journal>
         <ArticleTitle>A <i>synthetic</i> trial record</ArticleTitle>
         <Abstract>
           <AbstractText Label="BACKGROUND">First part.</AbstractText>
@@ -17,6 +21,7 @@
           <PublicationType>Journal Article</PublicationType>
           <PublicationType>Randomized Controlled Trial</PublicationType>
         </PublicationTypeList>
+        <Language>eng</Language>
       </Article>
       <MeshHeadingList>
         <MeshHeading><DescriptorName>Depressive Disorder, Treatment-Resistant</DescriptorName></MeshHeading>

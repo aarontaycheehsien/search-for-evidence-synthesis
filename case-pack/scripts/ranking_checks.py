@@ -118,6 +118,11 @@ def recall_at(ranked, labels, k):
     return sum(1 for r, label in zip(ranked, labels) if label and r <= k) / relevant
 
 
+def expected_last_rank(n, k):
+    """Expected rank of the last of k eligible records when n records are in random order."""
+    return k * (n + 1) / (k + 1)
+
+
 def main():
     csv.field_size_limit(sys.maxsize)
     rows = list(csv.DictReader((CACHE / "moran-2021" / "pool.csv").open(encoding="utf-8")))
@@ -152,7 +157,7 @@ def main():
         )
     last_title = max(r for r, f in zip(rank_title, ft) if f)
     last_strategy = max(r for r, f in zip(rank_strategy, ft) if f)
-    lines.append(f"| Rank of the last included record | about {n:,} | {last_title:,} | {last_strategy:,} |")
+    lines.append(f"| Rank of the last included record | about {round(expected_last_rank(n, sum(ft))):,} | {last_title:,} | {last_strategy:,} |")
     ta_lines = [
         "| Records screened (top k) | Random order, expected | Title query | Strategy query |",
         "|---|---|---|---|",
