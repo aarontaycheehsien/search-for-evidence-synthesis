@@ -60,7 +60,7 @@ For a searcher, five consequences follow.
 
 **One database now contains several indexing regimes.** A strategy run today searches records indexed fully by people before 2022, records indexed by an algorithm and checked by people, and records indexed by an algorithm alone. PubMed lets a searcher separate them: `indexingmethod_automated` and `indexingmethod_curated` retrieve the last two, and `medline[sb] NOT (indexingmethod_curated OR indexingmethod_automated)` retrieves records indexed fully by people [@nlmindexfaq]. That makes the regime testable: run a heading line within each set and compare.
 
-**The indexing gap has shrunk.** In @sec-missing-case, four reports fell outside a date limit on Ovid's `ed` field because their indexing was completed months after they appeared. For records indexed automatically, completion follows arrival within days, so a limit on the completion date now behaves almost like a limit on the date of entry. For older records the gap remains, and an update search that re-runs an old limit inherits it.
+**The indexing gap has shrunk.** In @sec-missing-case, four reports fell outside a date limit on Ovid's `ed` field because their indexing was completed months after they appeared. For records indexed automatically, completion follows arrival within days, so a limit on the completion date now behaves almost like a limit on the date of entry. For older records the gap remains, and an update search that reruns an old limit inherits it.
 
 ## Search filters are classifiers built by hand {#sec-indexing-filters}
 

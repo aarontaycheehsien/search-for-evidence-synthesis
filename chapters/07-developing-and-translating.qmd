@@ -2,7 +2,7 @@
 
 A strategy is a set of admission rules (@sec-boolean). Developing one means deciding which concepts become blocks and which words, headings and fields stand for each. Translating it means re-expressing those rules for another database without changing what they admit. Both are usually done by judgement and checked by reading the strategy. This chapter treats each decision as a claim that can be tested against eligible studies the team already knows, and shows three errors that reading alone tends to miss: a translation that silently drops fields, a subject heading that does not exist, and a system that rewrites the words before they reach the index.
 
-**After this chapter you should be able to** turn eligibility criteria into a strategy, use term mining and LLM drafting with checks, and translate a strategy without changing its intent.
+**After this chapter you should be able to** turn eligibility criteria into a strategy, use term mining and language-model drafting with checks, and translate a strategy without changing its intent.
 
 ## Criteria are not concepts {#sec-dev-concepts}
 
@@ -10,7 +10,7 @@ Eligibility criteria are written for screeners; blocks are written for an index.
 
 The Cochrane Handbook builds this into its guidance. A strategy should be structured around "the main concepts of the review", but "it is usually unnecessary, however, and may even be undesirable, to search on every aspect of the review's clinical question" [@lefebvre2025, sec. 4.4.2]. For a general database such as MEDLINE it says a strategy will typically have three sets of terms: the health condition, the intervention and the study design. Searching for the comparator "may be possible and reasonable" in some cases, "for example if the comparator is explicitly placebo and reported consistently". The MECIR standard asks searchers to "maximize sensitivity whilst striving for reasonable precision" (C32). @bramer2018 state the cost of each extra block plainly: "Adding an element to a search strategy increases the chance of missing relevant references. Therefore, the number of elements in a search strategy should remain as low as possible to optimize recall." They also note that elements "do not necessarily follow the patient, intervention, comparison, outcome (PICO) structure".
 
-CD010558 drops one of the Handbook's three typical sets. The Handbook allows exceptions: "for reviews of complex interventions, it may be necessary to search only for the population or the intervention" (C32). Its MEDLINE strategy has a block for the condition and a block for trial design, and no block for the therapies (@sec-missing-case). A therapy block would claim that every eligible trial's record names its therapy in words or headings the block anticipates, for a class of interventions with no single heading. PubMed has no heading called *Psychological Therapies*; searching for `"Psychological Therapies"[mh]` returns nothing (@sec-dev-system). The review pays at screening instead: the CLEF re-run returned 2,815 records. At the Handbook's estimate of 60 to 120 records an hour for title and abstract screening [@lefebvre2025, sec. 4.4.3], that is roughly 23 to 47 hours for one screener.
+CD010558 drops one of the Handbook's three typical sets. The Handbook allows exceptions: "for reviews of complex interventions, it may be necessary to search only for the population or the intervention" (C32). Its MEDLINE strategy has a block for the condition and a block for trial design, and no block for the therapies (@sec-missing-case). A therapy block would claim that every eligible trial's record names its therapy in words or headings the block anticipates, for a class of interventions with no single heading. PubMed has no heading called *Psychological Therapies*; searching for `"Psychological Therapies"[mh]` returns nothing (@sec-dev-system). The review pays at screening instead: the CLEF rerun returned 2,815 records. At the Handbook's estimate of 60 to 120 records an hour for title and abstract screening [@lefebvre2025, sec. 4.4.3], that is roughly 23 to 47 hours for one screener.
 
 Before a criterion becomes a block, five questions decide whether it earns its place (@tbl-dev-criteria).
 
@@ -139,7 +139,7 @@ Exercise 7.3 asks what the draft loses, and why.
 
 ### What the vendors offer
 
-Database vendors now build language-model drafting into their interfaces (@tbl-ai-drafting). All of those checked show the query they generate; not all say it can be edited, and one warns that it can change when re-run.
+Database vendors now build language-model drafting into their interfaces (@tbl-ai-drafting). All of those checked show the query they generate; not all say it can be edited, and one warns that it can change when rerun.
 
 | Tool | What the documentation says about the generated query |
 |---|---|
@@ -336,8 +336,8 @@ a. Before the MEDLINE strategy is translated or run: the research question in PI
 
 b. Probably none of them.
 - The CoBalT pilot has no PubMed record. That is a coverage loss, outside any strategy.
-- The four late-indexed reports were lost to the `ed` limit only when the strategy was re-run later. A reviewer might question an indexing-date field as an end date under the checklist's limits element, but the loss would not have shown at the time (@sec-recording-updating).
-- The letter and commentary fail the trial-design block, and are also removed, deliberately, by the `NOT` block. A reviewer could point to the Handbook's advice that `NOT` "should be avoided where possible", but dropping the `NOT` line would not have recovered them, and the loss cost two reports and no study.
+- The four late-indexed reports were lost to the `ed` limit only when the strategy was rerun later. A reviewer might question an indexing-date field as an end date under the checklist's limits element, but the loss would not have shown at the time (@sec-recording-updating).
+- The letter and commentary fail the trial-design block, and are also removed, deliberately, by the `NOT` block. A reviewer could point to the Handbook's advice, in the rationale for MECIR standard C32, that `NOT` "should be avoided where possible" [@lefebvre2025, sec. 4.4.2], but dropping the `NOT` line would not have recovered them, and the loss cost two reports and no study.
 
 Peer review checks the strategy's logic. It does not find coverage losses or test the strategy on eligible records; known-study testing and supplementary routes do that.
 :::

@@ -21,7 +21,7 @@ What stands for the information need differs from route to route, and so does wh
 
 : Routes to the evidence and what each can reach. {#tbl-supp-routes}
 
-A route earns its place by failing for different reasons from the strategy. That is also what makes it a useful check: @sec-stop-search showed that a capture–recapture estimate is most trustworthy when the two routes are independent, and two databases searched with one strategy are not.
+A route earns its place by failing for different reasons from the strategy. That is also what makes it a useful check: as @sec-stop-search explains, a capture–recapture estimate is most trustworthy when the two routes are independent, and two databases searched with one strategy are not.
 
 How much other routes add depends on the topic. In a systematic review of complex evidence, whose 495 sources included 213 empirical studies and 261 theoretical or overview sources, @greenhalgh2005 traced how each source had been found. Only 30% came from the protocol's database and hand searches. Snowballing found 51%: 44% by checking reference lists and 7% by forward citation tracking. Another 24% came from the authors' own knowledge or contacts. Electronic database searching took about two weeks and yielded "one useful paper every 40 minutes"; hand searching, "one paper per nine hours"; citation tracking of selected papers, "around one useful paper for every 15 minutes". These are figures from one review of complex evidence, not general rates.
 
@@ -68,7 +68,7 @@ The two health reviews in the case pack lost included reports at different bound
 
 : One round of citation searching in OpenAlex from the included reports each MEDLINE pool returned. Checked on 22 October 2026. From `case-pack/data/citation/`. {#tbl-citation-case}
 
-**What it reached.** In CD010558, both studies that the pool lacked entirely. The Town trial's only journal report cites the CoBalT trial's main paper and another included trial, so forward searching finds it, although an entry-date limit had excluded it from the MEDLINE re-run (@sec-recording-updating). The CoBalT pilot, which has no PubMed record, is cited by three CoBalT reports, so backward searching finds it. In CD011787, forward searching reaches the three late-indexed reports and two of the four studies that are not in PubMed. Citation links ignore wording, indexing dates and the searched database's coverage, which is exactly why they reach what the strategy missed.
+**What it reached.** In CD010558, both studies that the pool lacked entirely. The Town trial's only journal report cites the CoBalT trial's main paper and another included trial, so forward searching finds it, although an entry-date limit had excluded it from the MEDLINE rerun (@sec-recording-updating). The CoBalT pilot, which has no PubMed record, is cited by three CoBalT reports, so backward searching finds it. In CD011787, forward searching reaches the three late-indexed reports and two of the four studies that are not in PubMed. Citation links ignore wording, indexing dates and the searched database's coverage, which is exactly why they reach what the strategy missed.
 
 **What it missed, and why.** Three of the four misses are failures of the index; one is a limit of the method.
 

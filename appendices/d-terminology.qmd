@@ -79,7 +79,7 @@ Product descriptions name representations, mechanisms, pipeline stages, interfac
 
 **Test set.** In machine learning, the data kept back to test a model. In @hausner2015, the *test set* is the set used to develop the search strategy, and the records kept back are the *comparator set*; @hausner2012 call them the development and validation sets, and use *test set* for the whole reference set before it is split. Check which is which before comparing figures.
 
-**Pool.** In information retrieval, a *pool* is the set of documents judged for relevance, formed from the top results of the systems being compared; unjudged documents are counted as irrelevant [@zobel1998]. In this book, the *pool* is the set of records returned by a review's own search, or by a re-run of it, all carrying the review's screening decisions, as in the CLEF TAR and SYNERGY benchmarks [@kanoulas2019; @debruin2023]. Both kinds of pool miss eligible records outside them, for different reasons.
+**Pool.** In information retrieval, a *pool* is the set of documents judged for relevance, formed from the top results of the systems being compared; unjudged documents are counted as irrelevant [@zobel1998]. In this book, the *pool* is the set of records returned by a review's own search, or by a rerun of it, all carrying the review's screening decisions, as in the CLEF TAR and SYNERGY benchmarks [@kanoulas2019; @debruin2023]. Both kinds of pool miss eligible records outside them, for different reasons.
 
 **Filters.** In evidence synthesis, a *search filter* is a tested block of terms. In PubMed's interface, *Filters* are limits on article type, date or language applied to a result. A strategy can use both, and a report should say which.
 

@@ -8,7 +8,7 @@ This chapter follows a strategy from the searcher's text to the records it admit
 
 ## Admission is a yes-or-no decision {#sec-boolean-yes-no}
 
-A Boolean strategy states conditions. A record either satisfies them or it does not; there is no better or worse match, only membership of the admitted set. Strict Boolean search is the model behind the advanced search screens of Ovid, PubMed, EBSCOhost, Embase.com, Scopus and Web of Science, and it is what makes a strategy inspectable and re-runnable.
+A Boolean strategy states conditions. A record either satisfies them or it does not; there is no better or worse match, only membership of the admitted set. Strict Boolean search is the model behind the advanced search screens of Ovid, PubMed, EBSCOhost, Embase.com, Scopus and Web of Science, and it is what makes a strategy inspectable and rerunnable.
 
 The consequence that matters most for evidence synthesis is simple. **A record that fails a compulsory condition is gone.** No later step sees it, so no screening order, ranking or classifier can recover it. In the synthetic collection, the strategy `peer AND tutor* AND "reading comprehension"` excludes an eligible study of older pupils tutoring younger ones in "reading buddies" pairs, because its record never says *peer* or *comprehension*. Nothing went wrong in the database: it applied the strategy exactly as written.
 
@@ -118,7 +118,6 @@ Five differences matter most when a strategy moves between platforms.
 Lemmatisation adds a sixth difference for the two citation indexes. Both reduce English search words to a dictionary form by default: Scopus unless an exact phrase is used [@scopuscomplex], and Web of Science unless quotation marks, wildcards or its Exact Search setting turn it off [@wosrules]. Ovid and PubMed search the words as written, apart from PubMed's automatic term mapping, which @sec-developing covers.
 
 For the running case, one cell of @tbl-platforms matters directly. Ovid converts hyphens to spaces when indexing titles and abstracts [@ovidstopwords], so *treatment-resistant* is indexed as two words, as the case pack's emulation assumes. The hyphen thought experiment in @sec-boolean-cases describes a different analyser, not Ovid's.
-
 
 ## Analyser choices on real records {#sec-boolean-cases}
 

@@ -39,7 +39,7 @@ Every recall figure is a count out of something. A **reference set** is that som
 Reference sets come from four main sources, each with a different bias.
 
 - **A review's own included studies.** The most relevant reference set for that review, and the one this book builds for its running cases. It was found by the review's searches, so it favours what those searches could find.
-- **Included studies pooled across many reviews.** @sampson2006 validated search filters for randomised trials against the included studies of 105 Cochrane reviews instead of against a hand-searched gold standard. They called the result *relative recall*, because the reference set is itself the product of searching. 72% of the reviews' included studies were indexed in MEDLINE, and the filters' relative recall ranged from 0.91 to 0.98.
+- **Included studies pooled across many reviews.** @sampson2006 validated search filters for randomised trials against the included studies of 105 Cochrane reviews instead of against a hand-searched gold standard. They called the result *relative recall*, because the reference set is itself the product of searching. Of the reviews' included studies, 72% were indexed in MEDLINE, and the filters' relative recall ranged from 0.91 to 0.98.
 - **Hand-searching.** Screening every issue of selected journals gives a reference set that does not depend on any database's indexing, but only for the journals searched.
 - **Benchmark labels.** Shared collections such as CLEF TAR [@kanoulas2019] and SYNERGY [@debruin2023] attach a review's screening decisions to the records its search returned. They are convenient and comparable across studies, and they inherit everything about how they were built (@sec-validation-benchmarks).
 
@@ -62,10 +62,10 @@ The running cases show how much the choice of denominator matters (@tbl-three-de
 |---|---|---|
 | Included studies in the review | 6 | 38 |
 | Included studies with a PubMed record | 5 | 34 |
-| Included studies with a record in the re-run pool | 4 | 31 |
+| Included studies with a record in the rerun pool | 4 | 31 |
 | Included-study records labelled eligible in CLEF's screening labels | 10 records (4 studies) | 28 records (28 studies) |
-| Re-run strategy's recall against its own screening labels | 100% | 100% |
-| Re-run strategy's recall against the review's included studies | 67% | 82% |
+| Rerun strategy's recall against its own screening labels | 100% | 100% |
+| Rerun strategy's recall against the review's included studies | 67% | 82% |
 
 : Two Cochrane reviews measured against their screening labels and against their reference sets. From the case pack's reference sets, built from each review's included-studies list and checked against PubMed and OpenAlex on 21 October 2026. {#tbl-three-denominators}
 
@@ -87,7 +87,7 @@ The same separation applies wherever a method starts from known studies:
 
 A benchmark's labels are a reference set someone else built. Check them before relying on them. The case pack's two benchmarks both failed a check, in different ways.
 
-**CLEF TAR has two label sets with different scopes.** The 2019 collection gives each topic a screening-task label set, which judges every record in the re-run pool and nothing outside it, and a search-task label set, which lists the review's included and excluded references mapped to PubMed identifiers. The overview says that cited studies outside the re-run's results were left out of both [@kanoulas2019]. The distributed search-task labels do contain them: in 24 of the 31 test topics, at least one included-reference label is absent from the pool, 458 of 1,340 in all, nearly half of them from a single prognosis topic. The overview's per-topic table for CD010558 reports 75 and 16 relevant records, which are the search-task counts; the screening labels have 37 and 10. An evaluation that quotes the table's counts while scoring on the screening labels mixes two denominators. The case pack's `label-scope.csv` gives the counts for every topic.
+**CLEF TAR has two label sets with different scopes.** The 2019 collection gives each topic a screening-task label set, which judges every record in the rerun pool and nothing outside it, and a search-task label set, which lists the review's included and excluded references mapped to PubMed identifiers. The overview says that cited studies outside the rerun's results were left out of both [@kanoulas2019]. The distributed search-task labels do contain them: in 24 of the 31 test topics, at least one included-reference label is absent from the pool, 458 of 1,340 in all, nearly half of them from a single prognosis topic. The overview's per-topic table for CD010558 reports 75 and 16 relevant records, which are the search-task counts; the screening labels have 37 and 10. An evaluation that quotes the table's counts while scoring on the screening labels mixes two denominators. The case pack's `label-scope.csv` gives the counts for every topic.
 
 **Mapping a reference to a record can go wrong.** For CD011787, CLEF's search-task labels map three included studies to the wrong PubMed records, in each case another article in the same journal and year as the review's citation, which has an error in its volume, page or author name. One of them, an article on alcohol and mortality given in place of a vaccination study, is exactly the record PubMed's own citation matcher returned when the case pack was built; checking every match against a second source caught it. The correct records are in the pool, labelled ineligible, so a method that ranks them highly is marked down for it.
 
@@ -174,7 +174,7 @@ a. "Adding citation searching to our MEDLINE and Embase searches found three mor
 b. "Our semantic search retrieves 95% of the included studies from 50 Cochrane reviews, so Boolean searching is no longer necessary."
 c. "Model X outperforms model Y on the CLEF 2019 collection."
 d. "With our tool you can stop after screening 30% of the records."
-e. "Re-running last year's saved strategy found 40 new records, so the update search is complete."
+e. "Rerunning last year's saved strategy found 40 new records, so the update search is complete."
 
 ::: {.callout-tip collapse="true"}
 ## Worked answer
@@ -192,7 +192,7 @@ e. **Update.** Rerunning a saved strategy checks one thing: what that strategy n
 
 ### Exercise 10.2: Account for a benchmark's view of CD011787
 
-CLEF's screening labels mark 28 records in the CD011787 pool as included. The review included 38 studies, each with one listed report. Using `case-pack/reference-sets/CD011787.csv`, account for the difference, and compute the re-run strategy's recall at study level.
+CLEF's screening labels mark 28 records in the CD011787 pool as included. The review included 38 studies, each with one listed report. Using `case-pack/reference-sets/CD011787.csv`, account for the difference, and compute the rerun strategy's recall at study level.
 
 ::: {.callout-tip collapse="true"}
 ## Worked answer
@@ -205,7 +205,7 @@ CLEF's screening labels mark 28 records in the CD011787 pool as included. The re
 | Labelled eligible | 28 | |
 | **Total** | **38** | |
 
-The re-run strategy admitted 31 of the 38 studies' reports: recall of 82% at study level. Against the review's 34 PubMed-indexed studies it is 31 of 34, or 91%. Against its screening labels it is 100%. The three mislabelled studies matter for evaluating screening methods, not for the strategy: they are in the pool, and a method that ranks them highly is penalised for being right.
+The rerun strategy admitted 31 of the 38 studies' reports: recall of 82% at study level. Against the review's 34 PubMed-indexed studies it is 31 of 34, or 91%. Against its screening labels it is 100%. The three mislabelled studies matter for evaluating screening methods, not for the strategy: they are in the pool, and a method that ranks them highly is penalised for being right.
 :::
 
 ### Exercise 10.3: What does the ten-run table support?
@@ -238,7 +238,7 @@ Using @tbl-clef-runs and `case-pack/data/clef-2019/CD010558/README.md`, explain 
 
 They are different queries scored by the same formula. Sheffield built its query from the review title and terms extracted from the Boolean strategy; Padua's run is described as a simple baseline. What a query contains matters as much as how it is scored.
 
-For the review team, report the records screened before all included records were found (178 to 1,686 across the three runs), and how a stopping rule behaved: a 50-record streak stopped the Sheffield ranking at record 146 with 2 of 10 included records found, and stopped the active-learning run at record 298 with all 10 found. Then state the limits. These are single runs on one topic, with settings chosen for a shared task; the labels judge only the re-run pool, which holds four of the review's six studies; and with ten included records, one record is ten points of recall.
+For the review team, report the records screened before all included records were found (178 to 1,686 across the three runs), and how a stopping rule behaved: a 50-record streak stopped the Sheffield ranking at record 146 with 2 of 10 included records found, and stopped the active-learning run at record 298 with all 10 found. Then state the limits. These are single runs on one topic, with settings chosen for a shared task; the labels judge only the rerun pool, which holds four of the review's six studies; and with ten included records, one record is ten points of recall.
 :::
 
 ### Exercise 10.5: Design an evaluation
