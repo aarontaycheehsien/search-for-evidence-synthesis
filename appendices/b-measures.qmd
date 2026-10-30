@@ -6,9 +6,9 @@ This appendix defines the measures the book uses, each with a worked example fro
 
 Every measure here is a ratio of counts, and three choices fix what is being counted (@sec-missing-measures, @sec-validation-measures).
 
-- **The unit**: records in one database, reports, or studies. CD010558's re-run pool holds 10 of the review's 16 included reports that have a PubMed record, which report 4 of its 6 studies (@tbl-cd010558): 63% of the reports with a PubMed record and 67% of the studies, from the same search.
+- **The unit**: records in one database, reports, or studies. CD010558's rerun pool holds 10 of the review's 16 included reports that have a PubMed record, which report 4 of its 6 studies (@tbl-cd010558): 63% of the reports with a PubMed record and 67% of the studies, from the same search.
 - **The stage**: the search, screening within the search's results, or both together.
-- **The denominator**: which eligible records are known, and how they were found. A benchmark's labels know only what the review's own search, or a re-run of it, returned; a reference set built from other sources knows more (@sec-validation-reference).
+- **The denominator**: which eligible records are known, and how they were found. A benchmark's labels know only what the review's own search, or a rerun of it, returned; a reference set built from other sources knows more (@sec-validation-reference).
 
 A figure that does not state all three cannot be compared with another.
 
@@ -29,7 +29,7 @@ These treat a search result as a set: a record is in it or not, and its position
 
 $$\text{recall} = \frac{TP}{TP + FN}$$
 
-The share of the eligible records that the search retrieved. Information retrieval calls it *recall*; search-filter studies and evidence-synthesis guidance usually call it *sensitivity* [@lefebvre2025, sec. 4.4.3]. *Example:* measured against the CLEF labels for CD010558, the re-run strategy's recall is 10 of 10 included records, 100%; measured against the review's reference set, it is 10 of 16 reports with PubMed records (@sec-missing-case). *Cannot show:* anything about eligible records outside the denominator.
+The share of the eligible records that the search retrieved. Information retrieval calls it *recall*; search-filter studies and evidence-synthesis guidance usually call it *sensitivity* [@lefebvre2025, sec. 4.4.3]. *Example:* measured against the CLEF labels for CD010558, the rerun strategy's recall is 10 of 10 included records, 100%; measured against the review's reference set, it is 10 of 16 reports with PubMed records (@sec-missing-case). *Cannot show:* anything about eligible records outside the denominator.
 
 ### Precision
 

@@ -4,7 +4,7 @@ A review's findings rest on the studies it includes. Between a study being repor
 
 This chapter names those places. It gives the vocabulary the rest of the book uses, and it argues that most disputes about search tools are really disputes about which of these places a tool affects.
 
-**After this chapter you should be able to** locate a loss at coverage, record content and indexing, query admission, display and export limits, deduplication, or prioritisation and stopping, and say which measurement would reveal it.
+**After this chapter you should be able to** locate a loss at coverage, record content and indexing, query logic and limits, display and export limits, deduplication, or prioritisation and stopping, and say which measurement would reveal it.
 
 ## A strategy, run again {#sec-missing-case}
 
@@ -15,11 +15,11 @@ The Cochrane review *Psychological therapies for treatment-resistant depression 
 33  limit 32 to ed = "19480101-20170516"
 ```
 
-In 2019 the organisers of the CLEF Technology Assisted Review task re-ran this strategy in Ovid MEDLINE and released the 2,815 PubMed records it returned, with the review team's decisions mapped onto them [@kanoulas2019]. In those screening labels, 37 records pass title and abstract screening and 10 are included after full text. Measured against its own labels, the re-run strategy found every included record.
+In 2019 the organisers of the CLEF Technology Assisted Review task reran this strategy in Ovid MEDLINE and released the 2,815 PubMed records it returned, with the review team's decisions mapped onto them [@kanoulas2019]. In those screening labels, 37 records pass title and abstract screening and 10 are included after full text. Measured against its own labels, the rerun strategy found every included record.
 
-The review's reference list tells a different story. @tbl-cd010558 sets the six included studies against what the re-run returned. The six studies have 17 distinct publications and two trial-registry records between them; 16 of the publications have a PubMed record; the re-run pool contains 10 of them, reporting four of the six studies.
+The review's reference list tells a different story. @tbl-cd010558 sets the six included studies against what the rerun returned. The six studies have 17 distinct publications and two trial-registry records between them; 16 of the publications have a PubMed record; the rerun pool contains 10 of them, reporting four of the six studies.
 
-| Study | Publications listed in the review | With a PubMed record | In the re-run pool | Publications missing from the pool, and why |
+| Study | Publications listed in the review | With a PubMed record | In the rerun pool | Publications missing from the pool, and why |
 |---|---|---|---|---|
 | Harley 2008 | 2 | 2 | 2 | None |
 | Nakagawa 2017 | 2 | 2 | 1 (the protocol) | The results paper: indexing completed after the date limit |
@@ -29,17 +29,17 @@ The review's reference list tells a different story. @tbl-cd010558 sets the six 
 | Wiles 2016 (CoBalT) | 10 | 10 | 6 | Two 2016 papers: indexing completed after the date limit. A letter and a journal-club commentary: no match in the trial-design block, and removed by the `NOT` block in any case |
 | **Total** | **17, plus 2 registry records** | **16** | **10** | |
 
-: The six studies included in CD010558 and what the re-run MEDLINE strategy returned. Built from the review's reference list and checked against PubMed and OpenAlex on 21 October 2026; the case pack's reference set gives every identifier. {#tbl-cd010558}
+: The six studies included in CD010558 and what the rerun MEDLINE strategy returned. Built from the review's reference list and checked against PubMed and OpenAlex on 21 October 2026; the case pack's reference set gives every identifier. {#tbl-cd010558}
 
 Three different mechanisms account for the gaps.
 
 **The pilot trial is not in PubMed.** Its only report has no PubMed record, so no MEDLINE strategy could find it, however well written. This is a *coverage* loss: the report exists, but not in the source searched.
 
-**Four reports were indexed too late for the date limit.** In Ovid MEDLINE the `ed` field holds the date NLM completed the record's indexing, not the date it was published or first appeared [@ovidmedline]. PubMed's completion dates for all four reports fall between 17 May and 31 December 2017, after the limit's end date, while three in-pool reports checked for comparison, and the letter and commentary discussed below, were completed before it. Re-running the strategy in 2019 with its original limit therefore excluded them, including two papers published in 2016. One of them, the Town trial report, is the study's only journal publication; another is the Nakagawa results paper, leaving that study represented in the pool only by its protocol. This is an *admission* loss: the records were in the database, but the query's limit did not let them through.
+**Four reports were indexed too late for the date limit.** In Ovid MEDLINE the `ed` field holds the date NLM completed the record's indexing, not the date it was published or first appeared [@ovidmedline]. PubMed's completion dates for all four reports fall between 17 May and 31 December 2017, after the limit's end date, while three in-pool reports checked for comparison, and the letter and commentary discussed below, were completed before it. Rerunning the strategy in 2019 with its original limit therefore excluded them, including two papers published in 2016. One of them, the Town trial report, is the study's only journal publication; another is the Nakagawa results paper, leaving that study represented in the pool only by its protocol. This is an *admission* loss: the records were in the database, but the query's limit did not let them through.
 
 **Two reports were excluded twice over.** A letter by the CoBalT authors and a journal-club commentary on the trial have no abstract, no trial publication type and no design words in their titles, so they match nothing in the strategy's trial-design block. They also carry the Letter and Comment publication types, which the `NOT` block removes whatever else a record matches. These are admission losses too, and deliberate ones. Here they cost two reports but no study, because other CoBalT reports were admitted.
 
-This is not a story of a review that failed. The review team included all six studies, so they found the missing reports by some route: the database's in-process records, another database, a registry, or contact with investigators. The record of the search does not say which. What the case shows is that the strategy as recorded, run again, does not reproduce the review's evidence base, and that a score computed on the re-run's own labels reports complete recall for a pool that lacks a third of the review's studies.
+This is not a story of a review that failed. The review team included all six studies, so they found the missing reports by some route: the database's in-process records, another database, a registry, or contact with investigators. The record of the search does not say which. What the case shows is that the strategy as recorded, run again, does not reproduce the review's evidence base, and that a score computed on the rerun's own labels reports complete recall for a pool that lacks a third of the review's studies.
 
 The rest of this chapter takes the case apart: what counts as relevant, what is being counted, and where along the way a study can be lost.
 
@@ -51,7 +51,7 @@ The two diverge in both directions. A record can be squarely on topic and inelig
 
 Because eligibility is judged by people against criteria that no index records, a search for eligible studies must admit a great deal that is merely on topic. Precision is low by design:
 
-- CD010558's re-run pool has 2,815 records. Of these, 37 (1.3%) pass title and abstract screening and 10 (0.4%) are included.
+- CD010558's rerun pool has 2,815 records. Of these, 37 (1.3%) pass title and abstract screening and 10 (0.4%) are included.
 - The non-health running case, a behavioural-ecology review of nutritional condition and risk-taking [@moran2021], has 4,882 records in the case pack's labelled pool. Of these, 586 (12%) pass title and abstract screening and 137 (2.8%) are included.
 
 Low precision is not a defect to be engineered away at any cost. It is the price of admitting eligible studies whose records do not look like the searcher's idea of the topic. Every proposal to make searching more efficient is, in effect, a proposal about which on-topic or off-topic records the review can afford not to see, and the question is always whether eligible ones go with them.
@@ -64,11 +64,11 @@ Three units are easily confused, and the confusion changes the numbers.
 - A **report** is a document describing a study: a journal article, a conference abstract, a protocol, a thesis, a registry entry, a letter.
 - A **study** is the investigation itself, the unit the review includes and analyses. A study can have many reports.
 
-In CD010558, the 10 included records in the re-run pool are reports of four studies, and six of them are reports of one trial, CoBalT. The Nakagawa study appears only through its protocol. The synthetic collection plants the same structure: its first study has a journal article, a second database's record of that same article, and a conference abstract of interim results.
+In CD010558, the 10 included records in the rerun pool are reports of four studies, and six of them are reports of one trial, CoBalT. The Nakagawa study appears only through its protocol. The synthetic collection plants the same structure: its first study has a journal article, a second database's record of that same article, and a conference abstract of interim results.
 
 The distinction matters for four reasons.
 
-1. **Recall depends on the unit.** Against the review's PubMed-indexed publications, the re-run strategy recovers 10 of 16 (63%); against all publications, 10 of 17 (59%); against studies, 4 of 6 (67%); against its own screening labels, 10 of 10. Each figure is correct, and each answers a different question.
+1. **Recall depends on the unit.** Against the review's PubMed-indexed publications, the rerun strategy recovers 10 of 16 (63%); against all publications, 10 of 17 (59%); against studies, 4 of 6 (67%); against its own screening labels, 10 of 10. Each figure is correct, and each answers a different question.
 2. **A study needs only one report to be found.** The design and `NOT` blocks cost two CoBalT reports but not the study. A loss of a study's only report, as with the Town trial, costs the study.
 3. **Finding a study is not finding its results.** A protocol or registry record can lead a reviewer to a study whose results paper the search did not admit, but only if someone follows it up.
 4. **Deduplication works on records; eligibility is judged on studies.** Merging two records of the same article is correct; merging an abstract with the article it previews, or two different studies with similar titles, is not. The synthetic collection's interim abstract is a second report of its study, not a duplicate record.
@@ -154,7 +154,7 @@ All inputs are in this chapter or the case pack (`case-pack/reference-sets/`, `c
 
 ### Exercise 1.1: Locate the losses in CD010558
 
-Using @tbl-cd010558 and the strategy's last two lines, assign each of the seven publications missing from the re-run pool to a boundary in @tbl-boundaries. Then say which of the losses cost the review a study, had the strategy been the only search.
+Using @tbl-cd010558 and the strategy's last two lines, assign each of the seven publications missing from the rerun pool to a boundary in @tbl-boundaries. Then say which of the losses cost the review a study, had the strategy been the only search.
 
 ::: {.callout-tip collapse="true"}
 ## Worked answer
@@ -173,12 +173,12 @@ The two registry records are coverage losses for a MEDLINE search, since registr
 
 Two studies would have been lost: Wiles 2007, through coverage, and Town 2017, through the date limit, since the limit removed its only journal publication. The Nakagawa study survives only through its protocol; a reviewer would need to follow the protocol up to find the results. CoBalT survives its four losses because six other reports were admitted.
 
-Two points are easy to miss. None of the losses needs a missing synonym to explain it: coverage, the date limit and the strategy's design and `NOT` blocks account for all seven, and the date limit accounts for four. And the `ed` losses are an artefact of re-running a dated strategy later, which matters for updates (@sec-recording) and for any benchmark built on a re-run.
+Two points are easy to miss. None of the losses needs a missing synonym to explain it: coverage, the date limit and the strategy's design and `NOT` blocks account for all seven, and the date limit accounts for four. And the `ed` losses are an artefact of rerunning a dated strategy later, which matters for updates (@sec-recording) and for any benchmark built on a rerun.
 :::
 
 ### Exercise 1.2: Count at four levels
 
-Compute the re-run strategy's recall for CD010558 against (a) the CLEF screening labels, (b) the review's PubMed-indexed publications, (c) all of its publications and (d) its studies. Which figure would you report, and to whom?
+Compute the rerun strategy's recall for CD010558 against (a) the CLEF screening labels, (b) the review's PubMed-indexed publications, (c) all of its publications and (d) its studies. Which figure would you report, and to whom?
 
 ::: {.callout-tip collapse="true"}
 ## Worked answer
