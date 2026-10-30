@@ -118,6 +118,8 @@ Asking a language model for a strategy is another transformation: a description 
 
 Two caveats run through these studies. Benchmarks are built from published reviews, whose strategies a model may have seen in training; @wang2023 acknowledge that ChatGPT "may have already seen the original queries" (@sec-validation-dev). And the models change: a result for one version on one date says little about the next.
 
+RAISE's guidance on selecting and using tools, surveying them as they stood in February 2026, reaches the same conclusion. "Current evidence suggests that generated strategies are not adequate and require information specialist input," it says, and it rates language models for exploratory and supplementary use in strategy development [@raise2026select, table 2].
+
 ### A drafted strategy, checked
 
 The errors these studies report are the kind PubMed hides (@sec-dev-system). @tbl-draft-check is a PubMed strategy for CD010558's question, written for this chapter in the style of those errors; it is not the output of a model. Each line was run on 22 October 2026.
