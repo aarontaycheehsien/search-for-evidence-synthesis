@@ -1,6 +1,6 @@
 # Recording, reporting and updating {#sec-recording}
 
-In 2019 the CLEF organisers reran CD010558's MEDLINE strategy exactly as the review had published it, and the pool they got back held reports of four of the review's six studies (@sec-missing-case). The strategy they had told them what to type. It did not include what the search had returned in 2017, so nothing in it could show which of the review's reports this search had found, or why the second run lacked some of them.
+In 2019 the CLEF organisers reran CD010558's MEDLINE strategy exactly as the review had published it, and the pool they got back held reports of four of the review's six studies (@sec-missing-case). The published strategy told them what to type. It did not record what the search had returned in 2017, so nothing in it could show which of the review's reports this search had found, or why the second run lacked some of them.
 
 A search record has three readers. A peer reviewer reads it before the search runs, to catch errors in the strategy [@mcgowan2016]. A reader of the review reads it afterwards, to judge what the search could and could not have found. The next searcher reads it to update the review, often years later and often without the original searcher to ask. This chapter is about a record that serves all three, and about updating, where the gaps in a record become losses.
 
@@ -252,7 +252,7 @@ Using the Moran deduplication figures (`case-pack/data/moran-2021/README.md`), d
 ::: {.callout-tip collapse="true"}
 ## Worked answer
 
-**Methods.** "Records from Web of Science (2,729) and Scopus (4,479) were combined (7,208) and deduplicated in [tool, version] using [rule, for example DOI match followed by exact title match after removing punctuation], followed by manual checking of [which pairs]. 1,806 duplicates were removed, leaving 5,402 records." The figures here are for the DOI-or-exact-title rule; with another rule the numbers change, which is why the rule must be named.
+**Methods.** "Records from Web of Science (2,729) and Scopus (4,479) were combined (7,208) and deduplicated in [tool, version] using [rule, for example DOI match followed by exact title match after removing punctuation], followed by manual checking of [which pairs]. In all, 1,806 duplicates were removed, leaving 5,402 records." The figures here are for the DOI-or-exact-title rule; with another rule the numbers change, which is why the rule must be named.
 
 **Flow diagram.** "Duplicate records removed (n = 1,806)".
 
