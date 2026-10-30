@@ -10,7 +10,7 @@ Dear [name],
 
 I am writing an open textbook for evidence-synthesis librarians, *How Search Finds and Misses Studies: Information Retrieval for Evidence Synthesis*. It explains how databases and newer AI tools decide which records a review team ever sees, so that readers can work out where an eligible study was lost and judge a search tool against the claim actually made for it. The draft is online at <https://aarontaycheehsien.github.io/search-for-evidence-synthesis/>.
 
-Before revising it, I want to find out where it fails for practising librarians. I am inviting five to eight people who have built at least one search for a systematic or scoping review in the last two years, and I would value your view [because of your work on / as someone who works mainly on ...].
+Before revising it, I want to find out where it fails for practising librarians. I am inviting five to eight people who have built at least one search for a systematic or scoping review in the last two years, and I would value your view [say why: for example, your work on a particular kind of review or field].
 
 **What I would ask of you**
 
