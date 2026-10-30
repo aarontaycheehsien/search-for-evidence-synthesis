@@ -20,7 +20,7 @@ About five hours of reading and exercises over three weeks, two short checks of 
 | Week 3 | Read Chapter 10. Attempt Exercises 10.1 and 10.3, then the short capstone task we send you | About 2 hours |
 | At the end | Answer part B of the knowledge check, then a 60-minute conversation | 1 hour 15 minutes |
 
-The other exercises in each chapter are optional. Chapters 2 and 4 are also drafted; read them if you wish, but the questions are about Chapters 1, 3 and 10.
+The other exercises in each chapter are optional. The whole book is drafted; read other chapters if you wish, but the questions are about Chapters 1, 3 and 10.
 
 The book is online at <https://aarontaycheehsien.github.io/search-for-evidence-synthesis/>.
 

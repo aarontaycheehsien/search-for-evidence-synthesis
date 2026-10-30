@@ -1,13 +1,13 @@
 # Pilot protocol
 
-Version 1, 2026-10-22. For the author.
+Version 2, 2026-10-30. For the author. Version 1 (2026-10-22) was written when only Chapters 1 to 4 and 10 were drafted; version 2 reflects the complete first draft and adds an invitation ([`invitation.md`](invitation.md)). The procedure and decision rules are unchanged except where noted.
 
 ## Aims
 
 The pilot asks three questions.
 
 1. **Where do readers fail?** Which explanations, tables and exercises do practising evidence-synthesis librarians misread, find too hard or get wrong, and why?
-2. **Is the depth right?** Does Chapter 3 give the amount of retrieval mechanism readers want, too much or too little? The answer sets the depth of the rest of Part II (plan, implementation step 6).
+2. **Is the depth right?** Does Chapter 3 give the amount of retrieval mechanism readers want, too much or too little? The answer decides the depth of the rest of Part II, and in particular whether Chapters 5 and 6, drafted at a provisional depth, keep their depth, lose detail or gain optional boxes.
 3. **Does the book deliver its promise?** After reading, can participants locate where an eligible study was lost, and judge a proposed tool against the claim made for it?
 
 The pilot is formative. It is not an evaluation of the book's effectiveness and does not support claims of that kind.
@@ -23,6 +23,7 @@ The pilot is formative. It is not an evaluation of the book's effectiveness and 
 
 - The online draft: <https://aarontaycheehsien.github.io/search-for-evidence-synthesis/>, with Chapters 1, 3 and 10 as the pilot chapters.
 - The case pack in the repository, which holds every input the exercises need.
+- [`invitation.md`](invitation.md), a draft invitation to personalise and send.
 - [`participant-guide.md`](participant-guide.md), sent with the invitation.
 - The knowledge check and capstone task in [`facilitator-guide.md`](facilitator-guide.md), sent separately at the start and the end.
 
@@ -60,10 +61,10 @@ Everything goes into [`findings.md`](findings.md) as one row per finding, with a
 
 These rules are set now, before the data, so that the pilot cannot be read to suit a preference.
 
-- **A recurring failure is a revision.** If two or more participants fail the same core exercise, or misread the same passage in the same way, revise the section and its exercise before drafting further chapters.
+- **A recurring failure is a revision.** If two or more participants fail the same core exercise, or misread the same passage in the same way, revise the section and its exercise before the first edition, and check whether the same problem recurs in other chapters.
 - **A single failure is a check.** One participant's failure is logged and checked against the text; revise if the text is ambiguous or wrong, otherwise note it.
 - **Every reported error is checked and answered.** Confirmed errors are fixed and the fix recorded; claims about products are re-checked against current documentation and dated in `claims/register.csv`.
-- **Depth of Part II.** If most participants rate Chapter 3's mechanism coverage as about right, keep that depth for Chapters 5 and 6. If most rate it too much, cut mechanism detail in later chapters to what an exercise needs. If most rate it too little, add optional boxes rather than lengthening the main text.
+- **Depth of Part II.** If most participants rate Chapter 3's mechanism coverage as about right, keep that depth for Chapters 5 and 6. If most rate it too much, cut mechanism detail in Chapters 2 and 4 to 6 to what an exercise needs. If most rate it too little, add optional boxes rather than lengthening the main text.
 - **The promise.** If, after reading, fewer than half the participants can locate the boundary in knowledge-check items 1 to 3 or identify the claim type in items 7 and 8, revise Chapters 1 and 10 before anything else.
 
 Record each decision in the plan's decision record, with the date.
@@ -79,4 +80,4 @@ The pilot collects feedback on a draft text, not data about people. Even so:
 
 ## Timeline
 
-About five weeks from invitation to the end of the debriefs, then one to two weeks to analyse the findings and revise. Drafting of the remaining chapters (plan, step 6) resumes after that, unless the author decides to draft in parallel and accept that some revisions will be needed later.
+About five weeks from invitation to the end of the debriefs, then one to two weeks to analyse the findings and revise. Every chapter was drafted before the pilot (Chapters 5 and 6 at a provisional depth), so revisions follow the decision rules above across the whole book, starting with Chapters 1, 3 and 10 and the depth of Chapters 5 and 6.
